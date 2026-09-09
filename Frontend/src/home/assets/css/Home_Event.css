@@ -427,7 +427,6 @@
     }
     
     .filter-group {
-        flex-direction: column;
         align-items: center;
     }
     
