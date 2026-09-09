@@ -2,7 +2,6 @@
 
 .home-team {
     padding: var(--spacing-xl) 0;
-    background: var(--bg-color-primary);
     scroll-margin-top: calc(var(--topbar-height) + var(--navbar-height) + 20px);
 }
 
