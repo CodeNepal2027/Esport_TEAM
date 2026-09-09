@@ -1,0 +1,157 @@
+/* ============================================
+    GLOBAL RESET & BASE STYLES
+   ============================================ */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+        margin: 0 auto;
+        background-color: var(--bg-color-primary);
+        color: var(--font-color-primary);
+        font-family: var(--font-family-primary);
+        line-height: 1.6;
+        transition: background-color 0.3s ease, color 0.3s ease;
+        min-height: 100dvh;
+        -ms-overflow-style: none;
+    } body::-webkit-scrollbar {
+        display: none;
+    }
+
+html{
+  scroll-behavior: smooth;
+}
+
+/* ============================================
+    ROOT VARIABLES (Default Theme)
+   ============================================ */
+:root {
+    /* <==== FONTS ====> */
+    --font-family-primary: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    --font-family-heading: 'Orbitron', 'Inter', sans-serif;
+    --font-family-mono: 'Courier New', monospace;
+
+    /* <==== ALERT MESSAGE ====> */
+    --normal-color: #3B82F6;
+    --success-color: #10B981;
+    --failure-color: #EF4444;
+    --warning-color: #F59E0B;
+
+    /* <==== SIZE / MEASUREMENT ====> */
+    --container-max-width: 1400px;
+    --highest-zindex: 1000;
+
+    /* <==== LAYOUT HEIGHTS ====> */
+    --topbar-height: clamp(55px, 6vh, 80px);
+    --navbar-height: clamp(50px, 5vh, 70px);
+    --banner-height: clamp(300px, 60vh, 600px);
+    --footer-height: clamp(200px, 30vh, 350px);
+
+    /* <==== SIDEBAR ====> */
+    --sidebar-width-icon: clamp(56px, 6vw, 80px);
+    --sidebar-width-icon-text: clamp(180px, 18vw, 260px);
+    
+    /* <==== FONT SIZES (Responsive with clamp) ====> */
+    --font-size-xs: clamp(0.625rem, 0.7vw, 0.75rem);     /* 10-12px */
+    --font-size-sm: clamp(0.75rem, 1vw, 0.875rem);        /* 12-14px */
+    --font-size-md: clamp(0.875rem, 1.2vw, 1rem);        /* 14-16px */
+    --font-size-lg: clamp(1.125rem, 1.8vw, 1.25rem);      /* 18-20px */
+    --font-size-xl: clamp(1.5rem, 2.5vw, 2rem);          /* 24-32px */
+    --font-size-xxl: clamp(2rem, 4vw, 3.5rem);           /* 32-56px */
+    --font-size-xxxl: clamp(2.5rem, 6vw, 4.5rem);        /* 40-72px */
+
+    /* <==== SPACING ====> */
+    --spacing-xs: clamp(4px, 0.5vw, 8px);
+    --spacing-sm: clamp(8px, 1vw, 12px);
+    --spacing-md: clamp(12px, 1.5vw, 20px);
+    --spacing-lg: clamp(20px, 2.5vw, 32px);
+    --spacing-xl: clamp(32px, 4vw, 48px);
+    --spacing-xxl: clamp(48px, 6vw, 80px);
+
+    /* <==== BORDER RADIUS ====> */
+    --curve-radius: clamp(4px, 0.5vw, 8px);
+    --round-radius: 50%;
+
+    /* <==== SHADOWS ====> */
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.12);
+    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.15);
+    --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.2);
+    --shadow-xl: 0 16px 48px rgba(0, 0, 0, 0.25);
+    --shadow-glow: 0 0 40px rgba(255, 0, 0, 0.3);
+
+    /* <==== TRANSITIONS ====> */
+    --transition-fast: 0.15s ease;
+    --transition-normal: 0.3s ease;
+    --transition-slow: 0.5s ease;
+}
+
+/* ============================================
+    DARK MODE (Default - Esports Theme)
+   ============================================ */
+[page-theme='dark'],
+:root:not([page-theme='light']) {
+    /* <==== BACKGROUNDS ====> */
+    --bg-color-primary: #0B0D11;
+    --bg-color-secondary: #14181F;
+
+
+    /* <==== FONT COLORS ====> */
+    --font-color-primary: #FFFFFF;
+    --font-color-secondary: #B0C4DE;
+    --font-color-muted: #6A7A92;
+    --font-color-inverse: #0B0D11;
+
+    /* <==== HEADING COLORS ====> */
+    --heading-color-primary: #FFFFFF;
+    --heading-color-secondary: #B0C4DE;
+
+    /* <==== HIGHLIGHT COLORS (Using team colors) ====> */
+    --highlight-color-primary: #e11616;
+    --highlight-color-secondary: #00FF00;
+
+
+    /* <==== BORDER COLORS ====> */
+    --border-color-primary: rgba(255, 255, 255, 0.08);
+    --border-color-secondary: rgba(255, 255, 255, 0.15);
+    --border-color-highlight: rgba(255, 0, 0, 0.3);
+
+    /* <==== SCROLLBAR ====> */
+    --scrollbar-track: #14181F;
+    --scrollbar-thumb: #FF0000;
+}
+
+/* ============================================
+    LIGHT MODE
+   ============================================ */
+[page-theme='light'] {
+    /* <==== BACKGROUNDS ====> */
+    --bg-color-primary: #F8FAFC;
+    --bg-color-secondary: #FFFFFF;
+
+
+    /* <==== FONT COLORS ====> */
+    --font-color-primary: #0F172A;
+    --font-color-secondary: #334155;
+    --font-color-muted: #64748B;
+    --font-color-inverse: #FFFFFF;
+
+    /* <==== HEADING COLORS ====> */
+    --heading-color-primary: #0F172A;
+    --heading-color-secondary: #1E293B;
+
+    /* <==== HIGHLIGHT COLORS (Slightly softer for light mode) ====> */
+    --highlight-color-primary: #b91414;
+    --highlight-color-secondary: #00CC00;
+
+
+    /* <==== BORDER COLORS ====> */
+    --border-color-primary: rgba(0, 0, 0, 0.08);
+    --border-color-secondary: rgba(0, 0, 0, 0.15);
+    --border-color-highlight: rgba(204, 0, 0, 0.3);
+
+    /* <==== SCROLLBAR ====> */
+    --scrollbar-track: #F1F5F9;
+    --scrollbar-thumb: #CC0000;
+}

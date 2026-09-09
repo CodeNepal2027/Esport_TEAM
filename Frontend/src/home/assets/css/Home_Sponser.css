@@ -1,0 +1,356 @@
+/* src/assets/css/Home_Sponser.css */
+
+.home-sponser {
+    padding: var(--spacing-xl) 0;
+    scroll-margin-top: calc(var(--topbar-height) + var(--navbar-height) + 20px);
+}
+
+/* ============================================
+   SECTION HEADER
+   ============================================ */
+.section-header {
+    text-align: center;
+    margin-bottom: var(--spacing-xl);
+}
+
+.section-badge {
+    display: inline-block;
+    padding: var(--spacing-xs) var(--spacing-md);
+    border-radius: var(--curve-radius);
+    color: var(--font-color-inverse);
+    font-size: var(--font-size-xs);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: var(--spacing-sm);
+}
+
+.section-title {
+    font-family: var(--font-family-heading);
+    font-size: var(--font-size-xxl);
+    font-weight: 900;
+    color: var(--heading-color-primary);
+    margin-bottom: var(--spacing-xs);
+}
+
+.section-subtitle {
+    font-size: var(--font-size-md);
+    color: var(--font-color-secondary);
+    opacity: 0.8;
+}
+
+/* ============================================
+   LOADING STATE
+   ============================================ */
+.sponsor-loading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: var(--spacing-xl);
+    gap: var(--spacing-md);
+}
+
+.loading-spinner {
+    width: 50px;
+    height: 50px;
+    border: 4px solid var(--border-color-secondary);
+    border-top: 4px solid var(--highlight-color-primary);
+    border-radius: var(--round-radius);
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.sponsor-loading p {
+    color: var(--font-color-secondary);
+    font-size: var(--font-size-md);
+}
+
+/* ============================================
+   ERROR STATE
+   ============================================ */
+.sponsor-error {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-md);
+    border: 1px solid var(--failure-color);
+    border-radius: var(--curve-radius);
+    background: var(--bg-color-secondary);
+    margin-bottom: var(--spacing-lg);
+    color: var(--failure-color);
+}
+
+.sponsor-error i {
+    font-size: var(--font-size-lg);
+}
+
+.sponsor-empty {
+    text-align: center;
+    padding: var(--spacing-xl);
+    color: var(--font-color-muted);
+}
+
+/* ============================================
+   SPONSOR CAROUSEL
+   ============================================ */
+.sponsor-carousel-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-xl);
+}
+
+.sponsor-carousel {
+    flex: 1;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-behavior: smooth;
+    -ms-overflow-style: none;
+    padding: var(--spacing-md) 0;
+}
+
+.sponsor-carousel::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+    display: none;
+}
+
+@supports (scrollbar-width: none) {
+    .sponsor-carousel {
+        scrollbar-width: none;
+    }
+}
+
+.sponsor-track {
+    display: flex;
+    gap: var(--spacing-lg);
+    animation: scroll 25s linear infinite;
+    width: max-content;
+}
+
+.sponsor-carousel:hover .sponsor-track {
+    animation-play-state: paused;
+}
+
+@keyframes scroll {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-50%);
+    }
+}
+
+/* ============================================
+   SPONSOR ITEM
+   ============================================ */
+.sponsor-item {
+    flex: 0 0 auto;
+    width: clamp(140px, 18vw, 200px);
+    height: clamp(80px, 10vw, 120px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--bg-color-secondary);
+    border-radius: var(--curve-radius);
+    border: 1px solid var(--border-color-primary);
+    transition: var(--transition-normal);
+    padding: var(--spacing-sm);
+}
+
+.sponsor-item:hover {
+    border-color: var(--highlight-color-primary);
+    transform: scale(1.05);
+    box-shadow: var(--shadow-md);
+}
+
+.sponsor-logo-wrapper {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--spacing-xs);
+}
+
+.sponsor-logo {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    filter: grayscale(0.2);
+    transition: var(--transition-normal);
+}
+
+.sponsor-item:hover .sponsor-logo {
+    filter: grayscale(0);
+    transform: scale(1.05);
+}
+
+.sponsor-fallback {
+    font-size: var(--font-size-md);
+    font-weight: 700;
+    color: var(--font-color-secondary);
+    text-align: center;
+    padding: var(--spacing-sm);
+}
+
+/* ============================================
+   CAROUSEL BUTTONS
+   ============================================ */
+.carousel-btn {
+    width: clamp(40px, 4vw, 50px);
+    height: clamp(40px, 4vw, 50px);
+    border: none;
+    border-radius: var(--round-radius);
+    color: #fff;
+    font-size: var(--font-size-md);
+    cursor: pointer;
+    transition: var(--transition-fast);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    box-shadow: var(--shadow-md);
+    z-index: 2;
+}
+
+.carousel-btn:hover {
+    transform: scale(1.1);
+    box-shadow: var(--shadow-glow);
+}
+
+.carousel-btn:active {
+    transform: scale(0.95);
+}
+
+/* ============================================
+   SPONSOR CTA
+   ============================================ */
+.sponsor-cta {
+    margin-top: var(--spacing-xl);
+    padding: var(--spacing-xl);
+    border-radius: var(--curve-radius);
+    text-align: center;
+    transition: var(--transition-normal);
+}
+
+.sponsor-cta:hover {
+    transform: translateY(-3px);
+}
+
+.cta-content h3 {
+    font-family: var(--font-family-heading);
+    font-size: var(--font-size-xl);
+    font-weight: 900;
+    color: var(--heading-color-primary);
+    margin-bottom: var(--spacing-xs);
+}
+
+.cta-content p {
+    font-size: var(--font-size-md);
+    color: var(--font-color-secondary);
+    margin-bottom: var(--spacing-md);
+}
+
+.cta-btn {
+    padding: var(--spacing-sm) var(--spacing-xl);
+    border: none;
+    border-radius: var(--curve-radius);
+    font-weight: 700;
+    font-size: var(--font-size-sm);
+    cursor: pointer;
+    transition: var(--transition-normal);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+}
+
+.cta-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-glow);
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+@media (max-width: 1024px) {
+    .sponsor-item {
+        width: clamp(120px, 15vw, 170px);
+        height: clamp(70px, 8vw, 100px);
+    }
+}
+
+@media (max-width: 768px) {
+    .section-title {
+        font-size: var(--font-size-xl);
+    }
+    
+    .sponsor-item {
+        width: clamp(100px, 20vw, 140px);
+        height: clamp(60px, 10vw, 80px);
+    }
+    
+    .sponsor-track {
+        gap: var(--spacing-md);
+    }
+    
+    .carousel-btn {
+        width: 32px;
+        height: 32px;
+        font-size: var(--font-size-sm);
+    }
+    
+    .sponsor-cta {
+        padding: var(--spacing-lg);
+    }
+    
+    .cta-content h3 {
+        font-size: var(--font-size-lg);
+    }
+}
+
+@media (max-width: 480px) {
+    .sponsor-item {
+        width: clamp(80px, 25vw, 110px);
+        height: clamp(50px, 12vw, 70px);
+        padding: var(--spacing-xs);
+    }
+    
+    .sponsor-track {
+        gap: var(--spacing-sm);
+    }
+    
+    .carousel-btn {
+        width: 28px;
+        height: 28px;
+        font-size: var(--font-size-xs);
+    }
+    
+    .sponsor-logo-wrapper {
+        padding: 2px;
+    }
+    
+    .cta-btn {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+/* ============================================
+   PAUSE ANIMATION ON INTERACTION
+   ============================================ */
+@media (prefers-reduced-motion: reduce) {
+    .sponsor-track {
+        animation: none;
+    }
+}

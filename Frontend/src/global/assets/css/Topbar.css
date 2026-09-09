@@ -1,0 +1,308 @@
+/* src/assets/css/Topbar.css */
+
+.topbar {
+    height: var(--topbar-height);
+    background: var(--bg-color-secondary);
+    border-bottom: 1px solid var(--border-color-highlight);
+    display: flex;
+    align-items: center;
+    padding: 0 var(--spacing-md);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    transition: var(--transition-normal);
+    box-shadow: var(--shadow-sm);
+}
+
+.topbar .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    max-width: var(--container-max-width);
+    margin: 0 auto;
+    gap: var(--spacing-md);
+    flex-wrap: nowrap;
+}
+
+/* ============================================
+   TOPBAR LEFT - Logo & Brand
+   ============================================ */
+.topbar-left {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.brand-link {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    text-decoration: none;
+    transition: var(--transition-fast);
+}
+
+.brand-link:hover {
+    opacity: 0.9;
+}
+
+.logo-wrapper {
+    width: clamp(40px, 4vw, 50px);
+    height: clamp(40px, 4vw, 50px);
+    border-radius: var(--curve-radius);
+    border: 2px solid var(--highlight-color-primary);
+    padding: 4px;
+    background: var(--bg-color-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: var(--shadow-glow);
+    flex-shrink: 0;
+}
+
+.topbar-logo {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    border-radius: var(--curve-radius);
+}
+
+.brand-text {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.2;
+}
+
+.brand-tag {
+    font-family: var(--font-family-heading);
+    font-size: var(--font-size-lg);
+    font-weight: 900;
+    letter-spacing: 2px;
+}
+
+.brand-name {
+    font-size: var(--font-size-xs);
+    color: var(--font-color-secondary);
+    font-weight: 500;
+    opacity: 0.8;
+}
+
+/* ============================================
+   TOPBAR MIDDLE - Navigation Links
+   ============================================ */
+.topbar-middle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+    min-width: 0;
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-lg);
+    flex-wrap: nowrap;
+}
+
+.nav-link {
+    color: var(--font-color-secondary);
+    text-decoration: none;
+    font-size: var(--font-size-sm);
+    font-weight: 600;
+    transition: var(--transition-fast);
+    padding: var(--spacing-xs) 0;
+    position: relative;
+    white-space: nowrap;
+}
+
+.nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--highlight-color-primary);
+    transition: var(--transition-fast);
+}
+
+.nav-link:hover {
+    color: var(--font-color-primary);
+}
+
+.nav-link:hover::after,
+.nav-link.active::after {
+    width: 100%;
+}
+
+.nav-link.active {
+    color: var(--highlight-color-primary);
+}
+
+/* ============================================
+   TOPBAR RIGHT - Controls
+   ============================================ */
+.topbar-right {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+    flex-shrink: 0;
+}
+
+@keyframes pulse {
+    0%, 100% { 
+        opacity: 1; 
+        transform: scale(1);
+    }
+    50% { 
+        opacity: 0.3; 
+        transform: scale(0.7);
+    }
+}
+
+/* Theme Toggle */
+.theme-toggle {
+    background: var(--bg-color-primary);
+    border: 1px solid var(--border-color-secondary);
+    border-radius: var(--round-radius);
+    padding: var(--spacing-xs);
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: var(--font-color-secondary);
+    font-size: var(--font-size-md);
+    transition: var(--transition-fast);
+}
+
+.theme-toggle:hover {
+    transform: scale(1.1);
+    border-color: var(--highlight-color-primary);
+    color: var(--highlight-color-primary);
+}
+
+/* ============================================
+   RESPONSIVE - Tablet
+   ============================================ */
+@media (max-width: 1024px) {
+    .topbar .container {
+        gap: var(--spacing-sm);
+    }
+    
+    .nav-link {
+        font-size: var(--font-size-xs);
+    }
+    
+    .brand-tag {
+        font-size: var(--font-size-md);
+    }
+}
+
+/* ============================================
+   RESPONSIVE - Mobile (hide brand name only)
+   ============================================ */
+@media (max-width: 768px) {
+    .topbar {
+        padding: 0 var(--spacing-sm);
+        height: auto;
+        min-height: var(--topbar-height);
+    }
+    
+    .topbar .container {
+        gap: var(--spacing-sm);
+        flex-wrap: nowrap;
+    }
+    
+    /* Hide brand name on mobile */
+    .brand-name {
+        display: none;
+    }
+    
+    .brand-tag {
+        font-size: var(--font-size-sm);
+    }
+    
+    .logo-wrapper {
+        width: 32px;
+        height: 32px;
+        padding: 3px;
+    }
+    
+    .nav-link {
+        font-size: var(--font-size-xs);
+    }
+    
+    .theme-toggle {
+        width: 32px;
+        height: 32px;
+        font-size: var(--font-size-sm);
+    }
+    
+    .topbar-right {
+        gap: var(--spacing-xs);
+    }
+}
+
+/* ============================================
+   RESPONSIVE - Small Mobile
+   ============================================ */
+@media (max-width: 480px) {
+    .topbar {
+        padding: 0 var(--spacing-xs);
+    }
+    
+    .brand-tag {
+        font-size: var(--font-size-xs);
+        letter-spacing: 1px;
+    }
+    
+    .logo-wrapper {
+        width: 28px;
+        height: 28px;
+        padding: 2px;
+        border-width: 1.5px;
+    }
+    
+    .nav-link {
+        font-size: 10px;
+    }
+    
+    .theme-toggle {
+        width: 28px;
+        height: 28px;
+        font-size: var(--font-size-xs);
+    }
+}
+
+
+/* src/assets/css/Topbar.css - Add to existing */
+
+.logo-wrapper {
+    width: clamp(40px, 4vw, 50px);
+    height: clamp(40px, 4vw, 50px);
+    border-radius: var(--curve-radius);
+    padding: 4px;
+    background: var(--bg-color-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: var(--shadow-glow);
+    flex-shrink: 0;
+    transition: var(--transition-fast);
+}
+
+.logo-wrapper:hover {
+    transform: scale(1.05);
+}
+
+.logo-text {
+    font-family: var(--font-family-heading);
+    font-size: clamp(12px, 1.2vw, 16px);
+    font-weight: 900;
+    color: #fff;
+    letter-spacing: 1px;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.4);
+}
