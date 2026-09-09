@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react'
 import {BrowserRouter, Routes, Route} from 'react-router-dom'
 import { Analytics } from "@vercel/analytics/next"
+import { useEffect, useState } from 'react'
 
 import './App.css'
 import Navbar from './global/Navbar';
