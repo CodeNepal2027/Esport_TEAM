@@ -109,7 +109,7 @@ const Footer = () => {
                 {/* Bottom Bar */}
                 <div className="footer-bottom">
                     <div className="footer-bottom-left">
-                        <span className="footer-powered">Powered By NepByte</span>
+                        <span className="footer-powered">Powered By Optech</span>
                     </div>
                     <div className="footer-bottom-right">
                         <Link to="/privacy">Privacy Policy</Link>
