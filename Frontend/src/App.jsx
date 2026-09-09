@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import {BrowserRouter, Routes, Route} from 'react-router-dom'
+import { Analytics } from "@vercel/analytics/next"
 
 import './App.css'
 import Navbar from './global/Navbar';
@@ -42,6 +43,7 @@ function App() {
             </main>
 
             <Footer />
+            <Analytics />
         </BrowserRouter>
     )
 }
