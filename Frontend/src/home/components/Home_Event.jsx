@@ -172,7 +172,7 @@ const Home_Event = () => {
     };
 
     return (
-        <section id="home-event" className="home-event">
+        <section id="home-event-section" className="home-event-section">
             <div className="container">
                 {/* Section Header */}
                 <div className="section-header">

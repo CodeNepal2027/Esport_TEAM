@@ -9,15 +9,15 @@ export const BACKEND_URL_DEVELOPMENT = import.meta.env.VITE_BACKEND_URL_DEVELOPM
 // ============================================
 // TEAM IDENTITY
 // ============================================
-export const TEAM_TAG = import.meta.env.VITE_TEAM_TAG || 'T2K';
-export const TEAM_NAME = import.meta.env.VITE_TEAM_NAME || 'Trained To Kill';
+export const TEAM_TAG = import.meta.env.VITE_TEAM_TAG || 'ABC';
+export const TEAM_NAME = import.meta.env.VITE_TEAM_NAME || 'ABC Esports';
 export const TEAM_LOGO_URL = import.meta.env.VITE_TEAM_LOGO_URL || 'https://raw.githubusercontent.com/TrainedToKill/TrainedToKill/main/logo.png';
 
 // ============================================
 // TEAM COLORS
 // ============================================
 export const COLOR_CODE_1 = import.meta.env.VITE_COLOR_CODE_1 || '#FF0000';
-export const COLOR_CODE_2 = import.meta.env.VITE_COLOR_CODE_2 || '#313131';
+export const COLOR_CODE_2 = import.meta.env.VITE_COLOR_CODE_2 || '#00FF00';
 
 // ============================================
 // DERIVED / COMPUTED
@@ -34,7 +34,46 @@ export const IS_DEVELOPMENT = import.meta.env.MODE === 'development';
 export const APP_ENV = import.meta.env.MODE;
 
 // ============================================
-// EXPORT ALL AS DEFAULT OBJECT (optional)
+// AUTO-INJECT CSS VARIABLES FROM .env
+// ============================================
+export const injectThemeColors = () => {
+    if (typeof document === 'undefined') return;
+    
+    const root = document.documentElement;
+    
+    // Primary highlight color (from COLOR_CODE_1)
+    root.style.setProperty('--highlight-color-primary', COLOR_CODE_1);
+    root.style.setProperty('--highlight-color-primary-rgb', hexToRgb(COLOR_CODE_1));
+    
+    // Secondary highlight color (from COLOR_CODE_2)
+    root.style.setProperty('--highlight-color-secondary', COLOR_CODE_2);
+    root.style.setProperty('--highlight-color-secondary-rgb', hexToRgb(COLOR_CODE_2));
+    
+    // Also set border highlight
+    root.style.setProperty('--border-color-highlight', `${hexToRgb(COLOR_CODE_1, 0.3)}`);
+    
+    // Set scrollbar thumb
+    root.style.setProperty('--scrollbar-thumb', COLOR_CODE_1);
+    
+    // Set shadow glow
+    root.style.setProperty('--shadow-glow', `0 0 40px ${hexToRgb(COLOR_CODE_1, 0.3)}`);
+};
+
+// Helper: Convert HEX to RGB
+const hexToRgb = (hex, alpha = null) => {
+    const cleanHex = hex.replace('#', '');
+    const r = parseInt(cleanHex.substring(0, 2), 16);
+    const g = parseInt(cleanHex.substring(2, 4), 16);
+    const b = parseInt(cleanHex.substring(4, 6), 16);
+    
+    if (alpha !== null) {
+        return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+    }
+    return `${r}, ${g}, ${b}`;
+};
+
+// ============================================
+// EXPORT ALL AS DEFAULT OBJECT
 // ============================================
 const env_export = {
     BACKEND_URL_PRODUCTION,
@@ -48,32 +87,7 @@ const env_export = {
     IS_PRODUCTION,
     IS_DEVELOPMENT,
     APP_ENV,
+    injectThemeColors,
 };
 
 export default env_export;
-
-
-// <========= USAGE EXAMPLES ==========>
-// // Example: Using named exports
-// import { TEAM_TAG, TEAM_NAME, COLOR_CODE_1, BACKEND_URL } from '../config/env_export';
-
-// function TeamHeader() {
-//     return (
-//         <div style={{ color: COLOR_CODE_1 }}>
-//             <h1>{TEAM_TAG} - {TEAM_NAME}</h1>
-//             <p>API: {BACKEND_URL}</p>
-//         </div>
-//     );
-// }
-
-// // Example: Using default export
-// import env_export from '../config/env_export';
-
-// function TeamInfo() {
-//     return (
-//         <div>
-//             <img src={env_export.TEAM_LOGO_URL} alt={env_export.TEAM_NAME} />
-//             <p>Environment: {env_export.APP_ENV}</p>
-//         </div>
-//     );
-// }

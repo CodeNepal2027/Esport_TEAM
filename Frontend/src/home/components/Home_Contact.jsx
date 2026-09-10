@@ -37,7 +37,7 @@ const Home_Contact = () => {
     };
 
     return (
-        <section id="home-contact" className="home-contact">
+        <section id="home-contact-section" className="home-contact-section">
             <div className="container">
                 {/* Section Header */}
                 <div className="section-header">
@@ -62,7 +62,7 @@ const Home_Contact = () => {
                             border: `1px solid ${COLOR_CODE_1}44`
                         }}>
                             <div className="info-item">
-                                <div className="info-icon" style={{ background: COLOR_CODE_1 }}>
+                                <div className="info-icon">
                                     <i className="bi bi-envelope"></i>
                                 </div>
                                 <div className="info-text">
@@ -73,7 +73,7 @@ const Home_Contact = () => {
                             </div>
 
                             <div className="info-item">
-                                <div className="info-icon" style={{ background: COLOR_CODE_2 }}>
+                                <div className="info-icon">
                                     <i className="bi bi-geo-alt"></i>
                                 </div>
                                 <div className="info-text">
@@ -84,7 +84,7 @@ const Home_Contact = () => {
                             </div>
 
                             <div className="info-item">
-                                <div className="info-icon" style={{ background: COLOR_CODE_1 }}>
+                                <div className="info-icon">
                                     <i className="bi bi-phone"></i>
                                 </div>
                                 <div className="info-text">
@@ -95,7 +95,7 @@ const Home_Contact = () => {
                             </div>
 
                             <div className="info-item">
-                                <div className="info-icon" style={{ background: COLOR_CODE_2 }}>
+                                <div className="info-icon">
                                     <i className="bi bi-clock"></i>
                                 </div>
                                 <div className="info-text">

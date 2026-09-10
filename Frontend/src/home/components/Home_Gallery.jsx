@@ -1,5 +1,5 @@
 // src/routes/components/Home_Gallery.jsx
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import env_export from '../../config/env_export';
 import "../assets/css/Home_Gallery.css";
 
@@ -11,9 +11,26 @@ const Home_Gallery = () => {
         COLOR_CODE_2 
     } = env_export;
 
+    // Get number of columns based on screen size (matches CSS grid)
+    const getColumnsPerRow = () => {
+        if (typeof window === 'undefined') return 4;
+        const width = window.innerWidth;
+        if (width <= 480) return 2;   // Mobile: 2 columns
+        if (width <= 768) return 3;   // Tablet: 3 columns
+        if (width <= 1024) return 4;  // iPad: 4 columns
+        return 4;                      // Laptop/Desktop: 4 columns
+    };
+
+    // Get count for 3 rows based on screen size
+    const getInitialCount = () => {
+        return getColumnsPerRow() * 3; // 3 rows
+    };
+
     const [selectedImage, setSelectedImage] = useState(null);
     const [filter, setFilter] = useState('all');
-    const [visibleCount, setVisibleCount] = useState(10);
+    const [columnsPerRow, setColumnsPerRow] = useState(getColumnsPerRow());
+    const [initialCount, setInitialCount] = useState(getInitialCount());
+    const [visibleCount, setVisibleCount] = useState(getInitialCount());
     const [touchStartX, setTouchStartX] = useState(0);
     const [touchEndX, setTouchEndX] = useState(0);
     const galleryRef = useRef(null);
@@ -191,6 +208,26 @@ const Home_Gallery = () => {
         { id: 'events', label: 'Events' },
     ];
 
+    // Handle resize for responsive row count
+    useEffect(() => {
+        const handleResize = () => {
+            const newColumns = getColumnsPerRow();
+            const newInitial = newColumns * 3; // 3 rows
+            setColumnsPerRow(newColumns);
+            setInitialCount(newInitial);
+            // If user hasn't loaded more than initial, update visible count
+            setVisibleCount(prev => {
+                if (prev <= initialCount) {
+                    return newInitial;
+                }
+                return prev;
+            });
+        };
+
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, [initialCount]);
+
     // Filter images based on selected category
     const filteredImages = filter === 'all' 
         ? galleryImages 
@@ -199,17 +236,18 @@ const Home_Gallery = () => {
     // Get visible images
     const visibleImages = filteredImages.slice(0, visibleCount);
     const hasMore = visibleCount < filteredImages.length;
-    const hasLess = visibleCount > 10;
+    const hasLess = visibleCount > initialCount;
 
-    // Load more images
+    // Load more images (3 more rows)
     const loadMore = () => {
-        setVisibleCount(prev => Math.min(prev + 10, filteredImages.length));
+        const additionalRows = columnsPerRow * 3; // 3 more rows
+        setVisibleCount(prev => Math.min(prev + additionalRows, filteredImages.length));
     };
 
-    // Load less images (reset to 10)
+    // Load less images (reset to initial 3 rows)
     const loadLess = () => {
-        setVisibleCount(10);
-        const gallerySection = document.getElementById('home-gallery');
+        setVisibleCount(initialCount);
+        const gallerySection = document.getElementById('home-gallery-section');
         if (gallerySection) {
             gallerySection.scrollIntoView({ behavior: 'smooth' });
         }
@@ -218,7 +256,7 @@ const Home_Gallery = () => {
     // Reset visible count when filter changes
     const handleFilterChange = (categoryId) => {
         setFilter(categoryId);
-        setVisibleCount(10);
+        setVisibleCount(initialCount);
     };
 
     // Touch handlers for mobile swipe
@@ -231,14 +269,10 @@ const Home_Gallery = () => {
     };
 
     const handleTouchEnd = () => {
-        if (touchStartX - touchEndX > 50) {
-            if (selectedImage) {
-                nextImage();
-            }
-        } else if (touchEndX - touchStartX > 50) {
-            if (selectedImage) {
-                prevImage();
-            }
+        if (selectedImage && touchStartX - touchEndX > 50) {
+            nextImage();
+        } else if (selectedImage && touchEndX - touchStartX > 50) {
+            prevImage();
         }
         setTouchStartX(0);
         setTouchEndX(0);
@@ -272,7 +306,7 @@ const Home_Gallery = () => {
     // Get grid span based on aspect ratio
     const getGridSpan = (aspectRatio) => {
         if (!aspectRatio) return 'span-landscape';
-        const [w, h] = aspectRatio.split(':').map(Number);
+        const [w, h] = aspectRatio.split('/').map(Number);
         if (isNaN(w) || isNaN(h)) return 'span-landscape';
         const ratio = w / h;
         if (ratio > 1.8) return 'span-wide';
@@ -282,7 +316,7 @@ const Home_Gallery = () => {
     };
 
     return (
-        <section id="home-gallery" className="home-gallery">
+        <section id="home-gallery-section" className="home-gallery-section">
             <div className="container">
                 {/* Section Header */}
                 <div className="section-header">
@@ -321,7 +355,7 @@ const Home_Gallery = () => {
                 {/* Gallery Grid */}
                 <div className="gallery-grid" ref={galleryRef}>
                     {visibleImages.map((image) => {
-                        const aspectRatio = image.aspect_ratio || '4:3';
+                        const aspectRatio = image.aspect_ratio || '4/3';
                         return (
                             <div 
                                 key={image.id} 
@@ -407,7 +441,7 @@ const Home_Gallery = () => {
                                     alt={selectedImage.title}
                                     className="lightbox-image"
                                     style={{
-                                        aspectRatio: selectedImage.aspect_ratio || '4:3',
+                                        aspectRatio: selectedImage.aspect_ratio || '4/3',
                                         maxHeight: '70vh',
                                         width: '100%',
                                         height: 'auto',

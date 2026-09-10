@@ -193,7 +193,7 @@
     }
     
     .nav-list {
-        gap: var(--spacing-sm);
+        gap: var(--spacing-lg);
     }
     
     .nav-link {
@@ -273,7 +273,7 @@
     .nav-list {
         flex-direction: column;
         width: 100%;
-        gap: var(--spacing-xs);
+        gap: var(--spacing-md);
         padding: 0 var(--spacing-md);
     }
     
@@ -300,6 +300,7 @@
     }
     
     .nav-link.active {
+        padding: var(--spacing-md) var(--spacing-sm);
         background: var(--bg-color-primary);
         color: var(--highlight-color-primary);
     }

@@ -104,7 +104,7 @@ const Home_Team = () => {
     };
 
     return (
-        <section id="home-team" className="home-team">
+        <section id="home-team-section" className="home-team-section">
             <div className="container">
                 {/* Section Header */}
                 <div className="section-header">

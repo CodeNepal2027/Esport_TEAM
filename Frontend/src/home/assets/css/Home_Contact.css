@@ -1,9 +1,6 @@
 /* src/assets/css/Home_Contact.css */
 
-.home-contact {
-    padding: var(--spacing-xl) 0;
-    scroll-margin-top: calc(var(--topbar-height) + var(--navbar-height) + 20px);
-}
+
 
 /* ============================================
    SECTION HEADER
@@ -87,7 +84,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #fff;
+    color: var(--font-color-primary);
+    background: var(--bg-color-primary);
     font-size: var(--font-size-lg);
     flex-shrink: 0;
 }
@@ -301,6 +299,9 @@
     
     .contact-info-card {
         padding: var(--spacing-md);
+        flex-wrap: wrap;
+        flex-direction: row;
+        justify-content: space-evenly;
     }
     
     .contact-form {
@@ -362,13 +363,13 @@
     
     .form-group input,
     .form-group textarea {
-        padding: var(--spacing-xs) var(--spacing-sm);
+        padding: var(--spacing-md) var(--spacing-sm);
         font-size: var(--font-size-xs);
     }
     
     .submit-btn {
-        font-size: var(--font-size-xs);
-        padding: var(--spacing-xs) var(--spacing-md);
+        font-size: var(--font-size-md);
+        padding: var(--spacing-sm) var(--spacing-md);
     }
     
     .social-icon {

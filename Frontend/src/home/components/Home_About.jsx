@@ -12,7 +12,7 @@ const Home_About = () => {
     } = env_export;
 
     return (
-        <section id="home-about" className="home-about">
+        <section id="home-about-section" className="home-about-section">
             <div className="container">
                 {/* Section Header */}
                 <div className="section-header">
@@ -85,7 +85,7 @@ const Home_About = () => {
                         }}>
                             <div className="placeholder-content">
                                 <span className="placeholder-icon" style={{ color: COLOR_CODE_1 }}>
-                                    <i className="fas fa-gamepad"></i>
+                                    <i className="bi bi-controller"></i>
                                 </span>
                                 <h4>{TEAM_TAG}</h4>
                                 <p>{TEAM_NAME}</p>
@@ -101,7 +101,7 @@ const Home_About = () => {
                         background: `linear-gradient(135deg, ${COLOR_CODE_1}11, ${COLOR_CODE_2}11)`
                     }}>
                         <div className="mission-icon" style={{ color: COLOR_CODE_1 }}>
-                            <i className="fas fa-bullseye"></i>
+                            <i className="bi bi-bullseye"></i>
                         </div>
                         <h4>Our Mission</h4>
                         <p>To dominate the competitive gaming scene while building a community of passionate gamers who share our vision.</p>
@@ -112,7 +112,7 @@ const Home_About = () => {
                         background: `linear-gradient(135deg, ${COLOR_CODE_2}11, ${COLOR_CODE_1}11)`
                     }}>
                         <div className="mission-icon" style={{ color: COLOR_CODE_2 }}>
-                            <i className="fas fa-eye"></i>
+                            <i className="bi bi-eye"></i>
                         </div>
                         <h4>Our Vision</h4>
                         <p>To become a global esports powerhouse, inspiring the next generation of competitive gamers worldwide.</p>

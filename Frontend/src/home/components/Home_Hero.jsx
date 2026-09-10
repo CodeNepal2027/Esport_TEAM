@@ -56,7 +56,7 @@ const Home_Hero = () => {
     };
 
     return (
-        <section id="home-hero" className="home-hero">
+        <section id="home-hero-section" className="home-hero-section">
             {/* Hero Slider */}
             <div className="hero-slider">
                 {slides.map((slide, index) => (

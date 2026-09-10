@@ -1,9 +1,5 @@
 /* src/assets/css/Home_Event.css */
 
-.home-event {
-    padding: var(--spacing-xl) 0;
-    scroll-margin-top: calc(var(--topbar-height) + var(--navbar-height) + 20px);
-}
 
 /* ============================================
    SECTION HEADER

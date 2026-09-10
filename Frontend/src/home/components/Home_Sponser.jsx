@@ -109,7 +109,7 @@ const Home_Sponser = () => {
     // Loading state
     if (loading) {
         return (
-            <section id="home-sponser" className="home-sponser">
+            <section id="home-sponser-section" className="home-sponser-section">
                 <div className="container">
                     <div className="section-header">
                         <span className="section-badge" style={{ 
@@ -131,7 +131,7 @@ const Home_Sponser = () => {
     }
 
     return (
-        <section id="home-sponser" className="home-sponser">
+        <section id="home-sponser-section" className="home-sponser-section">
             <div className="container">
                 {/* Section Header */}
                 <div className="section-header">

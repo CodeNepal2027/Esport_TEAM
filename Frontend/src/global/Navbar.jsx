@@ -19,14 +19,14 @@ const Navbar = () => {
 
     // Navigation links with their section IDs
     const navLinks = [
-        { name: 'Home', id: 'home-hero' },
-        { name: 'About', id: 'home-about' },
-        { name: 'Sponsors', id: 'home-sponser' },
-        { name: 'Gallery', id: 'home-gallery' },
-        { name: 'Team', id: 'home-team' },
-        { name: 'Events', id: 'home-event' },
-        { name: 'Video', id: 'home-video' },
-        { name: 'Contact', id: 'home-contact' },
+        { name: 'Home', id: 'home-hero-section' },
+        { name: 'About', id: 'home-about-section' },
+        { name: 'Sponsors', id: 'home-sponser-section' },
+        { name: 'Gallery', id: 'home-gallery-section' },
+        { name: 'Team', id: 'home-team-section' },
+        { name: 'Events', id: 'home-event-section' },
+        { name: 'Video', id: 'home-video-section' },
+        { name: 'Contact', id: 'home-contact-section' },
     ];
 
     // Smooth scroll to section
@@ -56,9 +56,9 @@ const Navbar = () => {
             for (const link of navLinks) {
                 const element = document.getElementById(link.id);
                 if (element) {
-                    const offsetTop = element.offsetTop;
-                    const offsetBottom = offsetTop + element.offsetHeight;
-                    
+                    const { offsetTop, offsetHeight } = element;
+                    const offsetBottom = offsetTop + offsetHeight;
+
                     if (scrollPosition >= offsetTop && scrollPosition < offsetBottom) {
                         setActiveSection(link.id);
                         break;

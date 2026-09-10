@@ -38,16 +38,6 @@ const Home_Video = () => {
         },
         {
             id: 4,
-            youtube_url: 'https://youtu.be/fJ9rUzIMcZQ',
-            category: 'highlights'
-        },
-        {
-            id: 5,
-            youtube_url: 'https://youtu.be/VYOjWnS4cMY',
-            category: 'analysis'
-        },
-        {
-            id: 6,
             youtube_url: 'https://youtu.be/XqZsoesa55w',
             category: 'events'
         }
@@ -108,8 +98,8 @@ const Home_Video = () => {
                     title: item.snippet.title,
                     description: item.snippet.description || 'No description available',
                     thumbnail: item.snippet.thumbnails.maxres?.url || 
-                               item.snippet.thumbnails.high?.url || 
-                               `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`,
+                                item.snippet.thumbnails.high?.url || 
+                                `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`,
                     date: new Date(item.snippet.publishedAt).toLocaleDateString('en-US', { 
                         month: 'short', 
                         day: 'numeric', 
@@ -217,7 +207,7 @@ const Home_Video = () => {
 
     if (loading) {
         return (
-            <section id="home-video" className="home-video">
+            <section id="home-video-section" className="home-video-section">
                 <div className="container">
                     <div className="section-header">
                         <span className="section-badge" style={{ 
@@ -239,7 +229,7 @@ const Home_Video = () => {
     }
 
     return (
-        <section id="home-video" className="home-video">
+        <section id="home-video-section" className="home-video-section">
             <div className="container">
                 {/* Section Header */}
                 <div className="section-header">

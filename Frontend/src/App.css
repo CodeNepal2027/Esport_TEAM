@@ -1,6 +1,23 @@
 
-.main-section{
+/* .main-section{
     padding: 0 15px;
+    max-width: var(--container-max-width);
+    margin: 0 auto;
+} */
+
+/* .home-hero{
+
+} */
+
+.home-about-section, 
+.home-contact-section, 
+.home-event-section, 
+.home-sponser-section, 
+.home-gallery-section,
+.home-team-section,
+.home-video-section{
+    padding: var(--spacing-xl) 15px;
+    scroll-margin-top: calc(var(--topbar-height) + var(--navbar-height) + 20px);
     max-width: var(--container-max-width);
     margin: 0 auto;
 }
