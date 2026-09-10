@@ -153,9 +153,9 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background: var(--bg-color-secondary);
+    background: #ffff;
     border-radius: var(--curve-radius);
-    border: 1px solid var(--border-color-primary);
+    border: 2px solid var(--border-color-primary);
     transition: var(--transition-normal);
     padding: var(--spacing-sm);
 }

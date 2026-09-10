@@ -10,7 +10,9 @@ const Topbar = ({ isDark, toggleTheme }) => {
         TEAM_NAME, 
         TEAM_LOGO_URL,
         COLOR_CODE_1, 
-        COLOR_CODE_2 
+        COLOR_CODE_2,
+        ORG_SHOP,
+        ORG_ACHIVEMENTS,
     } = env_export;
 
     return (
@@ -18,7 +20,7 @@ const Topbar = ({ isDark, toggleTheme }) => {
             <div className="container">
                 {/* LEFT: Logo and Name */}
                 <div className="topbar-left">
-                    <Link to="/" className="brand-link">
+                    <Link to="/" onClick={() => {window.scrollTo(0,0);}} className="brand-link">
                         <div className="logo-wrapper">
                             <img 
                                 src={TEAM_LOGO_URL} 
@@ -50,22 +52,26 @@ const Topbar = ({ isDark, toggleTheme }) => {
                         >
                             Official
                         </NavLink>
-                        <a 
-                            href="https://sujan140.com.np" 
-                            target="_blank" 
-                            rel="noopener noreferrer" 
-                            className="nav-link"
-                        >
-                            Shop
-                        </a>
-                        <a 
-                            href="https://codevoraui.vercel.app" 
-                            target="_blank" 
-                            rel="noopener noreferrer" 
-                            className="nav-link"
-                        >
-                            Achievements
-                        </a>
+                        {ORG_SHOP && (
+                            <a 
+                                href={ORG_SHOP} 
+                                target="_blank" 
+                                rel="noopener noreferrer" 
+                                className="nav-link"
+                            >
+                                Shop
+                            </a>
+                        )}
+                        {ORG_ACHIVEMENTS && (
+                            <a 
+                                href={ORG_ACHIVEMENTS} 
+                                target="_blank" 
+                                rel="noopener noreferrer" 
+                                className="nav-link"
+                            >
+                                Achievements
+                            </a>
+                        )}
                     </nav>
                 </div>
 

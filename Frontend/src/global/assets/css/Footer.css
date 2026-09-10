@@ -329,3 +329,41 @@
         display: none;
     }
 }
+/* src/assets/css/Footer.css - Add these styles */
+
+/* ============================================
+   POWERED BY LINK & LOGO
+   ============================================ */
+.powered-by-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--highlight-color-primary);
+    text-decoration: none;
+    font-weight: 600;
+    transition: var(--transition-fast);
+    vertical-align: middle;
+}
+
+.powered-by-link:hover {
+    color: var(--highlight-color-secondary);
+    transform: translateY(-1px);
+}
+
+.powered-by-link:hover span {
+    text-decoration: underline;
+}
+
+.powered-by-logo {
+    height: 20px;
+    width: auto;
+    max-width: 60px;
+    object-fit: contain;
+    vertical-align: middle;
+    border-radius: 3px;
+}
+
+.powered-by-text {
+    color: var(--highlight-color-primary);
+    font-weight: 600;
+}

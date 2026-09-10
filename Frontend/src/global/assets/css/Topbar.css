@@ -50,9 +50,9 @@
     width: clamp(40px, 4vw, 50px);
     height: clamp(40px, 4vw, 50px);
     border-radius: var(--curve-radius);
-    border: 2px solid var(--highlight-color-primary);
+    border: none;
     padding: 2px;
-    background: var(--bg-color-primary);
+    background: transparent;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -63,7 +63,6 @@
 }
 
 .logo-wrapper:hover {
-    transform: scale(1.05);
     border-color: var(--highlight-color-secondary);
 }
 

@@ -57,10 +57,10 @@
 
 .contact-info-card {
     border-radius: var(--curve-radius);
-    padding: var(--spacing-lg);
+    padding: var(--spacing-md);
     display: flex;
     flex-direction: column;
-    gap: var(--spacing-md);
+    gap: var(--spacing-xs);
 }
 
 .info-item {
@@ -298,7 +298,7 @@
     }
     
     .contact-info-card {
-        padding: var(--spacing-md);
+        padding: var(--spacing-sm);
         flex-wrap: wrap;
         flex-direction: row;
         justify-content: space-evenly;
@@ -330,7 +330,7 @@
 
 @media (max-width: 480px) {
     .contact-info-card {
-        padding: var(--spacing-sm);
+        padding: var(--spacing-xs);
     }
     
     .info-item {
@@ -381,4 +381,20 @@
     .contact-social h4 {
         font-size: var(--font-size-sm);
     }
+}
+
+/* src/assets/css/Home_Contact.css - Add this at the end */
+
+/* Info link styling for email/phone/whatsapp */
+.info-link {
+    color: var(--font-color-primary);
+    text-decoration: none;
+    font-size: var(--font-size-sm);
+    font-weight: 500;
+    transition: var(--transition-fast);
+}
+
+.info-link:hover {
+    color: var(--highlight-color-primary);
+    text-decoration: underline;
 }

@@ -8,7 +8,20 @@ const Home_Contact = () => {
         TEAM_TAG, 
         TEAM_NAME, 
         COLOR_CODE_1, 
-        COLOR_CODE_2 
+        COLOR_CODE_2,
+        ORG_EMAIL,
+        ORG_PHONE_1,
+        ORG_PHONE_2,
+        ORG_WHATSAPP,
+        ORG_ADDRESS,
+        ORG_COUNTRY,
+        ORG_WORKING_DAY,
+        ORG_WORKING_HOUR,
+        ORG_YOUTUBE_LINK,
+        ORG_TIKTOK_LINK,
+        ORG_INSTAGRAM_LINK,
+        ORG_DISCORD_LINK,
+        ORG_TWITTER_LINK,
     } = env_export;
 
     const [formData, setFormData] = useState({
@@ -61,75 +74,161 @@ const Home_Contact = () => {
                             background: `linear-gradient(135deg, ${COLOR_CODE_1}22, ${COLOR_CODE_2}22)`,
                             border: `1px solid ${COLOR_CODE_1}44`
                         }}>
-                            <div className="info-item">
-                                <div className="info-icon">
-                                    <i className="bi bi-envelope"></i>
+                            {/* Email */}
+                            {ORG_EMAIL && (
+                                <div className="info-item">
+                                    <div className="info-icon">
+                                        <i className="bi bi-envelope"></i>
+                                    </div>
+                                    <div className="info-text">
+                                        <h4>Email</h4>
+                                        <p>
+                                            <a href={`mailto:${ORG_EMAIL}`} className="info-link">
+                                                {ORG_EMAIL}
+                                            </a>
+                                        </p>
+                                        <span>We'll respond within 24 hours</span>
+                                    </div>
                                 </div>
-                                <div className="info-text">
-                                    <h4>Email</h4>
-                                    <p>info@t2k.com</p>
-                                    <span>We'll respond within 24 hours</span>
-                                </div>
-                            </div>
+                            )}
 
-                            <div className="info-item">
-                                <div className="info-icon">
-                                    <i className="bi bi-geo-alt"></i>
+                            {/* Location */}
+                            {(ORG_ADDRESS || ORG_COUNTRY) && (
+                                <div className="info-item">
+                                    <div className="info-icon">
+                                        <i className="bi bi-geo-alt"></i>
+                                    </div>
+                                    <div className="info-text">
+                                        <h4>Location</h4>
+                                        <p>{ORG_ADDRESS}{ORG_ADDRESS && ORG_COUNTRY ? ', ' : ''}{ORG_COUNTRY}</p>
+                                        <span>Visit us anytime</span>
+                                    </div>
                                 </div>
-                                <div className="info-text">
-                                    <h4>Location</h4>
-                                    <p>Esports Arena, Seoul</p>
-                                    <span>South Korea</span>
-                                </div>
-                            </div>
+                            )}
 
-                            <div className="info-item">
-                                <div className="info-icon">
-                                    <i className="bi bi-phone"></i>
+                            {/* Phone */}
+                            {(ORG_PHONE_1 || ORG_PHONE_2) && (
+                                <div className="info-item">
+                                    <div className="info-icon">
+                                        <i className="bi bi-phone"></i>
+                                    </div>
+                                    <div className="info-text">
+                                        <h4>Phone</h4>
+                                        {ORG_PHONE_1 && (
+                                            <p>
+                                                <a href={`tel:${ORG_PHONE_1}`} className="info-link">
+                                                    {ORG_PHONE_1}
+                                                </a>
+                                            </p>
+                                        )}
+                                        {ORG_PHONE_2 && (
+                                            <p>
+                                                <a href={`tel:${ORG_PHONE_2}`} className="info-link">
+                                                    {ORG_PHONE_2}
+                                                </a>
+                                            </p>
+                                        )}
+                                        <span>Give us a call</span>
+                                    </div>
                                 </div>
-                                <div className="info-text">
-                                    <h4>Phone</h4>
-                                    <p>+82 1234 5678</p>
-                                    <span>Mon-Fri 9AM-6PM</span>
-                                </div>
-                            </div>
+                            )}
 
-                            <div className="info-item">
-                                <div className="info-icon">
-                                    <i className="bi bi-clock"></i>
+                            {/* WhatsApp */}
+                            {ORG_WHATSAPP && (
+                                <div className="info-item">
+                                    <div className="info-icon">
+                                        <i className="bi bi-whatsapp"></i>
+                                    </div>
+                                    <div className="info-text">
+                                        <h4>WhatsApp</h4>
+                                        <p>
+                                            <a 
+                                                href={`https://wa.me/${ORG_WHATSAPP.replace(/[^0-9]/g, '')}`} 
+                                                target="_blank" 
+                                                rel="noopener noreferrer"
+                                                className="info-link"
+                                            >
+                                                {ORG_WHATSAPP}
+                                            </a>
+                                        </p>
+                                        <span>Chat with us</span>
+                                    </div>
                                 </div>
-                                <div className="info-text">
-                                    <h4>Working Hours</h4>
-                                    <p>9:00 AM - 6:00 PM</p>
-                                    <span>Monday - Friday</span>
+                            )}
+
+                            {/* Working Hours */}
+                            {(ORG_WORKING_DAY || ORG_WORKING_HOUR) && (
+                                <div className="info-item">
+                                    <div className="info-icon">
+                                        <i className="bi bi-clock"></i>
+                                    </div>
+                                    <div className="info-text">
+                                        <h4>Working Hours</h4>
+                                        <p>{ORG_WORKING_HOUR}</p>
+                                        <span>{ORG_WORKING_DAY}</span>
+                                    </div>
                                 </div>
-                            </div>
+                            )}
                         </div>
 
                         {/* Social Links */}
-                        <div className="contact-social">
-                            <h4>Follow <span style={{ color: COLOR_CODE_1 }}>{TEAM_TAG}</span></h4>
-                            <div className="social-links">
-                                <a href="#" className="social-icon" style={{ color: COLOR_CODE_1 }}>
-                                    <i className="bi bi-twitter"></i>
-                                </a>
-                                <a href="#" className="social-icon" style={{ color: COLOR_CODE_2 }}>
-                                    <i className="bi bi-instagram"></i>
-                                </a>
-                                <a href="#" className="social-icon" style={{ color: '#FF0000' }}>
-                                    <i className="bi bi-youtube"></i>
-                                </a>
-                                <a href="#" className="social-icon" style={{ color: '#9146FF' }}>
-                                    <i className="bi bi-twitch"></i>
-                                </a>
-                                <a href="#" className="social-icon" style={{ color: '#5865F2' }}>
-                                    <i className="bi bi-discord"></i>
-                                </a>
-                                <a href="#" className="social-icon" style={{ color: '#000000' }}>
-                                    <i className="bi bi-tiktok"></i>
-                                </a>
+                        {(ORG_YOUTUBE_LINK || ORG_TIKTOK_LINK || ORG_INSTAGRAM_LINK || ORG_DISCORD_LINK || ORG_TWITTER_LINK) && (
+                            <div className="contact-social">
+                                <h4>Follow <span style={{ color: COLOR_CODE_1 }}>{TEAM_TAG}</span></h4>
+                                <div className="social-links">
+                                    {ORG_TWITTER_LINK && (
+                                        <a 
+                                            href={ORG_TWITTER_LINK} 
+                                            target="_blank" 
+                                            rel="noopener noreferrer"
+                                            className="social-icon"
+                                        >
+                                            <i className="bi bi-twitter"></i>
+                                        </a>
+                                    )}
+                                    {ORG_INSTAGRAM_LINK && (
+                                        <a 
+                                            href={ORG_INSTAGRAM_LINK} 
+                                            target="_blank" 
+                                            rel="noopener noreferrer"
+                                            className="social-icon"
+                                        >
+                                            <i className="bi bi-instagram"></i>
+                                        </a>
+                                    )}
+                                    {ORG_YOUTUBE_LINK && (
+                                        <a 
+                                            href={ORG_YOUTUBE_LINK} 
+                                            target="_blank" 
+                                            rel="noopener noreferrer"
+                                            className="social-icon"
+                                        >
+                                            <i className="bi bi-youtube"></i>
+                                        </a>
+                                    )}
+                                    {ORG_DISCORD_LINK && (
+                                        <a 
+                                            href={ORG_DISCORD_LINK} 
+                                            target="_blank" 
+                                            rel="noopener noreferrer"
+                                            className="social-icon"
+                                        >
+                                            <i className="bi bi-discord"></i>
+                                        </a>
+                                    )}
+                                    {ORG_TIKTOK_LINK && (
+                                        <a 
+                                            href={ORG_TIKTOK_LINK} 
+                                            target="_blank" 
+                                            rel="noopener noreferrer"
+                                            className="social-icon"
+                                        >
+                                            <i className="bi bi-tiktok"></i>
+                                        </a>
+                                    )}
+                                </div>
                             </div>
-                        </div>
+                        )}
                     </div>
 
                     {/* Right Side - Contact Form */}
