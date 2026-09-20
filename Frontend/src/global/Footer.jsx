@@ -216,7 +216,7 @@ const Footer = () => {
                                         target="_blank" 
                                         rel="noopener noreferrer"
                                         className="social-icon"
-                                        style={{ color: color_code_1 }}
+                                        // style={{ color: color_code_1 }}
                                     >
                                         <i className="bi bi-twitter"></i>
                                     </a>
@@ -227,7 +227,7 @@ const Footer = () => {
                                         target="_blank" 
                                         rel="noopener noreferrer"
                                         className="social-icon"
-                                        style={{ color: color_code_2 }}
+                                        // style={{ color: color_code_2 }}
                                     >
                                         <i className="bi bi-instagram"></i>
                                     </a>
