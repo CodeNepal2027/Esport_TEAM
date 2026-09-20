@@ -1,22 +1,53 @@
 // src/routes/components/Home_About.jsx
 import React from 'react';
 import { getOrgConfig } from '../../config/org_config';
+import { useHomeAPI } from '../../home/Home_API_Context';
 import "../assets/css/Home_About.css";
 
 const Home_About = () => {
     const { 
-        team_tag,
-        team_name,
-        color_code_1,
-        color_code_2,
+        team_tag, 
+        team_name, 
+        team_logo_url,
+        color_code_1, 
+        color_code_2 
     } = getOrgConfig();
+    const { about, loading, error, refresh } = useHomeAPI();
+
+    // Loading
+    if (loading && !about) {
+        return (
+            <section id="home-about-section" className="home-about-section">
+                <div className="container">
+                    <div className="section-loading">
+                        <div className="loading-spinner" style={{ borderColor: color_code_1 }}></div>
+                        <p>Loading...</p>
+                    </div>
+                </div>
+            </section>
+        );
+    }
+
+    // Error
+    if (error && !about) {
+        return (
+            <section id="home-about-section" className="home-about-section">
+                <div className="container">
+                    <div className="section-error">
+                        <p>Failed to load about content</p>
+                        <button onClick={refresh} style={{ background: color_code_1, color: '#fff' }}>Retry</button>
+                    </div>
+                </div>
+            </section>
+        );
+    }
 
     return (
         <section id="home-about-section" className="home-about-section">
             <div className="container">
                 {/* Section Header */}
                 <div className="section-header">
-                    <span className="section-badge" style={{ 
+                    <span className="section-badge" style={{
                         background: `linear-gradient(135deg, ${color_code_1}, ${color_code_2})`
                     }}>
                         About Us
@@ -33,62 +64,69 @@ const Home_About = () => {
                 <div className="about-grid">
                     <div className="about-content">
                         <h3 className="about-heading">
-                            <span style={{ color: color_code_1 }}>{team_tag}</span> - {team_name}
+                            <span style={{ color: color_code_1 }}>{team_tag}</span> - {about?.heading || team_name}
                         </h3>
-                        <p className="about-text">
-                            {team_name} is a professional esports organization dedicated to 
-                            competitive gaming excellence. Founded with a passion for gaming 
-                            and a vision to dominate the competitive scene.
-                        </p>
-                        <p className="about-text">
-                            Our team consists of highly skilled players who train rigorously 
-                            to compete at the highest level. We believe in teamwork, dedication, 
-                            and the relentless pursuit of victory.
-                        </p>
+
+                        {about?.paragraphs?.map((para, i) => (
+                            <p key={i} className="about-text">{para}</p>
+                        ))}
+
                         <div className="about-stats">
-                            <div className="stat-item">
-                                <span className="stat-number" style={{ color: color_code_1 }}>
-                                    2019
-                                </span>
-                                <span className="stat-label">Founded</span>
-                            </div>
-                            <div className="stat-item">
-                                <span className="stat-number" style={{ color: color_code_1 }}>
-                                    50+
-                                </span>
-                                <span className="stat-label">Tournaments</span>
-                            </div>
-                            <div className="stat-item">
-                                <span className="stat-number" style={{ color: color_code_1 }}>
-                                    87%
-                                </span>
-                                <span className="stat-label">Win Rate</span>
-                            </div>
-                            <div className="stat-item">
-                                <span className="stat-number" style={{ color: color_code_1 }}>
-                                    12
-                                </span>
-                                <span className="stat-label">Trophies</span>
-                            </div>
+                            {about?.stats?.map((stat, i) => (
+                                <div key={i} className="stat-item">
+                                    <span className="stat-number" style={{ color: color_code_1 }}>
+                                        {stat.value}
+                                    </span>
+                                    <span className="stat-label">{stat.label}</span>
+                                </div>
+                            ))}
                         </div>
-                        <button className="about-btn" style={{ 
+
+                        <button className="about-btn" style={{
                             background: `linear-gradient(135deg, ${color_code_1}, ${color_code_2})`
                         }}>
                             Join Our Team
                         </button>
                     </div>
 
+                    {/* About Image — Logo */}
                     <div className="about-image">
                         <div className="image-placeholder" style={{
-                            border: `3px solid ${color_code_1}`,
-                            boxShadow: `0 0 40px ${color_code_1}44`
+                            // border: `3px solid ${color_code_1}`,
+                            // boxShadow: `0 0 40px ${color_code_1}44`
                         }}>
+                            {/* Glow rings */}
+                            <div className="placeholder-glow" style={{
+                                background: `radial-gradient(circle, ${color_code_1}33 0%, transparent 70%)`
+                            }} />
+                            <div className="placeholder-glow-secondary" style={{
+                                background: `radial-gradient(circle, ${color_code_2}22 0%, transparent 70%)`
+                            }} />
+
                             <div className="placeholder-content">
-                                <span className="placeholder-icon" style={{ color: color_code_1 }}>
-                                    <i className="bi bi-controller"></i>
-                                </span>
-                                <h4>{team_tag}</h4>
-                                <p>{team_name}</p>
+                                {team_logo_url ? (
+                                    <img
+                                        src={team_logo_url}
+                                        alt={team_name}
+                                        className="about-logo"
+                                        onError={(e) => {
+                                            e.target.style.display = 'none';
+                                            const fallback = e.target.parentElement.querySelector('.about-logo-fallback');
+                                            if (fallback) fallback.style.display = 'flex';
+                                        }}
+                                    />
+                                ) : null}
+
+                                <div
+                                    className="about-logo-fallback"
+                                    style={{ display: team_logo_url ? 'none' : 'flex' }}
+                                >
+                                    <span className="placeholder-icon" style={{ color: color_code_1 }}>
+                                        <i className="bi bi-controller"></i>
+                                    </span>
+                                    <h4>{team_tag}</h4>
+                                    <p>{team_name}</p>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -104,7 +142,7 @@ const Home_About = () => {
                             <i className="bi bi-bullseye"></i>
                         </div>
                         <h4>Our Mission</h4>
-                        <p>To dominate the competitive gaming scene while building a community of passionate gamers who share our vision.</p>
+                        <p>{about?.mission}</p>
                     </div>
 
                     <div className="mission-card" style={{
@@ -115,7 +153,7 @@ const Home_About = () => {
                             <i className="bi bi-eye"></i>
                         </div>
                         <h4>Our Vision</h4>
-                        <p>To become a global esports powerhouse, inspiring the next generation of competitive gamers worldwide.</p>
+                        <p>{about?.vision}</p>
                     </div>
                 </div>
             </div>

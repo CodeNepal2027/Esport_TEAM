@@ -1,6 +1,7 @@
 /* src/assets/css/Home_About.css */
 
 
+
 /* ============================================
    ABOUT GRID
    ============================================ */
@@ -89,7 +90,7 @@
     max-width: 450px;
     aspect-ratio: 1;
     border-radius: var(--curve-radius);
-    background: var(--bg-color-secondary);
+    background: transparent;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -254,4 +255,41 @@
     .placeholder-icon {
         font-size: var(--font-size-xl);
     }
+}
+
+
+/* src/assets/css/Home_About.css — Add these styles */
+
+/* ============================================
+   ABOUT LOGO
+   ============================================ */
+.about-logo {
+    width: 75%;
+    height: 75%;
+    /* max-width: 260px;
+    max-height: 260px; */
+    object-fit: contain;
+    display: block;
+    margin: 0 auto;
+    border-radius: var(--curve-radius);
+    filter: drop-shadow(0 0 30px var(--highlight-color-primary)44);
+    transition: var(--transition-normal);
+    animation: logoFloat 4s ease-in-out infinite;
+}
+
+.image-placeholder:hover .about-logo {
+    transform: scale(1.05);
+    filter: drop-shadow(0 0 40px var(--highlight-color-primary)66);
+}
+
+@keyframes logoFloat {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+}
+
+.about-logo-fallback {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    padding: var(--spacing-lg);
 }

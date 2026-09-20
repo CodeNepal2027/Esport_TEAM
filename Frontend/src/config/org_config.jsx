@@ -65,7 +65,7 @@ const DEMO_TENANTS = {
 
         team_tag: 'DRS',
         team_name: 'DRS Gaming',
-        team_logo_url: 'https://static.gosugamers.net/7b/b6/e1/2bbeef7d498f5f10d3b99fcadd39f6191099f22f2727aeb7615c5ee024.webp?w=256',
+        team_logo_url: 'https://gadgetsinnepal.b-cdn.net/wp-content/uploads/2023/01/New-Project-2023-01-09T150742.741.jpg',
         color_code_1: '#1577ef',
         color_code_2: '#FFFFFF',
 

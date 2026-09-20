@@ -9,6 +9,10 @@ import Home_Sponser from "./components/Home_Sponser"
 import Home_Team from "./components/Home_Team"
 import Home_Video from "./components/Home_Video"
 
+import Home_API_Fetch from "./Home_API_Fetches"
+import Home_API_Context from "./Home_API_Context"
+import Home_API_Provider from "./Home_API_Provider"
+
 export{
     Home,
     Home_About,
@@ -18,5 +22,9 @@ export{
     Home_Hero,
     Home_Sponser,
     Home_Team,
-    Home_Video
+    Home_Video,
+
+    Home_API_Fetch,
+    Home_API_Context,
+    Home_API_Provider
 }

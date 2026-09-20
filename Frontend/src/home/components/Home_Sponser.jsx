@@ -1,118 +1,36 @@
 // src/routes/components/Home_Sponser.jsx
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef } from 'react';
 import { getOrgConfig } from '../../config/org_config';
+import { useHomeAPI } from '../../home/Home_API_Context';
 import "../assets/css/Home_Sponser.css";
 
 const Home_Sponser = () => {
-    const { 
-        team_tag,
-        team_name,
-        color_code_1,
-        color_code_2,
-    } = getOrgConfig();
+    const { color_code_1, color_code_2 } = getOrgConfig();
+    const { sponsors, loading, error, refresh } = useHomeAPI();
 
     const scrollRef = useRef(null);
-    const [sponsors, setSponsors] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
-
-    // Fetch sponsors with simple URLs
-    useEffect(() => {
-        try {
-            setLoading(true);
-            // Simple sponsor data with direct image URLs
-            const sponsorData = [
-                { 
-                    id: 1, 
-                    name: 'adidas', 
-                    logo: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/2/20/Adidas_Logo.svg/3840px-Adidas_Logo.svg.png?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=thumbnail' 
-                },
-                { 
-                    id: 2, 
-                    name: 'Nike', 
-                    logo: 'https://images.seeklogo.com/logo-png/9/2/nike-logo-png_seeklogo-99478.png' 
-                },
-                { 
-                    id: 3, 
-                    name: 'Puma', 
-                    logo: 'https://static.vecteezy.com/system/resources/previews/020/336/032/non_2x/puma-logo-puma-icon-free-free-vector.jpg' 
-                },
-                { 
-                    id: 4, 
-                    name: 'Red Bull', 
-                    logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Red_Bull_Energy_Drink_logo.svg/200px-Red_Bull_Energy_Drink_logo.svg.png' 
-                },
-                { 
-                    id: 5, 
-                    name: 'Razer', 
-                    logo: 'https://logos-world.net/wp-content/uploads/2020/11/Razer-Logo.png' 
-                },
-                { 
-                    id: 6, 
-                    name: 'GUESS', 
-                    logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0d/Guess_logo.svg/200px-Guess_logo.svg.png' 
-                },
-                { 
-                    id: 7, 
-                    name: 'Monster', 
-                    logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Monster_Energy_logo.svg/200px-Monster_Energy_logo.svg.png' 
-                },
-                { 
-                    id: 8, 
-                    name: 'amex', 
-                    logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/American_Express_logo.svg/200px-American_Express_logo.svg.png' 
-                },
-            ];
-            
-            setSponsors(sponsorData);
-            setError(null);
-        } catch (err) {
-            console.error('Error loading sponsors:', err);
-            setError(err.message);
-            // Fallback data with text if images fail
-            setSponsors([
-                { id: 1, name: 'adidas', logo: '' },
-                { id: 2, name: 'Nike', logo: '' },
-                { id: 3, name: 'Puma', logo: '' },
-                { id: 4, name: 'Red Bull', logo: '' },
-                { id: 5, name: 'Razer', logo: '' },
-                { id: 6, name: 'GUESS', logo: '' },
-                { id: 7, name: 'Monster', logo: '' },
-                { id: 8, name: 'amex', logo: '' },
-            ]);
-        } finally {
-            setLoading(false);
-        }
-    }, []);
-
-    // Duplicate sponsors for infinite scroll effect
-    const doubledSponsors = sponsors.length > 0 ? [...sponsors, ...sponsors] : [];
+    const items = sponsors || [];
+    const doubledSponsors = items.length > 0 ? [...items, ...items] : [];
 
     const scrollLeft = () => {
         if (scrollRef.current) {
-            scrollRef.current.scrollBy({
-                left: -200,
-                behavior: 'smooth'
-            });
+            scrollRef.current.scrollBy({ left: -200, behavior: 'smooth' });
         }
     };
 
     const scrollRight = () => {
         if (scrollRef.current) {
-            scrollRef.current.scrollBy({
-                left: 200,
-                behavior: 'smooth'
-            });
+            scrollRef.current.scrollBy({ left: 200, behavior: 'smooth' });
         }
     };
 
-    // Loading state
-    if (loading) {
+    // Loading
+    if (loading && !sponsors) {
         return (
             <section id="home-sponser-section" className="home-sponser-section">
                 <div className="container">
                     <div className="section-header">
-                        <span className="section-badge" style={{ 
+                        <span className="section-badge" style={{
                             background: `linear-gradient(135deg, ${color_code_1}, ${color_code_2})`
                         }}>
                             Our Partners
@@ -130,12 +48,25 @@ const Home_Sponser = () => {
         );
     }
 
+    // Error
+    if (error && !sponsors) {
+        return (
+            <section id="home-sponser-section" className="home-sponser-section">
+                <div className="container">
+                    <div className="section-error">
+                        <p>Failed to load sponsors</p>
+                        <button onClick={refresh} style={{ background: color_code_1, color: '#fff' }}>Retry</button>
+                    </div>
+                </div>
+            </section>
+        );
+    }
+
     return (
         <section id="home-sponser-section" className="home-sponser-section">
             <div className="container">
-                {/* Section Header */}
                 <div className="section-header">
-                    <span className="section-badge" style={{ 
+                    <span className="section-badge" style={{
                         background: `linear-gradient(135deg, ${color_code_1}, ${color_code_2})`
                     }}>
                         Our Partners
@@ -148,27 +79,11 @@ const Home_Sponser = () => {
                     </p>
                 </div>
 
-                {/* Error Message */}
-                {error && (
-                    <div className="sponsor-error" style={{
-                        borderColor: color_code_1,
-                        color: color_code_1
-                    }}>
-                        <i className="bi bi-exclamation-circle"></i>
-                        <span>{error}</span>
-                    </div>
-                )}
-
-                {/* Sponsor Carousel */}
-                {sponsors.length > 0 ? (
+                {items.length > 0 ? (
                     <div className="sponsor-carousel-wrapper">
-                        <button 
-                            className="carousel-btn carousel-btn-left" 
-                            onClick={scrollLeft}
-                            style={{
-                                background: `linear-gradient(135deg, ${color_code_1}, ${color_code_2})`
-                            }}
-                        >
+                        <button className="carousel-btn carousel-btn-left" onClick={scrollLeft} style={{
+                            background: `linear-gradient(135deg, ${color_code_1}, ${color_code_2})`
+                        }}>
                             <i className="bi bi-arrow-left-circle"></i>
                         </button>
 
@@ -178,14 +93,13 @@ const Home_Sponser = () => {
                                     <div key={`${sponsor.id}-${index}`} className="sponsor-item">
                                         <div className="sponsor-logo-wrapper">
                                             {sponsor.logo ? (
-                                                <img 
-                                                    src={sponsor.logo} 
+                                                <img
+                                                    src={sponsor.logo}
                                                     alt={sponsor.name}
                                                     className="sponsor-logo"
                                                     loading="lazy"
                                                     onError={(e) => {
                                                         e.target.style.display = 'none';
-                                                        // Show fallback text if image fails to load
                                                         const fallback = document.createElement('span');
                                                         fallback.className = 'sponsor-fallback';
                                                         fallback.textContent = sponsor.name;
@@ -204,13 +118,9 @@ const Home_Sponser = () => {
                             </div>
                         </div>
 
-                        <button 
-                            className="carousel-btn carousel-btn-right" 
-                            onClick={scrollRight}
-                            style={{
-                                background: `linear-gradient(135deg, ${color_code_1}, ${color_code_2})`
-                            }}
-                        >
+                        <button className="carousel-btn carousel-btn-right" onClick={scrollRight} style={{
+                            background: `linear-gradient(135deg, ${color_code_1}, ${color_code_2})`
+                        }}>
                             <i className="bi bi-arrow-right-circle"></i>
                         </button>
                     </div>
@@ -220,7 +130,6 @@ const Home_Sponser = () => {
                     </div>
                 )}
 
-                {/* Become a Sponsor CTA */}
                 <div className="sponsor-cta" style={{
                     background: `linear-gradient(135deg, ${color_code_1}22, ${color_code_2}22)`,
                     border: `1px solid ${color_code_1}44`

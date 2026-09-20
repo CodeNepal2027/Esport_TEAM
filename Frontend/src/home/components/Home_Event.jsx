@@ -1,182 +1,91 @@
 // src/routes/components/Home_Event.jsx
 import React, { useState } from 'react';
 import { getOrgConfig } from '../../config/org_config';
+import { useHomeAPI } from '../../home/Home_API_Context';
 import "../assets/css/Home_Event.css";
 
 const Home_Event = () => {
-    const { 
-        team_tag,
-        team_name,
-        color_code_1,
-        color_code_2,
-    } = getOrgConfig();
+    const { team_name, color_code_1, color_code_2 } = getOrgConfig();
+    const { events, loading, error, refresh } = useHomeAPI();
 
     const [selectedEvent, setSelectedEvent] = useState(null);
-
-    // Events data
-    const events = [
-        {
-            id: 1,
-            title: 'World Championship 2026',
-            description: 'The biggest esports tournament of the year featuring top teams from around the world competing for the championship title.',
-            image: 'https://images.unsplash.com/photo-1542751371-adc38448a05e?w=800&h=500&fit=crop',
-            date: 'Dec 15-20, 2026',
-            location: 'Seoul, South Korea',
-            prizePool: '$2,000,000',
-            status: 'upcoming',
-            category: 'tournament'
-        },
-        {
-            id: 2,
-            title: 'Regional Qualifiers',
-            description: 'Regional qualifiers to determine which teams will advance to the World Championship. Hosted across multiple regions.',
-            image: 'https://images.unsplash.com/photo-1511882150382-421056c89033?w=800&h=500&fit=crop',
-            date: 'Nov 10-25, 2026',
-            location: 'Multiple Regions',
-            prizePool: '$500,000',
-            status: 'ongoing',
-            category: 'qualifier'
-        },
-        {
-            id: 3,
-            title: 'Fan Fest 2026',
-            description: 'A massive fan gathering with meet & greet sessions, merchandise stalls, and live matches. Come meet your favorite players!',
-            image: 'https://images.unsplash.com/photo-1511512578047-dfb367046420?w=800&h=500&fit=crop',
-            date: 'Dec 18, 2026',
-            location: 'Seoul, South Korea',
-            prizePool: 'Free Entry',
-            status: 'upcoming',
-            category: 'fan_meet'
-        },
-        {
-            id: 4,
-            title: 'Winter Showdown',
-            description: 'Annual winter tournament featuring the top 8 teams battling it out in a double-elimination format.',
-            image: 'https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=800&h=500&fit=crop',
-            date: 'Jan 5-10, 2027',
-            location: 'London, UK',
-            prizePool: '$1,000,000',
-            status: 'upcoming',
-            category: 'tournament'
-        },
-        {
-            id: 5,
-            title: 'Spring Championship',
-            description: 'The spring championship marks the beginning of the competitive season with intense matches and rising talents.',
-            image: 'https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?w=800&h=500&fit=crop',
-            date: 'Mar 1-10, 2026',
-            location: 'Los Angeles, USA',
-            prizePool: '$750,000',
-            status: 'completed',
-            category: 'tournament'
-        },
-        {
-            id: 6,
-            title: 'Community Cup',
-            description: 'Community-driven tournament where amateur teams get a chance to compete against professional players.',
-            image: 'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800&h=500&fit=crop',
-            date: 'Oct 5-8, 2026',
-            location: 'Berlin, Germany',
-            prizePool: '$100,000',
-            status: 'completed',
-            category: 'community'
-        },
-        {
-            id: 7,
-            title: 'Showmatch All-Stars',
-            description: 'Celebrity showmatch featuring popular streamers and content creators competing for charity.',
-            image: 'https://images.unsplash.com/photo-1517594422361-5eeb8ae275a9?w=800&h=500&fit=crop',
-            date: 'Nov 28, 2026',
-            location: 'Online',
-            prizePool: 'Charity',
-            status: 'ongoing',
-            category: 'showmatch'
-        },
-        {
-            id: 8,
-            title: 'Summer Clash',
-            description: 'Summer tournament with the biggest prize pool of the year, featuring the top 16 teams worldwide.',
-            image: 'https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?w=800&h=500&fit=crop',
-            date: 'Jul 15-25, 2026',
-            location: 'Tokyo, Japan',
-            prizePool: '$3,000,000',
-            status: 'completed',
-            category: 'tournament'
-        },
-        {
-            id: 9,
-            title: 'Gaming Expo 2026',
-            description: 'Annual gaming expo where teams showcase their skills, new products are unveiled, and fans connect.',
-            image: 'https://images.unsplash.com/photo-1542751371-adc38448a05e?w=800&h=500&fit=crop',
-            date: 'Sep 20-22, 2026',
-            location: 'New York, USA',
-            prizePool: 'Free Entry',
-            status: 'upcoming',
-            category: 'expo'
-        },
-    ];
-
-    // Filter states
     const [statusFilter, setStatusFilter] = useState('all');
     const [categoryFilter, setCategoryFilter] = useState('all');
 
+    const allEvents = events || [];
     const statuses = ['all', 'upcoming', 'ongoing', 'completed'];
     const categories = ['all', 'tournament', 'qualifier', 'fan_meet', 'community', 'showmatch', 'expo'];
 
-    const filteredEvents = events.filter(event => {
+    const filteredEvents = allEvents.filter(event => {
         const statusMatch = statusFilter === 'all' || event.status === statusFilter;
         const categoryMatch = categoryFilter === 'all' || event.category === categoryFilter;
         return statusMatch && categoryMatch;
     });
 
-    const getStatusLabel = (status) => {
-        const labels = {
-            'upcoming': 'Upcoming',
-            'ongoing': 'Ongoing',
-            'completed': 'Completed'
-        };
-        return labels[status] || status;
-    };
+    const getStatusLabel = (status) => ({
+        'upcoming': 'Upcoming',
+        'ongoing': 'Ongoing',
+        'completed': 'Completed'
+    }[status] || status);
 
-    const getStatusColor = (status) => {
-        const colors = {
-            'upcoming': color_code_2,
-            'ongoing': '#FFA500',
-            'completed': '#888'
-        };
-        return colors[status] || '#888';
-    };
+    const getStatusColor = (status) => ({
+        'upcoming': color_code_2,
+        'ongoing': '#FFA500',
+        'completed': '#888'
+    }[status] || '#888');
 
-    const getCategoryLabel = (cat) => {
-        const labels = {
-            'tournament': 'Tournament',
-            'qualifier': 'Qualifier',
-            'fan_meet': 'Fan Meet',
-            'community': 'Community',
-            'showmatch': 'Showmatch',
-            'expo': 'Expo'
-        };
-        return labels[cat] || cat;
-    };
+    const getCategoryLabel = (cat) => ({
+        'tournament': 'Tournament',
+        'qualifier': 'Qualifier',
+        'fan_meet': 'Fan Meet',
+        'community': 'Community',
+        'showmatch': 'Showmatch',
+        'expo': 'Expo'
+    }[cat] || cat);
 
-    // Open event modal
     const openEventDetail = (event) => {
         setSelectedEvent(event);
         document.body.style.overflow = 'hidden';
     };
 
-    // Close event modal
     const closeEventDetail = () => {
         setSelectedEvent(null);
         document.body.style.overflow = 'auto';
     };
 
+    // Loading
+    if (loading && !events) {
+        return (
+            <section id="home-event-section" className="home-event-section">
+                <div className="container">
+                    <div className="section-loading">
+                        <div className="loading-spinner" style={{ borderColor: color_code_1 }}></div>
+                        <p>Loading events...</p>
+                    </div>
+                </div>
+            </section>
+        );
+    }
+
+    // Error
+    if (error && !events) {
+        return (
+            <section id="home-event-section" className="home-event-section">
+                <div className="container">
+                    <div className="section-error">
+                        <p>Failed to load events</p>
+                        <button onClick={refresh} style={{ background: color_code_1, color: '#fff' }}>Retry</button>
+                    </div>
+                </div>
+            </section>
+        );
+    }
+
     return (
         <section id="home-event-section" className="home-event-section">
             <div className="container">
-                {/* Section Header */}
                 <div className="section-header">
-                    <span className="section-badge" style={{ 
+                    <span className="section-badge" style={{
                         background: `linear-gradient(135deg, ${color_code_1}, ${color_code_2})`
                     }}>
                         Upcoming & Past
@@ -189,7 +98,6 @@ const Home_Event = () => {
                     </p>
                 </div>
 
-                {/* Filters */}
                 <div className="event-filters">
                     <div className="filter-group">
                         <span className="filter-label">Status:</span>
@@ -226,28 +134,20 @@ const Home_Event = () => {
                     </div>
                 </div>
 
-                {/* Event Grid */}
                 <div className="event-grid">
                     {filteredEvents.length > 0 ? (
                         filteredEvents.map((event) => (
-                            <div 
-                                key={event.id} 
+                            <div
+                                key={event.id}
                                 className="event-card"
                                 onClick={() => openEventDetail(event)}
-                                style={{
-                                    border: `2px solid ${color_code_1}22`
-                                }}
+                                style={{ border: `2px solid ${color_code_1}22` }}
                             >
                                 <div className="event-image-wrapper">
-                                    <img 
-                                        src={event.image} 
-                                        alt={event.title}
-                                        className="event-image"
-                                        loading="lazy"
-                                    />
+                                    <img src={event.image} alt={event.title} className="event-image" loading="lazy" />
                                     <div className="event-status-badge" style={{
                                         background: getStatusColor(event.status),
-                                        color: event.status === 'completed' ? '#fff' : '#fff'
+                                        color: '#fff'
                                     }}>
                                         {getStatusLabel(event.status)}
                                     </div>
@@ -255,8 +155,8 @@ const Home_Event = () => {
                                 <div className="event-info">
                                     <h3 className="event-title">{event.title}</h3>
                                     <p className="event-description">
-                                        {event.description.length > 60 
-                                            ? event.description.substring(0, 60) + '...' 
+                                        {event.description.length > 60
+                                            ? event.description.substring(0, 60) + '...'
                                             : event.description}
                                     </p>
                                     <div className="event-meta">
@@ -289,30 +189,24 @@ const Home_Event = () => {
                     )}
                 </div>
 
-                {/* Event Detail Modal */}
                 {selectedEvent && (
                     <div className="event-modal" onClick={closeEventDetail}>
                         <div className="event-modal-content" onClick={(e) => e.stopPropagation()}>
                             <button className="event-modal-close" onClick={closeEventDetail}>
                                 <i className="bi bi-x-lg"></i>
                             </button>
-                            
+
                             <div className="event-modal-image">
-                                <img 
-                                    src={selectedEvent.image} 
-                                    alt={selectedEvent.title}
-                                />
-                                <div className="event-modal-status" style={{
-                                    background: getStatusColor(selectedEvent.status)
-                                }}>
+                                <img src={selectedEvent.image} alt={selectedEvent.title} />
+                                <div className="event-modal-status" style={{ background: getStatusColor(selectedEvent.status) }}>
                                     {getStatusLabel(selectedEvent.status)}
                                 </div>
                             </div>
-                            
+
                             <div className="event-modal-info">
                                 <h2 style={{ color: color_code_1 }}>{selectedEvent.title}</h2>
                                 <p className="event-modal-description">{selectedEvent.description}</p>
-                                
+
                                 <div className="event-modal-details">
                                     <div className="event-modal-detail">
                                         <i className="bi bi-calendar3" style={{ color: color_code_1 }}></i>
@@ -343,7 +237,7 @@ const Home_Event = () => {
                                         </div>
                                     </div>
                                 </div>
-                                
+
                                 <button className="event-modal-btn" style={{
                                     background: `linear-gradient(135deg, ${color_code_1}, ${color_code_2})`,
                                     color: '#fff'

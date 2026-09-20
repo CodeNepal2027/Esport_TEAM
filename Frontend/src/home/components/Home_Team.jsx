@@ -1,114 +1,66 @@
 // src/routes/components/Home_Team.jsx
 import React, { useState } from 'react';
 import { getOrgConfig } from '../../config/org_config';
+import { useHomeAPI } from '../../home/Home_API_Context';
 import "../assets/css/Home_Team.css";
 
 const Home_Team = () => {
-    const { 
-        team_tag,
-        team_name,
-        color_code_1,
-        color_code_2,
-    } = getOrgConfig();
+    const { team_name, color_code_1, color_code_2 } = getOrgConfig();
+    const { team, loading, error, refresh } = useHomeAPI();
 
     const [selectedMember, setSelectedMember] = useState(null);
-
-    // Team members data
-    const teamMembers = [
-        {
-            id: 1,
-            name: 'Apex',
-            realName: 'John Doe',
-            role: 'IGL (In-Game Leader)',
-            image: 'https://images.unsplash.com/photo-1542751371-adc38448a05e?w=400&h=400&fit=crop',
-            instagram: 'https://instagram.com/apex',
-            tiktok: 'https://tiktok.com/@apex',
-            youtube: 'https://youtube.com/@apex',
-            country: '🇺🇸'
-        },
-        {
-            id: 2,
-            name: 'Fury',
-            realName: 'Mike Johnson',
-            role: 'Entry Fragger',
-            image: 'https://images.unsplash.com/photo-1511882150382-421056c89033?w=400&h=400&fit=crop',
-            instagram: 'https://instagram.com/fury',
-            tiktok: 'https://tiktok.com/@fury',
-            youtube: 'https://youtube.com/@fury',
-            country: '🇬🇧'
-        },
-        {
-            id: 3,
-            name: 'Viper',
-            realName: 'Sarah Chen',
-            role: 'Support',
-            image: 'https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=400&h=400&fit=crop',
-            instagram: 'https://instagram.com/viper',
-            tiktok: 'https://tiktok.com/@viper',
-            youtube: 'https://youtube.com/@viper',
-            country: '🇨🇳'
-        },
-        {
-            id: 4,
-            name: 'Shadow',
-            realName: 'Alex Rivera',
-            role: 'Anchor',
-            image: 'https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?w=400&h=400&fit=crop',
-            instagram: 'https://instagram.com/shadow',
-            tiktok: 'https://tiktok.com/@shadow',
-            youtube: 'https://youtube.com/@shadow',
-            country: '🇲🇽'
-        },
-        {
-            id: 5,
-            name: 'Blaze',
-            realName: 'Emma Wilson',
-            role: 'Fragger',
-            image: 'https://images.unsplash.com/photo-1511512578047-dfb367046420?w=400&h=400&fit=crop',
-            instagram: 'https://instagram.com/blaze',
-            tiktok: 'https://tiktok.com/@blaze',
-            youtube: 'https://youtube.com/@blaze',
-            country: '🇦🇺'
-        },
-        {
-            id: 6,
-            name: 'Storm',
-            realName: 'David Kim',
-            role: 'Sniper',
-            image: 'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=400&h=400&fit=crop',
-            instagram: 'https://instagram.com/storm',
-            tiktok: 'https://tiktok.com/@storm',
-            youtube: 'https://youtube.com/@storm',
-            country: '🇰🇷'
-        },
-    ];
-
-    // Filter by role
     const [roleFilter, setRoleFilter] = useState('all');
+
+    const teamMembers = team || [];
     const roles = ['all', 'IGL', 'Entry', 'Support', 'Anchor', 'Fragger', 'Sniper'];
 
-    const filteredMembers = roleFilter === 'all' 
-        ? teamMembers 
+    const filteredMembers = roleFilter === 'all'
+        ? teamMembers
         : teamMembers.filter(member => member.role.includes(roleFilter));
 
-    // Open member detail modal
     const openMemberDetail = (member) => {
         setSelectedMember(member);
         document.body.style.overflow = 'hidden';
     };
 
-    // Close member detail modal
     const closeMemberDetail = () => {
         setSelectedMember(null);
         document.body.style.overflow = 'auto';
     };
 
+    // Loading
+    if (loading && !team) {
+        return (
+            <section id="home-team-section" className="home-team-section">
+                <div className="container">
+                    <div className="section-loading">
+                        <div className="loading-spinner" style={{ borderColor: color_code_1 }}></div>
+                        <p>Loading roster...</p>
+                    </div>
+                </div>
+            </section>
+        );
+    }
+
+    // Error
+    if (error && !team) {
+        return (
+            <section id="home-team-section" className="home-team-section">
+                <div className="container">
+                    <div className="section-error">
+                        <p>Failed to load team roster</p>
+                        <button onClick={refresh} style={{ background: color_code_1, color: '#fff' }}>Retry</button>
+                    </div>
+                </div>
+            </section>
+        );
+    }
+
     return (
         <section id="home-team-section" className="home-team-section">
             <div className="container">
-                {/* Section Header */}
                 <div className="section-header">
-                    <span className="section-badge" style={{ 
+                    <span className="section-badge" style={{
                         background: `linear-gradient(135deg, ${color_code_1}, ${color_code_2})`
                     }}>
                         Our Squad
@@ -121,7 +73,6 @@ const Home_Team = () => {
                     </p>
                 </div>
 
-                {/* Role Filter */}
                 <div className="team-filters">
                     {roles.map((role) => (
                         <button
@@ -138,21 +89,11 @@ const Home_Team = () => {
                     ))}
                 </div>
 
-                {/* Team Grid */}
                 <div className="team-grid">
                     {filteredMembers.map((member) => (
-                        <div 
-                            key={member.id} 
-                            className="team-card"
-                            onClick={() => openMemberDetail(member)}
-                        >
+                        <div key={member.id} className="team-card" onClick={() => openMemberDetail(member)}>
                             <div className="team-card-image-wrapper">
-                                <img 
-                                    src={member.image} 
-                                    alt={member.name}
-                                    className="team-card-image"
-                                    loading="lazy"
-                                />
+                                <img src={member.image} alt={member.name} className="team-card-image" loading="lazy" />
                                 <div className="team-card-status-badge" style={{
                                     background: `linear-gradient(135deg, ${color_code_1}, ${color_code_2})`
                                 }}>
@@ -192,7 +133,6 @@ const Home_Team = () => {
                     ))}
                 </div>
 
-                {/* Join Team CTA */}
                 <div className="team-cta" style={{
                     background: `linear-gradient(135deg, ${color_code_1}22, ${color_code_2}22)`,
                     border: `1px solid ${color_code_1}44`
@@ -209,20 +149,16 @@ const Home_Team = () => {
                     </div>
                 </div>
 
-                {/* Member Detail Modal */}
                 {selectedMember && (
                     <div className="member-modal" onClick={closeMemberDetail}>
                         <div className="member-modal-content" onClick={(e) => e.stopPropagation()}>
                             <button className="member-modal-close" onClick={closeMemberDetail}>
                                 <i className="bi bi-x-lg"></i>
                             </button>
-                            
+
                             <div className="member-modal-grid">
                                 <div className="member-modal-image">
-                                    <img 
-                                        src={selectedMember.image} 
-                                        alt={selectedMember.name}
-                                    />
+                                    <img src={selectedMember.image} alt={selectedMember.name} />
                                     <div className="member-modal-status-badge" style={{
                                         background: `linear-gradient(135deg, ${color_code_1}, ${color_code_2})`
                                     }}>
@@ -236,7 +172,7 @@ const Home_Team = () => {
                                         <span className="member-modal-country">{selectedMember.country}</span>
                                     </div>
                                     <p className="member-modal-realname">{selectedMember.realName}</p>
-                                    <p className="member-modal-role" style={{ 
+                                    <p className="member-modal-role" style={{
                                         background: `linear-gradient(135deg, ${color_code_1}, ${color_code_2})`,
                                         color: '#fff'
                                     }}>

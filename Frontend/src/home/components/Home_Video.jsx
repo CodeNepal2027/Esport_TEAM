@@ -1,216 +1,141 @@
 // src/routes/components/Home_Video.jsx
 import React, { useState, useEffect } from 'react';
 import { getOrgConfig } from '../../config/org_config';
+import { useHomeAPI } from '../../home/Home_API_Context';
 import "../assets/css/Home_Video.css";
 
 const Home_Video = () => {
-    const { 
-        team_tag,
-        team_name,
-        color_code_1,
-        color_code_2,
-    } = getOrgConfig();
+    const { team_name, color_code_1, color_code_2 } = getOrgConfig();
+    const { videos: rawVideos, loading, error, refresh } = useHomeAPI();
 
     const [videos, setVideos] = useState([]);
-    const [loading, setLoading] = useState(true);
     const [selectedVideo, setSelectedVideo] = useState(null);
     const [categoryFilter, setCategoryFilter] = useState('all');
+    const [hydrating, setHydrating] = useState(true);
 
-    // YouTube API Key - Get from Google Cloud Console
-    const YOUTUBE_API_KEY = 'YOUR_YOUTUBE_API_KEY_HERE';
+    const YOUTUBE_API_KEY = import.meta.env.VITE_YOUTUBE_API_KEY || '';
 
-    // Default videos (only URL and category)
-    const defaultVideos = [
-        {
-            id: 1,
-            youtube_url: 'https://youtu.be/sHtBOMbBLZM?si=nAkLX1rnXfX3XI7z',
-            category: 'highlights'
-        },
-        {
-            id: 2,
-            youtube_url: 'https://youtu.be/9bZkp7q19f0',
-            category: 'training'
-        },
-        {
-            id: 3,
-            youtube_url: 'https://youtu.be/kJQP7kiw5Fk',
-            category: 'interviews'
-        },
-        {
-            id: 4,
-            youtube_url: 'https://youtu.be/XqZsoesa55w',
-            category: 'events'
-        }
-    ];
-
-    // Extract YouTube ID from URL
     const extractYoutubeId = (url) => {
         const regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#&?]*).*/;
         const match = url.match(regExp);
         return (match && match[7].length === 11) ? match[7] : null;
     };
 
-    // Fetch video metadata from YouTube API (including description)
     const fetchYouTubeData = async (videoId) => {
-        if (!YOUTUBE_API_KEY || YOUTUBE_API_KEY === 'YOUR_YOUTUBE_API_KEY_HERE') {
-            // Fallback: use oEmbed API (no API key required)
+        // Try YouTube Data API first if key exists
+        if (YOUTUBE_API_KEY) {
             try {
-                const response = await fetch(`https://www.youtube.com/oembed?url=https://www.youtube.com/watch?v=${videoId}&format=json`);
-                const data = await response.json();
-                return {
-                    title: data.title,
-                    description: data.author_name || 'No description available',
-                    thumbnail: `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`,
-                    date: new Date().toLocaleDateString('en-US', { 
-                        month: 'short', 
-                        day: 'numeric', 
-                        year: 'numeric' 
-                    }),
-                    views: 'N/A'
-                };
-            } catch {
-                return null;
-            }
+                const res = await fetch(
+                    `https://www.googleapis.com/youtube/v3/videos?id=${videoId}&key=${YOUTUBE_API_KEY}&part=snippet,statistics`
+                );
+                if (res.ok) {
+                    const data = await res.json();
+                    if (data.items?.length) {
+                        const item = data.items[0];
+                        const viewCount = parseInt(item.statistics.viewCount);
+                        let views = viewCount.toLocaleString();
+                        if (viewCount >= 1000000) views = (viewCount / 1000000).toFixed(1) + 'M';
+                        else if (viewCount >= 1000) views = (viewCount / 1000).toFixed(1) + 'K';
+
+                        return {
+                            title: item.snippet.title,
+                            description: item.snippet.description || 'No description available',
+                            thumbnail: item.snippet.thumbnails.maxres?.url ||
+                                item.snippet.thumbnails.high?.url ||
+                                `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`,
+                            date: new Date(item.snippet.publishedAt).toLocaleDateString('en-US', {
+                                month: 'short', day: 'numeric', year: 'numeric'
+                            }),
+                            views
+                        };
+                    }
+                }
+            } catch (e) { /* fall through */ }
         }
 
+        // Fallback: oEmbed
         try {
-            const response = await fetch(
-                `https://www.googleapis.com/youtube/v3/videos?id=${videoId}&key=${YOUTUBE_API_KEY}&part=snippet,statistics`
-            );
-            
-            if (!response.ok) {
-                throw new Error('Failed to fetch video data');
-            }
-
-            const data = await response.json();
-            
-            if (data.items && data.items.length > 0) {
-                const item = data.items[0];
-                const viewCount = parseInt(item.statistics.viewCount);
-                let views = viewCount.toLocaleString();
-                if (viewCount >= 1000000) {
-                    views = (viewCount / 1000000).toFixed(1) + 'M';
-                } else if (viewCount >= 1000) {
-                    views = (viewCount / 1000).toFixed(1) + 'K';
-                }
-                
-                return {
-                    title: item.snippet.title,
-                    description: item.snippet.description || 'No description available',
-                    thumbnail: item.snippet.thumbnails.maxres?.url || 
-                                item.snippet.thumbnails.high?.url || 
-                                `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`,
-                    date: new Date(item.snippet.publishedAt).toLocaleDateString('en-US', { 
-                        month: 'short', 
-                        day: 'numeric', 
-                        year: 'numeric' 
-                    }),
-                    views: views
-                };
-            }
+            const res = await fetch(`https://www.youtube.com/oembed?url=https://www.youtube.com/watch?v=${videoId}&format=json`);
+            const data = await res.json();
+            return {
+                title: data.title,
+                description: data.author_name || 'No description available',
+                thumbnail: `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`,
+                date: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
+                views: 'N/A'
+            };
+        } catch {
             return null;
-        } catch (error) {
-            console.error('Error fetching video metadata:', error);
-            // Fallback: use oEmbed
-            try {
-                const response = await fetch(`https://www.youtube.com/oembed?url=https://www.youtube.com/watch?v=${videoId}&format=json`);
-                const data = await response.json();
-                return {
-                    title: data.title,
-                    description: data.author_name || 'No description available',
-                    thumbnail: `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`,
-                    date: new Date().toLocaleDateString('en-US', { 
-                        month: 'short', 
-                        day: 'numeric', 
-                        year: 'numeric' 
-                    }),
-                    views: 'N/A'
-                };
-            } catch {
-                return null;
-            }
         }
     };
 
-    // Initialize with default videos
+    // Hydrate YouTube metadata for raw videos
     useEffect(() => {
-        const fetchDefaultVideos = async () => {
-            setLoading(true);
-            const updatedVideos = await Promise.all(
-                defaultVideos.map(async (video, index) => {
+        if (!rawVideos?.length) {
+            setHydrating(false);
+            return;
+        }
+
+        let cancelled = false;
+
+        (async () => {
+            setHydrating(true);
+            const hydrated = await Promise.all(
+                rawVideos.map(async (video, index) => {
                     const videoId = extractYoutubeId(video.youtube_url);
-                    if (videoId) {
-                        const data = await fetchYouTubeData(videoId);
-                        if (data) {
-                            return {
-                                ...video,
-                                id: index + 1,
-                                title: data.title,
-                                description: data.description || 'No description available',
-                                thumbnail: data.thumbnail,
-                                date: data.date,
-                                views: data.views
-                            };
-                        }
+                    if (!videoId) return { ...video, id: index + 1, title: 'Video', description: '', thumbnail: '', date: '', views: 'N/A' };
+
+                    const data = await fetchYouTubeData(videoId);
+                    if (data) {
+                        return { ...video, id: index + 1, ...data };
                     }
                     return {
                         ...video,
                         id: index + 1,
                         title: 'YouTube Video',
                         description: 'No description available',
-                        thumbnail: `https://img.youtube.com/vi/${extractYoutubeId(video.youtube_url)}/maxresdefault.jpg`,
-                        date: new Date().toLocaleDateString('en-US', { 
-                            month: 'short', 
-                            day: 'numeric', 
-                            year: 'numeric' 
-                        }),
+                        thumbnail: `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`,
+                        date: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
                         views: 'N/A'
                     };
                 })
             );
-            setVideos(updatedVideos);
-            setLoading(false);
-        };
+            if (!cancelled) {
+                setVideos(hydrated);
+                setHydrating(false);
+            }
+        })();
 
-        fetchDefaultVideos();
-    }, []);
+        return () => { cancelled = true; };
+    }, [rawVideos]);
 
-    // Filter categories
     const categories = ['all', 'highlights', 'training', 'interviews', 'analysis', 'events'];
-    const filteredVideos = categoryFilter === 'all' 
-        ? videos 
-        : videos.filter(video => video.category === categoryFilter);
+    const filteredVideos = categoryFilter === 'all'
+        ? videos
+        : videos.filter(v => v.category === categoryFilter);
 
-    const getCategoryLabel = (cat) => {
-        const labels = {
-            'all': 'All',
-            'highlights': 'Highlights',
-            'training': 'Training',
-            'interviews': 'Interviews',
-            'analysis': 'Analysis',
-            'events': 'Events'
-        };
-        return labels[cat] || cat;
-    };
+    const getCategoryLabel = (cat) => ({
+        'all': 'All', 'highlights': 'Highlights', 'training': 'Training',
+        'interviews': 'Interviews', 'analysis': 'Analysis', 'events': 'Events'
+    }[cat] || cat);
 
-    // Open video modal
     const openVideo = (video) => {
         setSelectedVideo(video);
         document.body.style.overflow = 'hidden';
     };
 
-    // Close video modal
     const closeVideo = () => {
         setSelectedVideo(null);
         document.body.style.overflow = 'auto';
     };
 
-    if (loading) {
+    // Loading
+    if ((loading || hydrating) && !videos.length) {
         return (
             <section id="home-video-section" className="home-video-section">
                 <div className="container">
                     <div className="section-header">
-                        <span className="section-badge" style={{ 
+                        <span className="section-badge" style={{
                             background: `linear-gradient(135deg, ${color_code_1}, ${color_code_2})`
                         }}>
                             Watch Us
@@ -228,12 +153,25 @@ const Home_Video = () => {
         );
     }
 
+    // Error
+    if (error && !videos.length) {
+        return (
+            <section id="home-video-section" className="home-video-section">
+                <div className="container">
+                    <div className="section-error">
+                        <p>Failed to load videos</p>
+                        <button onClick={refresh} style={{ background: color_code_1, color: '#fff' }}>Retry</button>
+                    </div>
+                </div>
+            </section>
+        );
+    }
+
     return (
         <section id="home-video-section" className="home-video-section">
             <div className="container">
-                {/* Section Header */}
                 <div className="section-header">
-                    <span className="section-badge" style={{ 
+                    <span className="section-badge" style={{
                         background: `linear-gradient(135deg, ${color_code_1}, ${color_code_2})`
                     }}>
                         Watch Us
@@ -246,7 +184,6 @@ const Home_Video = () => {
                     </p>
                 </div>
 
-                {/* Category Filters */}
                 <div className="video-filters">
                     {categories.map((cat) => (
                         <button
@@ -263,20 +200,13 @@ const Home_Video = () => {
                     ))}
                 </div>
 
-                {/* Video Grid */}
                 <div className="video-grid">
                     {filteredVideos.length > 0 ? (
                         filteredVideos.map((video) => (
-                            <div 
-                                key={video.id} 
-                                className="video-card"
-                                style={{
-                                    border: `2px solid ${color_code_1}22`
-                                }}
-                            >
+                            <div key={video.id} className="video-card" style={{ border: `2px solid ${color_code_1}22` }}>
                                 <div className="video-thumbnail-wrapper" onClick={() => openVideo(video)}>
-                                    <img 
-                                        src={video.thumbnail} 
+                                    <img
+                                        src={video.thumbnail}
                                         alt={video.title}
                                         className="video-thumbnail"
                                         loading="lazy"
@@ -296,8 +226,8 @@ const Home_Video = () => {
                                 <div className="video-info">
                                     <h3 className="video-title">{video.title}</h3>
                                     <p className="video-description">
-                                        {video.description?.length > 40 
-                                            ? video.description.substring(0, 40) + '...' 
+                                        {video.description?.length > 40
+                                            ? video.description.substring(0, 40) + '...'
                                             : video.description || 'No description available'}
                                     </p>
                                     <div className="video-meta">
@@ -325,14 +255,13 @@ const Home_Video = () => {
                     )}
                 </div>
 
-                {/* Video Modal with YouTube Embed */}
                 {selectedVideo && (
                     <div className="video-modal" onClick={closeVideo}>
                         <div className="video-modal-content" onClick={(e) => e.stopPropagation()}>
                             <button className="video-modal-close" onClick={closeVideo}>
                                 <i className="bi bi-x-lg"></i>
                             </button>
-                            
+
                             <div className="video-embed-wrapper">
                                 <iframe
                                     src={`https://www.youtube.com/embed/${extractYoutubeId(selectedVideo.youtube_url)}?autoplay=1&rel=0&modestbranding=1`}
@@ -343,7 +272,7 @@ const Home_Video = () => {
                                     frameBorder="0"
                                 ></iframe>
                             </div>
-                            
+
                             <div className="video-modal-info">
                                 <h3 style={{ color: color_code_1 }}>{selectedVideo.title}</h3>
                                 <p className="video-modal-description">{selectedVideo.description || 'No description available'}</p>

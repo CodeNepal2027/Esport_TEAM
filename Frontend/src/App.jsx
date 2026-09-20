@@ -7,6 +7,9 @@ import Navbar from './global/Navbar';
 import Footer from './global/Footer';
 import Topbar from './global/Topbar';
 import Home_Routes from './routes/Home_Routes';
+import {
+        Home_API_Provider
+    } from './home/Home_Import';
 
 function App() {
 
@@ -31,19 +34,22 @@ function App() {
 
     return (
         <BrowserRouter>
-            <Topbar isDark={isDark} toggleTheme={toggleTheme}/>
-            <Navbar />
+            <Home_API_Provider>
+                <Topbar isDark={isDark} toggleTheme={toggleTheme}/>
+                <Navbar />
 
-            <main className='main-section'>
-                <Routes>
+                <main className='main-section'>
+                    <Routes>
 
-                    <Route exact path="/*" element={<Home_Routes />} />
+                        <Route exact path="/*" element={<Home_Routes />} />
 
-                </Routes>
-            </main>
+                    </Routes>
+                </main>
 
-            <Footer />
-            <Analytics />
+                <Footer />
+                <Analytics />
+            
+            </Home_API_Provider>
         </BrowserRouter>
     )
 }
