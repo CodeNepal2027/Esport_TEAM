@@ -1,4 +1,7 @@
 // src/config/env_export.jsx
+// ============================================
+// ENV EXPORT — reads from .env and exports
+// ============================================
 
 // ============================================
 // BACKEND URLs
@@ -7,57 +10,62 @@ export const BACKEND_URL_PRODUCTION = import.meta.env.VITE_BACKEND_URL_PRODUCTIO
 export const BACKEND_URL_DEVELOPMENT = import.meta.env.VITE_BACKEND_URL_DEVELOPMENT || 'http://127.0.0.1:8000/api';
 
 // ============================================
-// POWERED BY (Footer Credit)
+// MASTER DB (Optech Platform)
+// ============================================
+export const MASTER_API_URL = import.meta.env.VITE_MASTER_API_URL || 'https://api.optech.com.np';
+export const DEFAULT_TENANT_SLUG = import.meta.env.VITE_DEFAULT_TENANT_SLUG || 'demo';
+
+// ============================================
+// POWERED BY (Footer Credit — Optech itself)
 // ============================================
 export const POWERED_BY_NAME = import.meta.env.VITE_POWERED_BY_NAME || 'Optech';
 export const POWERED_BY_LINK = import.meta.env.VITE_POWERED_BY_LINK || '';
 export const POWERED_BY_LOGO_URL = import.meta.env.VITE_POWERED_BY_LOGO_URL || '';
 
 // ============================================
-// TEAM IDENTITY
+// FALLBACK (Dev / Offline / API failure)
 // ============================================
-export const TEAM_TAG = import.meta.env.VITE_TEAM_TAG || 'ABC';
-export const TEAM_NAME = import.meta.env.VITE_TEAM_NAME || 'ABC Esports';
-export const TEAM_LOGO_URL = import.meta.env.VITE_TEAM_LOGO_URL || 'https://raw.githubusercontent.com/TrainedToKill/TrainedToKill/main/logo.png';
+export const FALLBACK_ORG = {
+    // Master layer
+    slug: 'demo',
+    org_domain: 'demo.optech.com.np',
+    subscription_tier: 'free',
+    feature_flags: {},
 
-// ============================================
-// TEAM COLORS
-// ============================================
-export const COLOR_CODE_1 = import.meta.env.VITE_COLOR_CODE_1 || '#FF0000';
-export const COLOR_CODE_2 = import.meta.env.VITE_COLOR_CODE_2 || '#00FF00';
+    // Tenant layer
+    team_tag: import.meta.env.VITE_TEAM_TAG || 'ABCD',
+    team_name: import.meta.env.VITE_TEAM_NAME || 'ABCD Esports',
+    team_logo_url: import.meta.env.VITE_TEAM_LOGO_URL || '',
+    color_code_1: import.meta.env.VITE_COLOR_CODE_1 || '#FF0000',
+    color_code_2: import.meta.env.VITE_COLOR_CODE_2 || '#00FF00',
 
-// ============================================
-// SUBDOMAINS
-// ============================================
-export const ORG_SHOP = import.meta.env.VITE_ORG_SHOP || '';
-export const ORG_ACHIVEMENTS = import.meta.env.VITE_ORG_ACHIVEMENTS || '';
+    // Subdomains
+    org_shop: import.meta.env.VITE_ORG_SHOP || '',
+    org_achievements: import.meta.env.VITE_ORG_ACHIVEMENTS || '',
 
-// ============================================
-// ORG SOCIAL MEDIA URLs
-// ============================================
-export const ORG_YOUTUBE_LINK = import.meta.env.VITE_ORG_YOUTUBE_LINK || '';
-export const ORG_TIKTOK_LINK = import.meta.env.VITE_ORG_TIKTOK_LINK || '';
-export const ORG_INSTAGRAM_LINK = import.meta.env.VITE_ORG_INSTAGRAM_LINK || '';
-export const ORG_DISCORD_LINK = import.meta.env.VITE_ORG_DISCORD_LINK || '';
-export const ORG_TWITTER_LINK = import.meta.env.VITE_ORG_TWITTER_LINK || '';
+    // Social
+    org_youtube_link: import.meta.env.VITE_ORG_YOUTUBE_LINK || '',
+    org_tiktok_link: import.meta.env.VITE_ORG_TIKTOK_LINK || '',
+    org_instagram_link: import.meta.env.VITE_ORG_INSTAGRAM_LINK || '',
+    org_discord_link: import.meta.env.VITE_ORG_DISCORD_LINK || '',
+    org_twitter_link: import.meta.env.VITE_ORG_TWITTER_LINK || '',
 
-// ============================================
-// ORG ADDRESSES + CONTACT
-// ============================================
-export const ORG_COUNTRY = import.meta.env.VITE_ORG_COUNTRY || '';
-export const ORG_ADDRESS = import.meta.env.VITE_ORG_ADDRESS || '';
-export const ORG_WORKING_DAY = import.meta.env.VITE_ORG_WORKING_DAY || '';
-export const ORG_WORKING_HOUR = import.meta.env.VITE_ORG_WORKING_HOUR || '';
-export const ORG_EMAIL = import.meta.env.VITE_ORG_EMAIL || '';
-export const ORG_WHATSAPP = import.meta.env.VITE_ORG_WHATSAPP || '';
-export const ORG_PHONE_1 = import.meta.env.VITE_ORG_PHONE_1 || '';
-export const ORG_PHONE_2 = import.meta.env.VITE_ORG_PHONE_2 || '';
+    // Contact / Address
+    org_country: import.meta.env.VITE_ORG_COUNTRY || '',
+    org_address: import.meta.env.VITE_ORG_ADDRESS || '',
+    org_working_day: import.meta.env.VITE_ORG_WORKING_DAY || '',
+    org_working_hour: import.meta.env.VITE_ORG_WORKING_HOUR || '',
+    org_email: import.meta.env.VITE_ORG_EMAIL || '',
+    org_whatsapp: import.meta.env.VITE_ORG_WHATSAPP || '',
+    org_phone_1: import.meta.env.VITE_ORG_PHONE_1 || '',
+    org_phone_2: import.meta.env.VITE_ORG_PHONE_2 || '',
+};
 
 // ============================================
 // DERIVED / COMPUTED
 // ============================================
-export const BACKEND_URL = import.meta.env.MODE === 'production' 
-    ? BACKEND_URL_PRODUCTION 
+export const BACKEND_URL = import.meta.env.MODE === 'production'
+    ? BACKEND_URL_PRODUCTION
     : BACKEND_URL_DEVELOPMENT;
 
 // ============================================
@@ -68,94 +76,52 @@ export const IS_DEVELOPMENT = import.meta.env.MODE === 'development';
 export const APP_ENV = import.meta.env.MODE;
 
 // ============================================
-// AUTO-INJECT CSS VARIABLES FROM .env
+// HEX → RGB helper
 // ============================================
-export const injectThemeColors = () => {
-    if (typeof document === 'undefined') return;
-    
+export const hexToRgb = (hex, alpha = null) => {
+    const h = hex.replace('#', '');
+    const r = parseInt(h.substring(0, 2), 16);
+    const g = parseInt(h.substring(2, 4), 16);
+    const b = parseInt(h.substring(4, 6), 16);
+    return alpha !== null ? `rgba(${r},${g},${b},${alpha})` : `${r},${g},${b}`;
+};
+
+// ============================================
+// INJECT THEME COLORS INTO :root
+// ============================================
+export const injectThemeColors = (org) => {
+    if (typeof document === 'undefined' || !org) return;
     const root = document.documentElement;
-    
-    // Primary highlight color (from COLOR_CODE_1)
-    root.style.setProperty('--highlight-color-primary', COLOR_CODE_1);
-    root.style.setProperty('--highlight-color-primary-rgb', hexToRgb(COLOR_CODE_1));
-    
-    // Secondary highlight color (from COLOR_CODE_2)
-    root.style.setProperty('--highlight-color-secondary', COLOR_CODE_2);
-    root.style.setProperty('--highlight-color-secondary-rgb', hexToRgb(COLOR_CODE_2));
-    
-    // Also set border highlight
-    root.style.setProperty('--border-color-highlight', `${hexToRgb(COLOR_CODE_1, 0.3)}`);
-    
-    // Set scrollbar thumb
-    root.style.setProperty('--scrollbar-thumb', COLOR_CODE_1);
-    
-    // Set shadow glow
-    root.style.setProperty('--shadow-glow', `0 0 40px ${hexToRgb(COLOR_CODE_1, 0.3)}`);
-};
 
-// Helper: Convert HEX to RGB
-const hexToRgb = (hex, alpha = null) => {
-    const cleanHex = hex.replace('#', '');
-    const r = parseInt(cleanHex.substring(0, 2), 16);
-    const g = parseInt(cleanHex.substring(2, 4), 16);
-    const b = parseInt(cleanHex.substring(4, 6), 16);
-    
-    if (alpha !== null) {
-        return `rgba(${r}, ${g}, ${b}, ${alpha})`;
-    }
-    return `${r}, ${g}, ${b}`;
+    const primary = org.color_code_1 || FALLBACK_ORG.color_code_1;
+    const secondary = org.color_code_2 || FALLBACK_ORG.color_code_2;
+
+    root.style.setProperty('--highlight-color-primary', primary);
+    root.style.setProperty('--highlight-color-primary-rgb', hexToRgb(primary));
+    root.style.setProperty('--highlight-color-secondary', secondary);
+    root.style.setProperty('--highlight-color-secondary-rgb', hexToRgb(secondary));
+    root.style.setProperty('--border-color-highlight', hexToRgb(primary, 0.3));
+    root.style.setProperty('--shadow-glow', `0 0 40px ${hexToRgb(primary, 0.3)}`);
+    root.style.setProperty('--scrollbar-thumb', primary);
 };
 
 // ============================================
-// EXPORT ALL AS DEFAULT OBJECT
+// DEFAULT EXPORT
 // ============================================
 const env_export = {
-    // Backend URLs
     BACKEND_URL_PRODUCTION,
     BACKEND_URL_DEVELOPMENT,
     BACKEND_URL,
-    
-    // Powered By
+    MASTER_API_URL,
+    DEFAULT_TENANT_SLUG,
     POWERED_BY_NAME,
     POWERED_BY_LINK,
     POWERED_BY_LOGO_URL,
-    
-    // Team Identity
-    TEAM_TAG,
-    TEAM_NAME,
-    TEAM_LOGO_URL,
-    
-    // Team Colors
-    COLOR_CODE_1,
-    COLOR_CODE_2,
-    
-    // Subdomains
-    ORG_SHOP,
-    ORG_ACHIVEMENTS,
-    
-    // Social Media
-    ORG_YOUTUBE_LINK,
-    ORG_TIKTOK_LINK,
-    ORG_INSTAGRAM_LINK,
-    ORG_DISCORD_LINK,
-    ORG_TWITTER_LINK,
-    
-    // Contact / Address
-    ORG_COUNTRY,
-    ORG_ADDRESS,
-    ORG_WORKING_DAY,
-    ORG_WORKING_HOUR,
-    ORG_EMAIL,
-    ORG_WHATSAPP,
-    ORG_PHONE_1,
-    ORG_PHONE_2,
-    
-    // Environment
+    FALLBACK_ORG,
     IS_PRODUCTION,
     IS_DEVELOPMENT,
     APP_ENV,
-    
-    // Helpers
+    hexToRgb,
     injectThemeColors,
 };
 

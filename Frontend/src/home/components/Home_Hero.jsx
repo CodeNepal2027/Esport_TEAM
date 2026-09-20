@@ -1,30 +1,35 @@
 // src/routes/components/Home_Hero.jsx
 import React, { useState, useEffect } from 'react';
-import env_export from '../../config/env_export';
+import { getOrgConfig } from '../../config/org_config';
 import '../assets/css/Home_Hero.css';
 
 const Home_Hero = () => {
-    const { TEAM_TAG, TEAM_NAME, COLOR_CODE_1, COLOR_CODE_2 } = env_export;
+    const { 
+        team_tag,
+        team_name,
+        color_code_1,
+        color_code_2,
+    } = getOrgConfig();
 
     // Hero slides data
     const slides = [
         {
             id: 1,
-            image: 'https://images.unsplash.com/photo-1542751371-adc38448a05e?w=1200&h=600&fit=crop',
+            image: 'https://english.onlinekhabar.com/wp-content/uploads/2022/11/T2K-PMGC.jpg',
             title: '#RISE AS ONE',
             subtitle: 'Welcome to the battlefield',
             tag: 'SEASON 2026'
         },
         {
             id: 2,
-            image: 'https://images.unsplash.com/photo-1511882150382-421056c89033?w=1200&h=600&fit=crop',
+            image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRKPCIiafmgxRuw56exgZH5mm5UGoLx827IVUUMICRzWg&s=10',
             title: 'DOMINATE',
             subtitle: 'Train. Kill. Repeat.',
-            tag: 'TEAM T2K'
+            tag: `TEAM ${team_tag}`
         },
         {
             id: 3,
-            image: 'https://images.unsplash.com/photo-1511512578047-dfb367046420?w=1200&h=600&fit=crop',
+            image: 'https://www.sportspro.com/wp-content/uploads/2023/03/Copy-of-Copy-of-WP-News-story-template-2023-03-08T113813.566.jpg?x70900',
             title: 'VICTORY AWAITS',
             subtitle: 'Join the elite squad',
             tag: 'ESPORT PRO'
@@ -79,7 +84,7 @@ const Home_Hero = () => {
                         
                         <div className="hero-content">
                             <span className="hero-badge" style={{
-                                background: `linear-gradient(135deg, ${COLOR_CODE_1}, ${COLOR_CODE_2})`
+                                background: `linear-gradient(135deg, ${color_code_1}, ${color_code_2})`
                             }}>
                                 {slide.tag}
                             </span>
@@ -87,9 +92,9 @@ const Home_Hero = () => {
                                 {slide.title.split(' ').map((word, i) => (
                                     <span key={i}>
                                         {word === 'AS' ? (
-                                            <span style={{ color: COLOR_CODE_2 }}>AS</span>
+                                            <span style={{ color: color_code_2 }}>AS</span>
                                         ) : word === 'ONE' ? (
-                                            <span style={{ color: COLOR_CODE_1 }}>ONE</span>
+                                            <span style={{ color: color_code_1 }}>ONE</span>
                                         ) : (
                                             word
                                         )}{' '}
@@ -99,7 +104,7 @@ const Home_Hero = () => {
                             <p className="hero-subtitle">{slide.subtitle}</p>
                             <div className="hero-actions">
                                 <button className="hero-btn-primary" style={{
-                                    background: `linear-gradient(135deg, ${COLOR_CODE_1}, ${COLOR_CODE_2})`
+                                    background: `linear-gradient(135deg, ${color_code_1}, ${color_code_2})`
                                 }}>
                                     Join Now
                                 </button>
@@ -138,7 +143,7 @@ const Home_Hero = () => {
                         aria-label={`Go to slide ${index + 1}`}
                         style={{
                             background: index === currentSlide 
-                                ? `linear-gradient(135deg, ${COLOR_CODE_1}, ${COLOR_CODE_2})`
+                                ? `linear-gradient(135deg, ${color_code_1}, ${color_code_2})`
                                 : 'var(--border-color-secondary)'
                         }}
                     />
@@ -147,10 +152,10 @@ const Home_Hero = () => {
 
             {/* Team Info Overlay */}
             <div className="hero-team-info">
-                <div className="hero-team-tag" style={{ color: COLOR_CODE_1 }}>
-                    {TEAM_TAG}
+                <div className="hero-team-tag" style={{ color: color_code_1 }}>
+                    {team_tag}
                 </div>
-                <div className="hero-team-name">{TEAM_NAME}</div>
+                <div className="hero-team-name">{team_name}</div>
             </div>
         </section>
     );

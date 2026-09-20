@@ -1,15 +1,15 @@
 // src/routes/components/Home_About.jsx
 import React from 'react';
-import env_export from '../../config/env_export';
+import { getOrgConfig } from '../../config/org_config';
 import "../assets/css/Home_About.css";
 
 const Home_About = () => {
     const { 
-        TEAM_TAG, 
-        TEAM_NAME, 
-        COLOR_CODE_1, 
-        COLOR_CODE_2 
-    } = env_export;
+        team_tag,
+        team_name,
+        color_code_1,
+        color_code_2,
+    } = getOrgConfig();
 
     return (
         <section id="home-about-section" className="home-about-section">
@@ -17,15 +17,15 @@ const Home_About = () => {
                 {/* Section Header */}
                 <div className="section-header">
                     <span className="section-badge" style={{ 
-                        background: `linear-gradient(135deg, ${COLOR_CODE_1}, ${COLOR_CODE_2})`
+                        background: `linear-gradient(135deg, ${color_code_1}, ${color_code_2})`
                     }}>
                         About Us
                     </span>
                     <h2 className="section-title">
-                        Who We <span style={{ color: COLOR_CODE_1 }}>Are</span>
+                        Who We <span style={{ color: color_code_1 }}>Are</span>
                     </h2>
                     <p className="section-subtitle">
-                        Learn more about {TEAM_NAME} and our journey
+                        Learn more about {team_name} and our journey
                     </p>
                 </div>
 
@@ -33,10 +33,10 @@ const Home_About = () => {
                 <div className="about-grid">
                     <div className="about-content">
                         <h3 className="about-heading">
-                            <span style={{ color: COLOR_CODE_1 }}>{TEAM_TAG}</span> - {TEAM_NAME}
+                            <span style={{ color: color_code_1 }}>{team_tag}</span> - {team_name}
                         </h3>
                         <p className="about-text">
-                            {TEAM_NAME} is a professional esports organization dedicated to 
+                            {team_name} is a professional esports organization dedicated to 
                             competitive gaming excellence. Founded with a passion for gaming 
                             and a vision to dominate the competitive scene.
                         </p>
@@ -47,32 +47,32 @@ const Home_About = () => {
                         </p>
                         <div className="about-stats">
                             <div className="stat-item">
-                                <span className="stat-number" style={{ color: COLOR_CODE_1 }}>
+                                <span className="stat-number" style={{ color: color_code_1 }}>
                                     2019
                                 </span>
                                 <span className="stat-label">Founded</span>
                             </div>
                             <div className="stat-item">
-                                <span className="stat-number" style={{ color: COLOR_CODE_1 }}>
+                                <span className="stat-number" style={{ color: color_code_1 }}>
                                     50+
                                 </span>
                                 <span className="stat-label">Tournaments</span>
                             </div>
                             <div className="stat-item">
-                                <span className="stat-number" style={{ color: COLOR_CODE_1 }}>
+                                <span className="stat-number" style={{ color: color_code_1 }}>
                                     87%
                                 </span>
                                 <span className="stat-label">Win Rate</span>
                             </div>
                             <div className="stat-item">
-                                <span className="stat-number" style={{ color: COLOR_CODE_1 }}>
+                                <span className="stat-number" style={{ color: color_code_1 }}>
                                     12
                                 </span>
                                 <span className="stat-label">Trophies</span>
                             </div>
                         </div>
                         <button className="about-btn" style={{ 
-                            background: `linear-gradient(135deg, ${COLOR_CODE_1}, ${COLOR_CODE_2})`
+                            background: `linear-gradient(135deg, ${color_code_1}, ${color_code_2})`
                         }}>
                             Join Our Team
                         </button>
@@ -80,15 +80,15 @@ const Home_About = () => {
 
                     <div className="about-image">
                         <div className="image-placeholder" style={{
-                            border: `3px solid ${COLOR_CODE_1}`,
-                            boxShadow: `0 0 40px ${COLOR_CODE_1}44`
+                            border: `3px solid ${color_code_1}`,
+                            boxShadow: `0 0 40px ${color_code_1}44`
                         }}>
                             <div className="placeholder-content">
-                                <span className="placeholder-icon" style={{ color: COLOR_CODE_1 }}>
+                                <span className="placeholder-icon" style={{ color: color_code_1 }}>
                                     <i className="bi bi-controller"></i>
                                 </span>
-                                <h4>{TEAM_TAG}</h4>
-                                <p>{TEAM_NAME}</p>
+                                <h4>{team_tag}</h4>
+                                <p>{team_name}</p>
                             </div>
                         </div>
                     </div>
@@ -97,10 +97,10 @@ const Home_About = () => {
                 {/* Mission & Vision */}
                 <div className="mission-vision">
                     <div className="mission-card" style={{
-                        border: `1px solid ${COLOR_CODE_1}44`,
-                        background: `linear-gradient(135deg, ${COLOR_CODE_1}11, ${COLOR_CODE_2}11)`
+                        border: `1px solid ${color_code_1}44`,
+                        background: `linear-gradient(135deg, ${color_code_1}11, ${color_code_2}11)`
                     }}>
-                        <div className="mission-icon" style={{ color: COLOR_CODE_1 }}>
+                        <div className="mission-icon" style={{ color: color_code_1 }}>
                             <i className="bi bi-bullseye"></i>
                         </div>
                         <h4>Our Mission</h4>
@@ -108,10 +108,10 @@ const Home_About = () => {
                     </div>
 
                     <div className="mission-card" style={{
-                        border: `1px solid ${COLOR_CODE_2}44`,
-                        background: `linear-gradient(135deg, ${COLOR_CODE_2}11, ${COLOR_CODE_1}11)`
+                        border: `1px solid ${color_code_2}44`,
+                        background: `linear-gradient(135deg, ${color_code_2}11, ${color_code_1}11)`
                     }}>
-                        <div className="mission-icon" style={{ color: COLOR_CODE_2 }}>
+                        <div className="mission-icon" style={{ color: color_code_2 }}>
                             <i className="bi bi-eye"></i>
                         </div>
                         <h4>Our Vision</h4>

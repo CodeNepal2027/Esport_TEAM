@@ -1,15 +1,15 @@
 // src/routes/components/Home_Team.jsx
 import React, { useState } from 'react';
-import env_export from '../../config/env_export';
+import { getOrgConfig } from '../../config/org_config';
 import "../assets/css/Home_Team.css";
 
 const Home_Team = () => {
     const { 
-        TEAM_TAG, 
-        TEAM_NAME, 
-        COLOR_CODE_1, 
-        COLOR_CODE_2 
-    } = env_export;
+        team_tag,
+        team_name,
+        color_code_1,
+        color_code_2,
+    } = getOrgConfig();
 
     const [selectedMember, setSelectedMember] = useState(null);
 
@@ -109,15 +109,15 @@ const Home_Team = () => {
                 {/* Section Header */}
                 <div className="section-header">
                     <span className="section-badge" style={{ 
-                        background: `linear-gradient(135deg, ${COLOR_CODE_1}, ${COLOR_CODE_2})`
+                        background: `linear-gradient(135deg, ${color_code_1}, ${color_code_2})`
                     }}>
                         Our Squad
                     </span>
                     <h2 className="section-title">
-                        <span style={{ color: COLOR_CODE_1 }}>Team</span> Roster
+                        <span style={{ color: color_code_1 }}>Team</span> Roster
                     </h2>
                     <p className="section-subtitle">
-                        Meet the warriors of {TEAM_NAME}
+                        Meet the warriors of {team_name}
                     </p>
                 </div>
 
@@ -129,8 +129,8 @@ const Home_Team = () => {
                             className={`role-filter-btn ${roleFilter === role ? 'active' : ''}`}
                             onClick={() => setRoleFilter(role)}
                             style={{
-                                borderColor: roleFilter === role ? COLOR_CODE_1 : 'var(--border-color-secondary)',
-                                color: roleFilter === role ? COLOR_CODE_1 : 'var(--font-color-secondary)'
+                                borderColor: roleFilter === role ? color_code_1 : 'var(--border-color-secondary)',
+                                color: roleFilter === role ? color_code_1 : 'var(--font-color-secondary)'
                             }}
                         >
                             {role === 'all' ? 'All' : role}
@@ -154,13 +154,13 @@ const Home_Team = () => {
                                     loading="lazy"
                                 />
                                 <div className="team-card-status-badge" style={{
-                                    background: `linear-gradient(135deg, ${COLOR_CODE_1}, ${COLOR_CODE_2})`
+                                    background: `linear-gradient(135deg, ${color_code_1}, ${color_code_2})`
                                 }}>
                                     <span className="status-dot"></span>
                                     Active
                                 </div>
                                 <div className="team-card-overlay" style={{
-                                    background: `linear-gradient(135deg, ${COLOR_CODE_1}99, ${COLOR_CODE_2}99)`
+                                    background: `linear-gradient(135deg, ${color_code_1}99, ${color_code_2}99)`
                                 }}>
                                     <div className="team-card-overlay-content">
                                         <i className="bi bi-eye" style={{ color: '#fff' }}></i>
@@ -171,8 +171,7 @@ const Home_Team = () => {
                             <div className="team-card-info">
                                 <div className="team-card-header">
                                     <h3 className="team-card-name">{member.name}</h3>
-                                    {/* <span className="team-card-country">{member.country}</span> */}
-                                    <p className="team-card-role" style={{ color: COLOR_CODE_1 }}>
+                                    <p className="team-card-role" style={{ color: color_code_1 }}>
                                         {member.role}
                                     </p>
                                 </div>
@@ -195,15 +194,15 @@ const Home_Team = () => {
 
                 {/* Join Team CTA */}
                 <div className="team-cta" style={{
-                    background: `linear-gradient(135deg, ${COLOR_CODE_1}22, ${COLOR_CODE_2}22)`,
-                    border: `1px solid ${COLOR_CODE_1}44`
+                    background: `linear-gradient(135deg, ${color_code_1}22, ${color_code_2}22)`,
+                    border: `1px solid ${color_code_1}44`
                 }}>
                     <div className="team-cta-content">
-                        <h3>Join the <span style={{ color: COLOR_CODE_1 }}>Squad</span></h3>
-                        <p>Think you have what it takes to join {TEAM_NAME}?</p>
+                        <h3>Join the <span style={{ color: color_code_1 }}>Squad</span></h3>
+                        <p>Think you have what it takes to join {team_name}?</p>
                         <button className="team-cta-btn" style={{
-                            background: `linear-gradient(135deg, ${COLOR_CODE_1}, ${COLOR_CODE_2})`,
-                            color: '#fff'
+                            background: `linear-gradient(135deg, ${color_code_1}, ${color_code_2})`,
+                            color: 'white'
                         }}>
                             <i className="bi bi-person-plus"></i> Tryout Now
                         </button>
@@ -225,7 +224,7 @@ const Home_Team = () => {
                                         alt={selectedMember.name}
                                     />
                                     <div className="member-modal-status-badge" style={{
-                                        background: `linear-gradient(135deg, ${COLOR_CODE_1}, ${COLOR_CODE_2})`
+                                        background: `linear-gradient(135deg, ${color_code_1}, ${color_code_2})`
                                     }}>
                                         <span className="status-dot"></span>
                                         Active
@@ -233,12 +232,12 @@ const Home_Team = () => {
                                 </div>
                                 <div className="member-modal-info">
                                     <div className="member-modal-header">
-                                        <h2 style={{ color: COLOR_CODE_1 }}>{selectedMember.name}</h2>
+                                        <h2 style={{ color: color_code_1 }}>{selectedMember.name}</h2>
                                         <span className="member-modal-country">{selectedMember.country}</span>
                                     </div>
                                     <p className="member-modal-realname">{selectedMember.realName}</p>
                                     <p className="member-modal-role" style={{ 
-                                        background: `linear-gradient(135deg, ${COLOR_CODE_1}, ${COLOR_CODE_2})`,
+                                        background: `linear-gradient(135deg, ${color_code_1}, ${color_code_2})`,
                                         color: '#fff'
                                     }}>
                                         {selectedMember.role}

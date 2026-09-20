@@ -3,12 +3,12 @@
 .navbar {
     height: var(--navbar-height);
     background: var(--bg-color-secondary);
-    border-bottom: 2px solid var(--border-color-highlight);
+    border-bottom: 1px solid var(--border-color-highlight);
     display: flex;
     align-items: center;
     padding: 0 var(--spacing-md);
     position: sticky;
-    top: var(--topbar-height);
+    top: calc(var(--topbar-height) - 2px);
     z-index: var(--highest-zindex);
     transition: var(--transition-normal);
     box-shadow: var(--shadow-sm);
@@ -165,8 +165,8 @@
 
 .mobile-toggle {
     display: none;
-    background: var(--bg-color-primary);
-    border: 1px solid var(--border-color-secondary);
+    background: none;
+    border: none;
     border-radius: var(--curve-radius);
     padding: var(--spacing-xs);
     width: 40px;

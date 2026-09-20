@@ -45,8 +45,8 @@ html {
     --highest-zindex: 1000;
 
     /* <==== LAYOUT HEIGHTS ====> */
-    --topbar-height: clamp(55px, 6vh, 80px);
-    --navbar-height: clamp(50px, 5vh, 70px);
+    --topbar-height: clamp(40px, 6vh, 80px);
+    --navbar-height: clamp(35px, 5vh, 70px);
     --banner-height: clamp(300px, 60vh, 600px);
     --footer-height: clamp(200px, 30vh, 350px);
 

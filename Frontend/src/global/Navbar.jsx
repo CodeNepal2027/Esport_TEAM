@@ -1,11 +1,10 @@
 // src/global/Navbar.jsx
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import env_export from '../config/env_export';
+import { getOrgConfig } from '../config/org_config';
 import "./assets/css/Navbar.css";
 
 const Navbar = () => {
-    const { TEAM_TAG, TEAM_NAME, COLOR_CODE_1 } = env_export;
+    const { team_tag, team_name } = getOrgConfig();
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [activeSection, setActiveSection] = useState('');
 
@@ -74,8 +73,6 @@ const Navbar = () => {
     return (
         <nav className="navbar">
             <div className="container">
-
-
                 {/* MIDDLE: Navigation Links */}
                 <div className={`navbar-right ${isMobileMenuOpen ? 'open' : ''}`}>
                     <ul className="nav-list">

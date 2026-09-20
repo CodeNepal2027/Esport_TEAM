@@ -1,15 +1,15 @@
 // src/routes/components/Home_Sponser.jsx
 import React, { useRef, useState, useEffect } from 'react';
-import env_export from '../../config/env_export';
+import { getOrgConfig } from '../../config/org_config';
 import "../assets/css/Home_Sponser.css";
 
 const Home_Sponser = () => {
     const { 
-        TEAM_TAG, 
-        TEAM_NAME, 
-        COLOR_CODE_1, 
-        COLOR_CODE_2 
-    } = env_export;
+        team_tag,
+        team_name,
+        color_code_1,
+        color_code_2,
+    } = getOrgConfig();
 
     const scrollRef = useRef(null);
     const [sponsors, setSponsors] = useState([]);
@@ -113,16 +113,16 @@ const Home_Sponser = () => {
                 <div className="container">
                     <div className="section-header">
                         <span className="section-badge" style={{ 
-                            background: `linear-gradient(135deg, ${COLOR_CODE_1}, ${COLOR_CODE_2})`
+                            background: `linear-gradient(135deg, ${color_code_1}, ${color_code_2})`
                         }}>
                             Our Partners
                         </span>
                         <h2 className="section-title">
-                            <span style={{ color: COLOR_CODE_1 }}>Trusted</span> Sponsors
+                            <span style={{ color: color_code_1 }}>Trusted</span> Sponsors
                         </h2>
                     </div>
                     <div className="sponsor-loading">
-                        <div className="loading-spinner" style={{ borderColor: COLOR_CODE_1 }}></div>
+                        <div className="loading-spinner" style={{ borderColor: color_code_1 }}></div>
                         <p>Loading sponsors...</p>
                     </div>
                 </div>
@@ -136,12 +136,12 @@ const Home_Sponser = () => {
                 {/* Section Header */}
                 <div className="section-header">
                     <span className="section-badge" style={{ 
-                        background: `linear-gradient(135deg, ${COLOR_CODE_1}, ${COLOR_CODE_2})`
+                        background: `linear-gradient(135deg, ${color_code_1}, ${color_code_2})`
                     }}>
                         Our Partners
                     </span>
                     <h2 className="section-title">
-                        <span style={{ color: COLOR_CODE_1 }}>Trusted</span> Sponsors
+                        <span style={{ color: color_code_1 }}>Trusted</span> Sponsors
                     </h2>
                     <p className="section-subtitle">
                         Proudly supported by industry leaders who believe in our vision
@@ -151,8 +151,8 @@ const Home_Sponser = () => {
                 {/* Error Message */}
                 {error && (
                     <div className="sponsor-error" style={{
-                        borderColor: COLOR_CODE_1,
-                        color: COLOR_CODE_1
+                        borderColor: color_code_1,
+                        color: color_code_1
                     }}>
                         <i className="bi bi-exclamation-circle"></i>
                         <span>{error}</span>
@@ -166,7 +166,7 @@ const Home_Sponser = () => {
                             className="carousel-btn carousel-btn-left" 
                             onClick={scrollLeft}
                             style={{
-                                background: `linear-gradient(135deg, ${COLOR_CODE_1}, ${COLOR_CODE_2})`
+                                background: `linear-gradient(135deg, ${color_code_1}, ${color_code_2})`
                             }}
                         >
                             <i className="bi bi-arrow-left-circle"></i>
@@ -189,12 +189,12 @@ const Home_Sponser = () => {
                                                         const fallback = document.createElement('span');
                                                         fallback.className = 'sponsor-fallback';
                                                         fallback.textContent = sponsor.name;
-                                                        fallback.style.color = COLOR_CODE_1;
+                                                        fallback.style.color = color_code_1;
                                                         e.target.parentElement.appendChild(fallback);
                                                     }}
                                                 />
                                             ) : (
-                                                <span className="sponsor-fallback" style={{ color: COLOR_CODE_1 }}>
+                                                <span className="sponsor-fallback" style={{ color: color_code_1 }}>
                                                     {sponsor.name}
                                                 </span>
                                             )}
@@ -208,7 +208,7 @@ const Home_Sponser = () => {
                             className="carousel-btn carousel-btn-right" 
                             onClick={scrollRight}
                             style={{
-                                background: `linear-gradient(135deg, ${COLOR_CODE_1}, ${COLOR_CODE_2})`
+                                background: `linear-gradient(135deg, ${color_code_1}, ${color_code_2})`
                             }}
                         >
                             <i className="bi bi-arrow-right-circle"></i>
@@ -222,14 +222,14 @@ const Home_Sponser = () => {
 
                 {/* Become a Sponsor CTA */}
                 <div className="sponsor-cta" style={{
-                    background: `linear-gradient(135deg, ${COLOR_CODE_1}22, ${COLOR_CODE_2}22)`,
-                    border: `1px solid ${COLOR_CODE_1}44`
+                    background: `linear-gradient(135deg, ${color_code_1}22, ${color_code_2}22)`,
+                    border: `1px solid ${color_code_1}44`
                 }}>
                     <div className="cta-content">
-                        <h3>Become a <span style={{ color: COLOR_CODE_1 }}>Partner</span></h3>
+                        <h3>Become a <span style={{ color: color_code_1 }}>Partner</span></h3>
                         <p>Join our growing family of sponsors and partners</p>
                         <button className="cta-btn" style={{
-                            background: `linear-gradient(135deg, ${COLOR_CODE_1}, ${COLOR_CODE_2})`,
+                            background: `linear-gradient(135deg, ${color_code_1}, ${color_code_2})`,
                             color: '#fff'
                         }}>
                             <i className="bi bi-people"></i> Partner With Us

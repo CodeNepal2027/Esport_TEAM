@@ -1,15 +1,15 @@
 // src/routes/components/Home_Video.jsx
 import React, { useState, useEffect } from 'react';
-import env_export from '../../config/env_export';
+import { getOrgConfig } from '../../config/org_config';
 import "../assets/css/Home_Video.css";
 
 const Home_Video = () => {
     const { 
-        TEAM_TAG, 
-        TEAM_NAME, 
-        COLOR_CODE_1, 
-        COLOR_CODE_2 
-    } = env_export;
+        team_tag,
+        team_name,
+        color_code_1,
+        color_code_2,
+    } = getOrgConfig();
 
     const [videos, setVideos] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -211,16 +211,16 @@ const Home_Video = () => {
                 <div className="container">
                     <div className="section-header">
                         <span className="section-badge" style={{ 
-                            background: `linear-gradient(135deg, ${COLOR_CODE_1}, ${COLOR_CODE_2})`
+                            background: `linear-gradient(135deg, ${color_code_1}, ${color_code_2})`
                         }}>
                             Watch Us
                         </span>
                         <h2 className="section-title">
-                            <span style={{ color: COLOR_CODE_1 }}>Latest</span> Videos
+                            <span style={{ color: color_code_1 }}>Latest</span> Videos
                         </h2>
                     </div>
                     <div className="video-loading">
-                        <div className="loading-spinner" style={{ borderColor: COLOR_CODE_1 }}></div>
+                        <div className="loading-spinner" style={{ borderColor: color_code_1 }}></div>
                         <p>Loading videos...</p>
                     </div>
                 </div>
@@ -234,15 +234,15 @@ const Home_Video = () => {
                 {/* Section Header */}
                 <div className="section-header">
                     <span className="section-badge" style={{ 
-                        background: `linear-gradient(135deg, ${COLOR_CODE_1}, ${COLOR_CODE_2})`
+                        background: `linear-gradient(135deg, ${color_code_1}, ${color_code_2})`
                     }}>
                         Watch Us
                     </span>
                     <h2 className="section-title">
-                        <span style={{ color: COLOR_CODE_1 }}>Latest</span> Videos
+                        <span style={{ color: color_code_1 }}>Latest</span> Videos
                     </h2>
                     <p className="section-subtitle">
-                        Catch all the action from {TEAM_NAME}
+                        Catch all the action from {team_name}
                     </p>
                 </div>
 
@@ -254,8 +254,8 @@ const Home_Video = () => {
                             className={`filter-btn ${categoryFilter === cat ? 'active' : ''}`}
                             onClick={() => setCategoryFilter(cat)}
                             style={{
-                                borderColor: categoryFilter === cat ? COLOR_CODE_1 : 'var(--border-color-secondary)',
-                                color: categoryFilter === cat ? COLOR_CODE_1 : 'var(--font-color-secondary)'
+                                borderColor: categoryFilter === cat ? color_code_1 : 'var(--border-color-secondary)',
+                                color: categoryFilter === cat ? color_code_1 : 'var(--font-color-secondary)'
                             }}
                         >
                             {getCategoryLabel(cat)}
@@ -271,7 +271,7 @@ const Home_Video = () => {
                                 key={video.id} 
                                 className="video-card"
                                 style={{
-                                    border: `2px solid ${COLOR_CODE_1}22`
+                                    border: `2px solid ${color_code_1}22`
                                 }}
                             >
                                 <div className="video-thumbnail-wrapper" onClick={() => openVideo(video)}>
@@ -286,7 +286,7 @@ const Home_Video = () => {
                                         }}
                                     />
                                     <div className="video-play-overlay" style={{
-                                        background: `linear-gradient(135deg, ${COLOR_CODE_1}99, ${COLOR_CODE_2}99)`
+                                        background: `linear-gradient(135deg, ${color_code_1}99, ${color_code_2}99)`
                                     }}>
                                         <div className="play-button">
                                             <i className="bi bi-play-circle-fill" style={{ color: '#fff' }}></i>
@@ -302,7 +302,7 @@ const Home_Video = () => {
                                     </p>
                                     <div className="video-meta">
                                         <span className="video-category-tag" style={{
-                                            background: `linear-gradient(135deg, ${COLOR_CODE_1}, ${COLOR_CODE_2})`,
+                                            background: `linear-gradient(135deg, ${color_code_1}, ${color_code_2})`,
                                             color: '#fff'
                                         }}>
                                             {getCategoryLabel(video.category)}
@@ -319,7 +319,7 @@ const Home_Video = () => {
                         ))
                     ) : (
                         <div className="video-empty">
-                            <i className="bi bi-youtube" style={{ color: COLOR_CODE_1 }}></i>
+                            <i className="bi bi-youtube" style={{ color: color_code_1 }}></i>
                             <p>No videos found in this category.</p>
                         </div>
                     )}
@@ -345,11 +345,11 @@ const Home_Video = () => {
                             </div>
                             
                             <div className="video-modal-info">
-                                <h3 style={{ color: COLOR_CODE_1 }}>{selectedVideo.title}</h3>
+                                <h3 style={{ color: color_code_1 }}>{selectedVideo.title}</h3>
                                 <p className="video-modal-description">{selectedVideo.description || 'No description available'}</p>
                                 <div className="video-modal-meta">
                                     <span className="video-modal-category" style={{
-                                        background: `linear-gradient(135deg, ${COLOR_CODE_1}, ${COLOR_CODE_2})`,
+                                        background: `linear-gradient(135deg, ${color_code_1}, ${color_code_2})`,
                                         color: '#fff'
                                     }}>
                                         {getCategoryLabel(selectedVideo.category)}

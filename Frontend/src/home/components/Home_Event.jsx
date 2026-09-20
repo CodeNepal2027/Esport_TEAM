@@ -1,15 +1,15 @@
 // src/routes/components/Home_Event.jsx
 import React, { useState } from 'react';
-import env_export from '../../config/env_export';
+import { getOrgConfig } from '../../config/org_config';
 import "../assets/css/Home_Event.css";
 
 const Home_Event = () => {
     const { 
-        TEAM_TAG, 
-        TEAM_NAME, 
-        COLOR_CODE_1, 
-        COLOR_CODE_2 
-    } = env_export;
+        team_tag,
+        team_name,
+        color_code_1,
+        color_code_2,
+    } = getOrgConfig();
 
     const [selectedEvent, setSelectedEvent] = useState(null);
 
@@ -140,7 +140,7 @@ const Home_Event = () => {
 
     const getStatusColor = (status) => {
         const colors = {
-            'upcoming': COLOR_CODE_2,
+            'upcoming': color_code_2,
             'ongoing': '#FFA500',
             'completed': '#888'
         };
@@ -177,15 +177,15 @@ const Home_Event = () => {
                 {/* Section Header */}
                 <div className="section-header">
                     <span className="section-badge" style={{ 
-                        background: `linear-gradient(135deg, ${COLOR_CODE_1}, ${COLOR_CODE_2})`
+                        background: `linear-gradient(135deg, ${color_code_1}, ${color_code_2})`
                     }}>
                         Upcoming & Past
                     </span>
                     <h2 className="section-title">
-                        <span style={{ color: COLOR_CODE_1 }}>Events</span> & Tournaments
+                        <span style={{ color: color_code_1 }}>Events</span> & Tournaments
                     </h2>
                     <p className="section-subtitle">
-                        Stay updated with all {TEAM_NAME} events and tournaments
+                        Stay updated with all {team_name} events and tournaments
                     </p>
                 </div>
 
@@ -199,8 +199,8 @@ const Home_Event = () => {
                                 className={`filter-btn ${statusFilter === status ? 'active' : ''}`}
                                 onClick={() => setStatusFilter(status)}
                                 style={{
-                                    borderColor: statusFilter === status ? COLOR_CODE_1 : 'var(--border-color-secondary)',
-                                    color: statusFilter === status ? COLOR_CODE_1 : 'var(--font-color-secondary)'
+                                    borderColor: statusFilter === status ? color_code_1 : 'var(--border-color-secondary)',
+                                    color: statusFilter === status ? color_code_1 : 'var(--font-color-secondary)'
                                 }}
                             >
                                 {status === 'all' ? 'All' : getStatusLabel(status)}
@@ -216,8 +216,8 @@ const Home_Event = () => {
                                 className={`filter-btn ${categoryFilter === cat ? 'active' : ''}`}
                                 onClick={() => setCategoryFilter(cat)}
                                 style={{
-                                    borderColor: categoryFilter === cat ? COLOR_CODE_1 : 'var(--border-color-secondary)',
-                                    color: categoryFilter === cat ? COLOR_CODE_1 : 'var(--font-color-secondary)'
+                                    borderColor: categoryFilter === cat ? color_code_1 : 'var(--border-color-secondary)',
+                                    color: categoryFilter === cat ? color_code_1 : 'var(--font-color-secondary)'
                                 }}
                             >
                                 {cat === 'all' ? 'All' : getCategoryLabel(cat)}
@@ -235,7 +235,7 @@ const Home_Event = () => {
                                 className="event-card"
                                 onClick={() => openEventDetail(event)}
                                 style={{
-                                    border: `2px solid ${COLOR_CODE_1}22`
+                                    border: `2px solid ${color_code_1}22`
                                 }}
                             >
                                 <div className="event-image-wrapper">
@@ -268,11 +268,11 @@ const Home_Event = () => {
                                         </span>
                                     </div>
                                     <div className="event-footer">
-                                        <span className="event-prize" style={{ color: COLOR_CODE_1 }}>
+                                        <span className="event-prize" style={{ color: color_code_1 }}>
                                             <i className="bi bi-trophy"></i> {event.prizePool}
                                         </span>
                                         <span className="event-category-tag" style={{
-                                            background: `linear-gradient(135deg, ${COLOR_CODE_1}, ${COLOR_CODE_2})`,
+                                            background: `linear-gradient(135deg, ${color_code_1}, ${color_code_2})`,
                                             color: '#fff'
                                         }}>
                                             {getCategoryLabel(event.category)}
@@ -283,7 +283,7 @@ const Home_Event = () => {
                         ))
                     ) : (
                         <div className="event-empty">
-                            <i className="bi bi-calendar2-event" style={{ color: COLOR_CODE_1 }}></i>
+                            <i className="bi bi-calendar2-event" style={{ color: color_code_1 }}></i>
                             <p>No events found matching your filters.</p>
                         </div>
                     )}
@@ -310,33 +310,33 @@ const Home_Event = () => {
                             </div>
                             
                             <div className="event-modal-info">
-                                <h2 style={{ color: COLOR_CODE_1 }}>{selectedEvent.title}</h2>
+                                <h2 style={{ color: color_code_1 }}>{selectedEvent.title}</h2>
                                 <p className="event-modal-description">{selectedEvent.description}</p>
                                 
                                 <div className="event-modal-details">
                                     <div className="event-modal-detail">
-                                        <i className="bi bi-calendar3" style={{ color: COLOR_CODE_1 }}></i>
+                                        <i className="bi bi-calendar3" style={{ color: color_code_1 }}></i>
                                         <div>
                                             <span className="detail-label">Date</span>
                                             <span className="detail-value">{selectedEvent.date}</span>
                                         </div>
                                     </div>
                                     <div className="event-modal-detail">
-                                        <i className="bi bi-geo-alt" style={{ color: COLOR_CODE_1 }}></i>
+                                        <i className="bi bi-geo-alt" style={{ color: color_code_1 }}></i>
                                         <div>
                                             <span className="detail-label">Location</span>
                                             <span className="detail-value">{selectedEvent.location}</span>
                                         </div>
                                     </div>
                                     <div className="event-modal-detail">
-                                        <i className="bi bi-trophy" style={{ color: COLOR_CODE_1 }}></i>
+                                        <i className="bi bi-trophy" style={{ color: color_code_1 }}></i>
                                         <div>
                                             <span className="detail-label">Prize Pool</span>
                                             <span className="detail-value">{selectedEvent.prizePool}</span>
                                         </div>
                                     </div>
                                     <div className="event-modal-detail">
-                                        <i className="bi bi-tag" style={{ color: COLOR_CODE_1 }}></i>
+                                        <i className="bi bi-tag" style={{ color: color_code_1 }}></i>
                                         <div>
                                             <span className="detail-label">Category</span>
                                             <span className="detail-value">{getCategoryLabel(selectedEvent.category)}</span>
@@ -345,7 +345,7 @@ const Home_Event = () => {
                                 </div>
                                 
                                 <button className="event-modal-btn" style={{
-                                    background: `linear-gradient(135deg, ${COLOR_CODE_1}, ${COLOR_CODE_2})`,
+                                    background: `linear-gradient(135deg, ${color_code_1}, ${color_code_2})`,
                                     color: '#fff'
                                 }}>
                                     <i className="bi bi-ticket"></i> Get Tickets

@@ -1,28 +1,28 @@
 // src/routes/components/Home_Contact.jsx
 import React, { useState } from 'react';
-import env_export from '../../config/env_export';
+import { getOrgConfig } from '../../config/org_config';
 import "../assets/css/Home_Contact.css";
 
 const Home_Contact = () => {
     const { 
-        TEAM_TAG, 
-        TEAM_NAME, 
-        COLOR_CODE_1, 
-        COLOR_CODE_2,
-        ORG_EMAIL,
-        ORG_PHONE_1,
-        ORG_PHONE_2,
-        ORG_WHATSAPP,
-        ORG_ADDRESS,
-        ORG_COUNTRY,
-        ORG_WORKING_DAY,
-        ORG_WORKING_HOUR,
-        ORG_YOUTUBE_LINK,
-        ORG_TIKTOK_LINK,
-        ORG_INSTAGRAM_LINK,
-        ORG_DISCORD_LINK,
-        ORG_TWITTER_LINK,
-    } = env_export;
+        team_tag,
+        team_name,
+        color_code_1,
+        color_code_2,
+        org_email,
+        org_phone_1,
+        org_phone_2,
+        org_whatsapp,
+        org_address,
+        org_country,
+        org_working_day,
+        org_working_hour,
+        org_youtube_link,
+        org_tiktok_link,
+        org_instagram_link,
+        org_discord_link,
+        org_twitter_link,
+    } = getOrgConfig();
 
     const [formData, setFormData] = useState({
         name: '',
@@ -55,15 +55,15 @@ const Home_Contact = () => {
                 {/* Section Header */}
                 <div className="section-header">
                     <span className="section-badge" style={{ 
-                        background: `linear-gradient(135deg, ${COLOR_CODE_1}, ${COLOR_CODE_2})`
+                        background: `linear-gradient(135deg, ${color_code_1}, ${color_code_2})`
                     }}>
                         Get In Touch
                     </span>
                     <h2 className="section-title">
-                        Let's <span style={{ color: COLOR_CODE_1 }}>Connect</span>
+                        Let's <span style={{ color: color_code_1 }}>Connect</span>
                     </h2>
                     <p className="section-subtitle">
-                        Have questions or want to collaborate? Reach out to {TEAM_NAME}
+                        Have questions or want to collaborate? Reach out to {team_name}
                     </p>
                 </div>
 
@@ -71,11 +71,11 @@ const Home_Contact = () => {
                     {/* Left Side - Contact Info */}
                     <div className="contact-left">
                         <div className="contact-info-card" style={{
-                            background: `linear-gradient(135deg, ${COLOR_CODE_1}22, ${COLOR_CODE_2}22)`,
-                            border: `1px solid ${COLOR_CODE_1}44`
+                            background: `linear-gradient(135deg, ${color_code_1}22, ${color_code_2}22)`,
+                            border: `1px solid ${color_code_1}44`
                         }}>
                             {/* Email */}
-                            {ORG_EMAIL && (
+                            {org_email && (
                                 <div className="info-item">
                                     <div className="info-icon">
                                         <i className="bi bi-envelope"></i>
@@ -83,8 +83,8 @@ const Home_Contact = () => {
                                     <div className="info-text">
                                         <h4>Email</h4>
                                         <p>
-                                            <a href={`mailto:${ORG_EMAIL}`} className="info-link">
-                                                {ORG_EMAIL}
+                                            <a href={`mailto:${org_email}`} className="info-link">
+                                                {org_email}
                                             </a>
                                         </p>
                                         <span>We'll respond within 24 hours</span>
@@ -93,38 +93,38 @@ const Home_Contact = () => {
                             )}
 
                             {/* Location */}
-                            {(ORG_ADDRESS || ORG_COUNTRY) && (
+                            {(org_address || org_country) && (
                                 <div className="info-item">
                                     <div className="info-icon">
                                         <i className="bi bi-geo-alt"></i>
                                     </div>
                                     <div className="info-text">
                                         <h4>Location</h4>
-                                        <p>{ORG_ADDRESS}{ORG_ADDRESS && ORG_COUNTRY ? ', ' : ''}{ORG_COUNTRY}</p>
+                                        <p>{org_address}{org_address && org_country ? ', ' : ''}{org_country}</p>
                                         <span>Visit us anytime</span>
                                     </div>
                                 </div>
                             )}
 
                             {/* Phone */}
-                            {(ORG_PHONE_1 || ORG_PHONE_2) && (
+                            {(org_phone_1 || org_phone_2) && (
                                 <div className="info-item">
                                     <div className="info-icon">
                                         <i className="bi bi-phone"></i>
                                     </div>
                                     <div className="info-text">
                                         <h4>Phone</h4>
-                                        {ORG_PHONE_1 && (
+                                        {org_phone_1 && (
                                             <p>
-                                                <a href={`tel:${ORG_PHONE_1}`} className="info-link">
-                                                    {ORG_PHONE_1}
+                                                <a href={`tel:${org_phone_1}`} className="info-link">
+                                                    {org_phone_1}
                                                 </a>
                                             </p>
                                         )}
-                                        {ORG_PHONE_2 && (
+                                        {org_phone_2 && (
                                             <p>
-                                                <a href={`tel:${ORG_PHONE_2}`} className="info-link">
-                                                    {ORG_PHONE_2}
+                                                <a href={`tel:${org_phone_2}`} className="info-link">
+                                                    {org_phone_2}
                                                 </a>
                                             </p>
                                         )}
@@ -134,7 +134,7 @@ const Home_Contact = () => {
                             )}
 
                             {/* WhatsApp */}
-                            {ORG_WHATSAPP && (
+                            {org_whatsapp && (
                                 <div className="info-item">
                                     <div className="info-icon">
                                         <i className="bi bi-whatsapp"></i>
@@ -143,12 +143,12 @@ const Home_Contact = () => {
                                         <h4>WhatsApp</h4>
                                         <p>
                                             <a 
-                                                href={`https://wa.me/${ORG_WHATSAPP.replace(/[^0-9]/g, '')}`} 
+                                                href={`https://wa.me/${org_whatsapp.replace(/[^0-9]/g, '')}`} 
                                                 target="_blank" 
                                                 rel="noopener noreferrer"
                                                 className="info-link"
                                             >
-                                                {ORG_WHATSAPP}
+                                                {org_whatsapp}
                                             </a>
                                         </p>
                                         <span>Chat with us</span>
@@ -157,28 +157,28 @@ const Home_Contact = () => {
                             )}
 
                             {/* Working Hours */}
-                            {(ORG_WORKING_DAY || ORG_WORKING_HOUR) && (
+                            {(org_working_day || org_working_hour) && (
                                 <div className="info-item">
                                     <div className="info-icon">
                                         <i className="bi bi-clock"></i>
                                     </div>
                                     <div className="info-text">
                                         <h4>Working Hours</h4>
-                                        <p>{ORG_WORKING_HOUR}</p>
-                                        <span>{ORG_WORKING_DAY}</span>
+                                        <p>{org_working_hour}</p>
+                                        <span>{org_working_day}</span>
                                     </div>
                                 </div>
                             )}
                         </div>
 
                         {/* Social Links */}
-                        {(ORG_YOUTUBE_LINK || ORG_TIKTOK_LINK || ORG_INSTAGRAM_LINK || ORG_DISCORD_LINK || ORG_TWITTER_LINK) && (
+                        {(org_youtube_link || org_tiktok_link || org_instagram_link || org_discord_link || org_twitter_link) && (
                             <div className="contact-social">
-                                <h4>Follow <span style={{ color: COLOR_CODE_1 }}>{TEAM_TAG}</span></h4>
+                                <h4>Follow <span style={{ color: color_code_1 }}>{team_tag}</span></h4>
                                 <div className="social-links">
-                                    {ORG_TWITTER_LINK && (
+                                    {org_twitter_link && (
                                         <a 
-                                            href={ORG_TWITTER_LINK} 
+                                            href={org_twitter_link} 
                                             target="_blank" 
                                             rel="noopener noreferrer"
                                             className="social-icon"
@@ -186,9 +186,9 @@ const Home_Contact = () => {
                                             <i className="bi bi-twitter"></i>
                                         </a>
                                     )}
-                                    {ORG_INSTAGRAM_LINK && (
+                                    {org_instagram_link && (
                                         <a 
-                                            href={ORG_INSTAGRAM_LINK} 
+                                            href={org_instagram_link} 
                                             target="_blank" 
                                             rel="noopener noreferrer"
                                             className="social-icon"
@@ -196,9 +196,9 @@ const Home_Contact = () => {
                                             <i className="bi bi-instagram"></i>
                                         </a>
                                     )}
-                                    {ORG_YOUTUBE_LINK && (
+                                    {org_youtube_link && (
                                         <a 
-                                            href={ORG_YOUTUBE_LINK} 
+                                            href={org_youtube_link} 
                                             target="_blank" 
                                             rel="noopener noreferrer"
                                             className="social-icon"
@@ -206,9 +206,9 @@ const Home_Contact = () => {
                                             <i className="bi bi-youtube"></i>
                                         </a>
                                     )}
-                                    {ORG_DISCORD_LINK && (
+                                    {org_discord_link && (
                                         <a 
-                                            href={ORG_DISCORD_LINK} 
+                                            href={org_discord_link} 
                                             target="_blank" 
                                             rel="noopener noreferrer"
                                             className="social-icon"
@@ -216,9 +216,9 @@ const Home_Contact = () => {
                                             <i className="bi bi-discord"></i>
                                         </a>
                                     )}
-                                    {ORG_TIKTOK_LINK && (
+                                    {org_tiktok_link && (
                                         <a 
-                                            href={ORG_TIKTOK_LINK} 
+                                            href={org_tiktok_link} 
                                             target="_blank" 
                                             rel="noopener noreferrer"
                                             className="social-icon"
@@ -234,11 +234,11 @@ const Home_Contact = () => {
                     {/* Right Side - Contact Form */}
                     <div className="contact-right">
                         <div className="contact-form" style={{
-                            border: `1px solid ${COLOR_CODE_1}44`,
-                            background: `linear-gradient(135deg, ${COLOR_CODE_1}11, ${COLOR_CODE_2}11)`
+                            border: `1px solid ${color_code_1}44`,
+                            background: `linear-gradient(135deg, ${color_code_1}11, ${color_code_2}11)`
                         }}>
                             <div className="form-header">
-                                <h3>Send Us a <span style={{ color: COLOR_CODE_1 }}>Message</span></h3>
+                                <h3>Send Us a <span style={{ color: color_code_1 }}>Message</span></h3>
                                 <p>We'd love to hear from you</p>
                             </div>
 
@@ -246,7 +246,7 @@ const Home_Contact = () => {
                                 <div className="form-row">
                                     <div className="form-group">
                                         <label>
-                                            <i className="bi bi-person" style={{ color: COLOR_CODE_1 }}></i>
+                                            <i className="bi bi-person" style={{ color: color_code_1 }}></i>
                                             Your Name
                                         </label>
                                         <input
@@ -257,7 +257,7 @@ const Home_Contact = () => {
                                             onChange={handleChange}
                                             required
                                             style={{
-                                                border: `1px solid ${COLOR_CODE_1}44`,
+                                                border: `1px solid ${color_code_1}44`,
                                                 background: 'var(--bg-color-primary)',
                                                 color: 'var(--font-color-primary)'
                                             }}
@@ -266,7 +266,7 @@ const Home_Contact = () => {
 
                                     <div className="form-group">
                                         <label>
-                                            <i className="bi bi-envelope" style={{ color: COLOR_CODE_1 }}></i>
+                                            <i className="bi bi-envelope" style={{ color: color_code_1 }}></i>
                                             Email Address
                                         </label>
                                         <input
@@ -277,7 +277,7 @@ const Home_Contact = () => {
                                             onChange={handleChange}
                                             required
                                             style={{
-                                                border: `1px solid ${COLOR_CODE_1}44`,
+                                                border: `1px solid ${color_code_1}44`,
                                                 background: 'var(--bg-color-primary)',
                                                 color: 'var(--font-color-primary)'
                                             }}
@@ -287,7 +287,7 @@ const Home_Contact = () => {
 
                                 <div className="form-group">
                                     <label>
-                                        <i className="bi bi-tag" style={{ color: COLOR_CODE_1 }}></i>
+                                        <i className="bi bi-tag" style={{ color: color_code_1 }}></i>
                                         Subject
                                     </label>
                                     <input
@@ -298,7 +298,7 @@ const Home_Contact = () => {
                                         onChange={handleChange}
                                         required
                                         style={{
-                                            border: `1px solid ${COLOR_CODE_1}44`,
+                                            border: `1px solid ${color_code_1}44`,
                                             background: 'var(--bg-color-primary)',
                                             color: 'var(--font-color-primary)'
                                         }}
@@ -307,7 +307,7 @@ const Home_Contact = () => {
 
                                 <div className="form-group">
                                     <label>
-                                        <i className="bi bi-chat" style={{ color: COLOR_CODE_1 }}></i>
+                                        <i className="bi bi-chat" style={{ color: color_code_1 }}></i>
                                         Message
                                     </label>
                                     <textarea
@@ -318,7 +318,7 @@ const Home_Contact = () => {
                                         onChange={handleChange}
                                         required
                                         style={{
-                                            border: `1px solid ${COLOR_CODE_1}44`,
+                                            border: `1px solid ${color_code_1}44`,
                                             background: 'var(--bg-color-primary)',
                                             color: 'var(--font-color-primary)',
                                             resize: 'vertical'
@@ -330,7 +330,7 @@ const Home_Contact = () => {
                                     type="submit" 
                                     className="submit-btn"
                                     style={{
-                                        background: `linear-gradient(135deg, ${COLOR_CODE_1}, ${COLOR_CODE_2})`,
+                                        background: `linear-gradient(135deg, ${color_code_1}, ${color_code_2})`,
                                         color: '#fff'
                                     }}
                                 >
@@ -339,7 +339,7 @@ const Home_Contact = () => {
                                 </button>
 
                                 {formStatus === 'success' && (
-                                    <div className="form-success" style={{ color: COLOR_CODE_2 }}>
+                                    <div className="form-success" style={{ color: color_code_2 }}>
                                         <i className="bi bi-check-circle-fill"></i> 
                                         Message sent successfully! We'll get back to you soon.
                                     </div>

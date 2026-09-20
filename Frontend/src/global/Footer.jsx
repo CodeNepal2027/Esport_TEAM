@@ -1,31 +1,33 @@
 // src/global/Footer.jsx
 import React from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-import env_export from '../config/env_export';
+import { getOrgConfig } from '../config/org_config';
+import {
+    POWERED_BY_NAME,
+    POWERED_BY_LINK,
+    POWERED_BY_LOGO_URL,
+} from '../config/env_export';
 import "./assets/css/Footer.css";
 
 const Footer = () => {
     const { 
-        TEAM_TAG, 
-        TEAM_NAME, 
-        TEAM_LOGO_URL,
-        COLOR_CODE_1, 
-        COLOR_CODE_2,
-        ORG_SHOP,
-        ORG_EMAIL,
-        ORG_PHONE_1,
-        ORG_PHONE_2,
-        ORG_ADDRESS,
-        ORG_COUNTRY,
-        ORG_YOUTUBE_LINK,
-        ORG_TIKTOK_LINK,
-        ORG_INSTAGRAM_LINK,
-        ORG_DISCORD_LINK,
-        ORG_TWITTER_LINK,
-        POWERED_BY_NAME,
-        POWERED_BY_LINK,
-        POWERED_BY_LOGO_URL,
-    } = env_export;
+        team_tag,
+        team_name,
+        team_logo_url,
+        color_code_1,
+        color_code_2,
+        org_shop,
+        org_email,
+        org_phone_1,
+        org_phone_2,
+        org_address,
+        org_country,
+        org_youtube_link,
+        org_tiktok_link,
+        org_instagram_link,
+        org_discord_link,
+        org_twitter_link,
+    } = getOrgConfig();
 
     const navigate = useNavigate();
     const location = useLocation();
@@ -86,19 +88,19 @@ const Footer = () => {
                     <div className="footer-brand">
                         <div className="footer-logo-wrapper">
                             <img 
-                                src={TEAM_LOGO_URL} 
-                                alt={TEAM_NAME}
+                                src={team_logo_url} 
+                                alt={team_name}
                                 className="footer-logo"
                                 onError={(e) => {
-                                    e.target.src = `https://ui-avatars.com/api/?name=${TEAM_TAG}&background=${COLOR_CODE_1.replace('#', '')}&color=fff&size=64`;
+                                    e.target.src = `https://ui-avatars.com/api/?name=${team_tag}&background=${color_code_1.replace('#', '')}&color=fff&size=64`;
                                 }}
                             />
-                            <h2 className="footer-brand-name" style={{ color: COLOR_CODE_1 }}>
-                                {TEAM_TAG} <span>ESPORTS</span>
+                            <h2 className="footer-brand-name" style={{ color: color_code_1 }}>
+                                {team_tag} <span>ESPORTS</span>
                             </h2>
                         </div>
                         <p className="footer-description">
-                            Showcasing Excellence: {TEAM_NAME} represents passion, skill, and creativity—explore our journey, achievements, and the team behind the success.
+                            Showcasing Excellence: {team_name} represents passion, skill, and creativity—explore our journey, achievements, and the team behind the success.
                         </p>
                     </div>
 
@@ -134,12 +136,12 @@ const Footer = () => {
 
                     {/* Store Column */}
                     <div className="footer-column">
-                        <h4 className="footer-column-title">{TEAM_TAG} Store</h4>
+                        <h4 className="footer-column-title">{team_tag} Store</h4>
                         <ul className="footer-links">
-                            {ORG_SHOP && (
+                            {org_shop && (
                                 <li>
                                     <a 
-                                        href={ORG_SHOP} 
+                                        href={org_shop} 
                                         target="_blank" 
                                         rel="noopener noreferrer"
                                     >
@@ -159,42 +161,42 @@ const Footer = () => {
                     <div className="footer-column">
                         <h4 className="footer-column-title">Get In Touch</h4>
                         <div className="footer-contact">
-                            {ORG_EMAIL && (
+                            {org_email && (
                                 <div className="contact-item">
                                     <span className="contact-label">EMAIL</span>
                                     <a 
-                                        href={`mailto:${ORG_EMAIL}`} 
+                                        href={`mailto:${org_email}`} 
                                         className="contact-value" 
-                                        style={{ color: COLOR_CODE_1 }}
+                                        style={{ color: color_code_1 }}
                                     >
-                                        {ORG_EMAIL}
+                                        {org_email}
                                     </a>
                                 </div>
                             )}
-                            {ORG_PHONE_1 && (
+                            {org_phone_1 && (
                                 <div className="contact-item">
                                     <span className="contact-label">PHONE</span>
                                     <a 
-                                        href={`tel:${ORG_PHONE_1}`} 
+                                        href={`tel:${org_phone_1}`} 
                                         className="contact-value"
                                     >
-                                        {ORG_PHONE_1}
+                                        {org_phone_1}
                                     </a>
-                                    {ORG_PHONE_2 && (
+                                    {org_phone_2 && (
                                         <a 
-                                            href={`tel:${ORG_PHONE_2}`} 
+                                            href={`tel:${org_phone_2}`} 
                                             className="contact-value"
                                         >
-                                            {ORG_PHONE_2}
+                                            {org_phone_2}
                                         </a>
                                     )}
                                 </div>
                             )}
-                            {(ORG_ADDRESS || ORG_COUNTRY) && (
+                            {(org_address || org_country) && (
                                 <div className="contact-item">
                                     <span className="contact-label">LOCATION</span>
                                     <span className="contact-value">
-                                        {ORG_ADDRESS}{ORG_ADDRESS && ORG_COUNTRY ? ', ' : ''}{ORG_COUNTRY}
+                                        {org_address}{org_address && org_country ? ', ' : ''}{org_country}
                                     </span>
                                 </div>
                             )}
@@ -203,36 +205,36 @@ const Footer = () => {
                 </div>
 
                 {/* Social Media Section */}
-                {(ORG_YOUTUBE_LINK || ORG_TIKTOK_LINK || ORG_INSTAGRAM_LINK || ORG_DISCORD_LINK || ORG_TWITTER_LINK) && (
+                {(org_youtube_link || org_tiktok_link || org_instagram_link || org_discord_link || org_twitter_link) && (
                     <div className="footer-social-section">
                         <div className="footer-social">
                             <h4 className="footer-social-title">FOLLOW OUR JOURNEY</h4>
                             <div className="social-icons">
-                                {ORG_TWITTER_LINK && (
+                                {org_twitter_link && (
                                     <a 
-                                        href={ORG_TWITTER_LINK} 
+                                        href={org_twitter_link} 
                                         target="_blank" 
                                         rel="noopener noreferrer"
                                         className="social-icon"
-                                        style={{ color: COLOR_CODE_1 }}
+                                        style={{ color: color_code_1 }}
                                     >
                                         <i className="bi bi-twitter"></i>
                                     </a>
                                 )}
-                                {ORG_INSTAGRAM_LINK && (
+                                {org_instagram_link && (
                                     <a 
-                                        href={ORG_INSTAGRAM_LINK} 
+                                        href={org_instagram_link} 
                                         target="_blank" 
                                         rel="noopener noreferrer"
                                         className="social-icon"
-                                        style={{ color: COLOR_CODE_2 }}
+                                        style={{ color: color_code_2 }}
                                     >
                                         <i className="bi bi-instagram"></i>
                                     </a>
                                 )}
-                                {ORG_YOUTUBE_LINK && (
+                                {org_youtube_link && (
                                     <a 
-                                        href={ORG_YOUTUBE_LINK} 
+                                        href={org_youtube_link} 
                                         target="_blank" 
                                         rel="noopener noreferrer"
                                         className="social-icon"
@@ -240,9 +242,9 @@ const Footer = () => {
                                         <i className="bi bi-youtube"></i>
                                     </a>
                                 )}
-                                {ORG_TIKTOK_LINK && (
+                                {org_tiktok_link && (
                                     <a 
-                                        href={ORG_TIKTOK_LINK} 
+                                        href={org_tiktok_link} 
                                         target="_blank" 
                                         rel="noopener noreferrer"
                                         className="social-icon"
@@ -250,9 +252,9 @@ const Footer = () => {
                                         <i className="bi bi-tiktok"></i>
                                     </a>
                                 )}
-                                {ORG_DISCORD_LINK && (
+                                {org_discord_link && (
                                     <a 
-                                        href={ORG_DISCORD_LINK} 
+                                        href={org_discord_link} 
                                         target="_blank" 
                                         rel="noopener noreferrer"
                                         className="social-icon"
@@ -303,7 +305,7 @@ const Footer = () => {
 
                 {/* Copyright - Auto Year from System Calendar */}
                 <div className="footer-copyright">
-                    <p>© {currentYear} {TEAM_NAME}. All rights reserved.</p>
+                    <p>© {currentYear} {team_name}. All rights reserved.</p>
                 </div>
             </div>
         </footer>

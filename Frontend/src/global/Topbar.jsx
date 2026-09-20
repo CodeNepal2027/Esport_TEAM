@@ -1,19 +1,17 @@
 // src/global/Topbar.jsx
 import React from 'react';
 import { Link, NavLink } from 'react-router-dom';
-import env_export from '../config/env_export';
+import { getOrgConfig } from '../config/org_config';
 import "./assets/css/Topbar.css";
 
 const Topbar = ({ isDark, toggleTheme }) => {
     const { 
-        TEAM_TAG, 
-        TEAM_NAME, 
-        TEAM_LOGO_URL,
-        COLOR_CODE_1, 
-        COLOR_CODE_2,
-        ORG_SHOP,
-        ORG_ACHIVEMENTS,
-    } = env_export;
+        team_tag,
+        team_name,
+        team_logo_url,
+        org_shop,
+        org_achievements,
+    } = getOrgConfig();
 
     return (
         <div className="topbar">
@@ -23,21 +21,21 @@ const Topbar = ({ isDark, toggleTheme }) => {
                     <Link to="/" onClick={() => {window.scrollTo(0,0);}} className="brand-link">
                         <div className="logo-wrapper">
                             <img 
-                                src={TEAM_LOGO_URL} 
-                                alt={TEAM_NAME}
+                                src={team_logo_url} 
+                                alt={team_name}
                                 className="topbar-logo"
                                 onError={(e) => {
                                     // Fallback to text logo if image fails
                                     e.target.style.display = 'none';
-                                    e.target.parentElement.innerHTML = `<span class="logo-text">${TEAM_TAG}</span>`;
+                                    e.target.parentElement.innerHTML = `<span class="logo-text">${team_tag}</span>`;
                                 }}
                             />
                         </div>
                         <div className="brand-text">
                             <span className="brand-tag">
-                                {TEAM_TAG}
+                                {team_tag}
                             </span>
-                            <span className="brand-name">{TEAM_NAME}</span>
+                            <span className="brand-name">{team_name}</span>
                         </div>
                     </Link>
                 </div>
@@ -52,9 +50,9 @@ const Topbar = ({ isDark, toggleTheme }) => {
                         >
                             Official
                         </NavLink>
-                        {ORG_SHOP && (
+                        {org_shop && (
                             <a 
-                                href={ORG_SHOP} 
+                                href={org_shop} 
                                 target="_blank" 
                                 rel="noopener noreferrer" 
                                 className="nav-link"
@@ -62,9 +60,9 @@ const Topbar = ({ isDark, toggleTheme }) => {
                                 Shop
                             </a>
                         )}
-                        {ORG_ACHIVEMENTS && (
+                        {org_achievements && (
                             <a 
-                                href={ORG_ACHIVEMENTS} 
+                                href={org_achievements} 
                                 target="_blank" 
                                 rel="noopener noreferrer" 
                                 className="nav-link"

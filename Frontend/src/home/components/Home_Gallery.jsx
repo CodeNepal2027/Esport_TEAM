@@ -1,15 +1,15 @@
 // src/routes/components/Home_Gallery.jsx
 import React, { useState, useRef, useEffect } from 'react';
-import env_export from '../../config/env_export';
+import { getOrgConfig } from '../../config/org_config';
 import "../assets/css/Home_Gallery.css";
 
 const Home_Gallery = () => {
     const { 
-        TEAM_TAG, 
-        TEAM_NAME, 
-        COLOR_CODE_1, 
-        COLOR_CODE_2 
-    } = env_export;
+        team_tag,
+        team_name,
+        color_code_1,
+        color_code_2,
+    } = getOrgConfig();
 
     // Get number of columns based on screen size (matches CSS grid)
     const getColumnsPerRow = () => {
@@ -321,15 +321,15 @@ const Home_Gallery = () => {
                 {/* Section Header */}
                 <div className="section-header">
                     <span className="section-badge" style={{ 
-                        background: `linear-gradient(135deg, ${COLOR_CODE_1}, ${COLOR_CODE_2})`
+                        background: `linear-gradient(135deg, ${color_code_1}, ${color_code_2})`
                     }}>
                         Our Moments
                     </span>
                     <h2 className="section-title">
-                        <span style={{ color: COLOR_CODE_1 }}>Photo</span> Gallery
+                        <span style={{ color: color_code_1 }}>Photo</span> Gallery
                     </h2>
                     <p className="section-subtitle">
-                        Capturing the best moments of {TEAM_NAME}
+                        Capturing the best moments of {team_name}
                     </p>
                 </div>
 
@@ -342,8 +342,8 @@ const Home_Gallery = () => {
                                 className={`filter-btn ${filter === cat.id ? 'active' : ''}`}
                                 onClick={() => handleFilterChange(cat.id)}
                                 style={{
-                                    borderColor: filter === cat.id ? COLOR_CODE_1 : 'var(--border-color-secondary)',
-                                    color: filter === cat.id ? COLOR_CODE_1 : 'var(--font-color-secondary)'
+                                    borderColor: filter === cat.id ? color_code_1 : 'var(--border-color-secondary)',
+                                    color: filter === cat.id ? color_code_1 : 'var(--font-color-secondary)'
                                 }}
                             >
                                 {cat.label}
@@ -362,7 +362,7 @@ const Home_Gallery = () => {
                                 className={`gallery-item ${getGridSpan(aspectRatio)}`}
                                 onClick={() => openLightbox(image)}
                                 style={{
-                                    border: `2px solid ${COLOR_CODE_1}22`,
+                                    border: `2px solid ${color_code_1}22`,
                                     aspectRatio: aspectRatio
                                 }}
                             >
@@ -374,7 +374,7 @@ const Home_Gallery = () => {
                                         loading="lazy"
                                     />
                                     <div className="gallery-overlay" style={{
-                                        background: `linear-gradient(135deg, ${COLOR_CODE_1}99, ${COLOR_CODE_2}99)`
+                                        background: `linear-gradient(135deg, ${color_code_1}99, ${color_code_2}99)`
                                     }}>
                                         <div className="gallery-overlay-content">
                                             <i className="bi bi-search" style={{ color: '#fff' }}></i>
@@ -395,8 +395,8 @@ const Home_Gallery = () => {
                             className="view-more-btn"
                             onClick={loadMore}
                             style={{
-                                border: `2px solid ${COLOR_CODE_1}`,
-                                color: COLOR_CODE_1
+                                border: `2px solid ${color_code_1}`,
+                                color: color_code_1
                             }}
                         >
                             <i className="bi bi-plus-circle"></i> View More ({filteredImages.length - visibleCount} remaining)
@@ -408,8 +408,8 @@ const Home_Gallery = () => {
                             className="view-less-btn"
                             onClick={loadLess}
                             style={{
-                                border: `2px solid ${COLOR_CODE_1}`,
-                                color: COLOR_CODE_1
+                                border: `2px solid ${color_code_1}`,
+                                color: color_code_1
                             }}
                         >
                             <i className="bi bi-dash-circle"></i> View Less
@@ -455,10 +455,10 @@ const Home_Gallery = () => {
                             </button>
                             
                             <div className="lightbox-info">
-                                <h3 style={{ color: COLOR_CODE_1 }}>{selectedImage.title}</h3>
+                                <h3 style={{ color: color_code_1 }}>{selectedImage.title}</h3>
                                 <p>{selectedImage.description}</p>
                                 <span className="lightbox-category" style={{
-                                    background: `linear-gradient(135deg, ${COLOR_CODE_1}, ${COLOR_CODE_2})`
+                                    background: `linear-gradient(135deg, ${color_code_1}, ${color_code_2})`
                                 }}>
                                     {selectedImage.category}
                                 </span>
