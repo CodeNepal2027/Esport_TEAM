@@ -157,6 +157,25 @@ const normalizeApiBase = (apiUrl) => {
     return withoutQuery;
 };
 
+const extractTenantSlugFromHost = (host) => {
+    const normalized = String(host || '').trim().toLowerCase().replace(/^www\./, '').replace(/:\d+$/, '');
+    if (!normalized) return '';
+
+    const rootHost = normalized.replace(/\.vercel\.app$/, '').replace(/\.com\.np$/, '').replace(/\.com$/, '').replace(/\.np$/, '');
+    const rootLabel = rootHost.split('.')[0] || '';
+    if (!rootLabel) return '';
+
+    const suffixes = ['esports', 'sports', 'esport', 'sport'];
+    for (const suffix of suffixes) {
+        if (rootLabel.endsWith(suffix)) {
+            const candidate = rootLabel.slice(0, -suffix.length).replace(/[-_]+$/, '');
+            if (candidate) return candidate;
+        }
+    }
+
+    return rootLabel;
+};
+
 const findMatchingOrgByCurrentHost = (items) => {
     if (!Array.isArray(items) || items.length === 0 || typeof window === 'undefined') {
         return null;
@@ -164,17 +183,24 @@ const findMatchingOrgByCurrentHost = (items) => {
 
     const currentHost = window.location.host.toLowerCase();
     const currentHostname = window.location.hostname.toLowerCase();
+    const candidates = new Set([
+        extractTenantSlugFromHost(currentHostname),
+        extractTenantSlugFromHost(currentHost),
+    ]);
 
     return items.find((item) => {
         const orgDomain = normalizeOrgDomain(item?.org_domain);
         const slug = String(item?.slug || '').toLowerCase();
+        const domainSlug = extractTenantSlugFromHost(orgDomain);
 
         return (
             orgDomain === currentHost ||
             orgDomain === currentHostname ||
             (orgDomain && (currentHost.includes(orgDomain) || currentHostname.includes(orgDomain))) ||
             slug === currentHostname ||
-            slug === currentHost.split(':')[0]
+            slug === currentHost.split(':')[0] ||
+            slug === currentHostname.split('.')[0] ||
+            Array.from(candidates).some((candidate) => candidate && (slug === candidate || domainSlug === candidate))
         );
     }) || null;
 };
@@ -205,7 +231,7 @@ const getTenantIdentifier = () => {
         return ENV_DEMO_TENANT.toLowerCase();
     }
 
-    const host = window.location.hostname.toLowerCase().replace(/^www\./, '');
+    const host = window.location.hostname.toLowerCase().replace(/^www\./, '').replace(/:\d+$/, '');
 
     for (const [slug, tenant] of Object.entries(DEMO_MASTER)) {
         if (tenant.org_domain === host) {
@@ -214,18 +240,24 @@ const getTenantIdentifier = () => {
         }
     }
 
-    if (host === 'localhost' || host === '127.0.0.1') {
-        return 'localhost';
+    const slugFromHost = extractTenantSlugFromHost(host);
+    if (slugFromHost && DEMO_MASTER[slugFromHost]) {
+        console.info(`[org_config] Tenant matched by host slug: ${slugFromHost}`);
+        return slugFromHost;
     }
 
-    if (!host.includes('.optech.')) {
-        return host;
+    if (host === 'localhost' || host === '127.0.0.1') {
+        return DEFAULT_TENANT_SLUG || 'abc';
+    }
+
+    if (slugFromHost) {
+        return slugFromHost;
     }
 
     const parts = host.split('.');
     if (parts.length >= 3) return parts[0];
 
-    return DEFAULT_TENANT_SLUG;
+    return DEFAULT_TENANT_SLUG || 'abc';
 };
 
 // ============================================

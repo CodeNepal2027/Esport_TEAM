@@ -22,10 +22,29 @@ def _normalize_host(value):
     return host
 
 
+def _extract_slug_from_host(host):
+    normalized = _normalize_host(host)
+    if not normalized:
+        return ''
+
+    if normalized.endswith('.vercel.app'):
+        base = normalized.replace('.vercel.app', '').lower()
+        for suffix in ('esports', 'sports', 'esport', 'sport'):
+            if base.endswith(suffix):
+                candidate = base[:-len(suffix)].rstrip('-_')
+                if candidate:
+                    return candidate
+        return base.split('.')[0]
+
+    return normalized.split(':')[0].split('.')[0]
+
+
 def _find_org_for_host(host):
     normalized_host = _normalize_host(host)
     if not normalized_host:
         return None
+
+    slug_hint = _extract_slug_from_host(normalized_host)
 
     for org in Organization.objects.all():
         if _normalize_host(org.org_domain) == normalized_host:
@@ -34,9 +53,12 @@ def _find_org_for_host(host):
             return org
         if org.slug and org.slug.lower() == normalized_host.split(':')[0]:
             return org
+        if org.slug and org.slug.lower() == slug_hint.lower():
+            return org
 
     return (
-        Organization.objects.filter(slug=normalized_host.split(':')[0]).first()
+        Organization.objects.filter(slug=slug_hint).first()
+        or Organization.objects.filter(slug=normalized_host.split(':')[0]).first()
         or Organization.objects.filter(org_domain=host).first()
         or Organization.objects.filter(org_domain__icontains=normalized_host).first()
     )
