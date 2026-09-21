@@ -15,11 +15,31 @@ from .serializers import OrganizationsSerializer
 def _normalize_host(value):
     if not value:
         return ''
-    host = value.strip().lower()
+    host = str(value).strip().lower()
     host = host.replace('https://', '').replace('http://', '')
     host = host.split('/')[0]
     host = host.replace('www.', '')
     return host
+
+
+def _find_org_for_host(host):
+    normalized_host = _normalize_host(host)
+    if not normalized_host:
+        return None
+
+    for org in Organization.objects.all():
+        if _normalize_host(org.org_domain) == normalized_host:
+            return org
+        if org.slug and org.slug.lower() == normalized_host:
+            return org
+        if org.slug and org.slug.lower() == normalized_host.split(':')[0]:
+            return org
+
+    return (
+        Organization.objects.filter(slug=normalized_host.split(':')[0]).first()
+        or Organization.objects.filter(org_domain=host).first()
+        or Organization.objects.filter(org_domain__icontains=normalized_host).first()
+    )
 
 
 # ============================================
@@ -37,10 +57,7 @@ def resolve_host(request):
             status=status.HTTP_400_BAD_REQUEST,
         )
 
-    org = (
-        Organization.objects.filter(org_domain=host).first()
-        or Organization.objects.filter(slug=host.split('.')[0]).first()
-    )
+    org = _find_org_for_host(host)
 
     if not org:
         return Response({
@@ -75,10 +92,7 @@ def get_config(request):
     )
     slug = request.GET.get('slug') or (host.split('.')[0] if host else None)
 
-    org = (
-        Organization.objects.filter(org_domain=host).first()
-        or Organization.objects.filter(slug=slug).first()
-    )
+    org = _find_org_for_host(host or slug)
 
     if not org:
         return Response({

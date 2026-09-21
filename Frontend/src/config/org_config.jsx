@@ -283,7 +283,10 @@ const fetchOrgData = async () => {
     }
 
     const tenantApiBase = normalizeApiBase(master.api_url || MASTER_API_URL);
-    const tenantRes = await fetch(`${tenantApiBase}/config`);
+    const configHost = master.org_domain || master.domain || window.location.origin;
+    const tenantRes = await fetch(
+        `${tenantApiBase}/config?host=${encodeURIComponent(configHost)}&slug=${encodeURIComponent(master.slug || '')}`
+    );
     if (!tenantRes.ok) {
         throw new Error(`Tenant API error: ${tenantRes.status}`);
     }

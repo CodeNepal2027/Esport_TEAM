@@ -4,3 +4,5 @@
 */__pycache__/
 
 *.sqlite3
+master.sqlite3
+tenant.sqlite3
