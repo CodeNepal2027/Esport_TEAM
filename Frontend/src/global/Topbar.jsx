@@ -13,6 +13,8 @@ const Topbar = ({ isDark, toggleTheme }) => {
         org_achievements,
     } = getOrgConfig();
 
+    const hasLogo = team_logo_url && team_logo_url.trim() !== '';
+
     return (
         <div className="topbar">
             <div className="container">
@@ -20,16 +22,24 @@ const Topbar = ({ isDark, toggleTheme }) => {
                 <div className="topbar-left">
                     <Link to="/" onClick={() => {window.scrollTo(0,0);}} className="brand-link">
                         <div className="logo-wrapper">
-                            <img 
-                                src={team_logo_url} 
-                                alt={team_name}
-                                className="topbar-logo"
-                                onError={(e) => {
-                                    // Fallback to text logo if image fails
-                                    e.target.style.display = 'none';
-                                    e.target.parentElement.innerHTML = `<span class="logo-text">${team_tag}</span>`;
-                                }}
-                            />
+                            {hasLogo ? (
+                                <img 
+                                    src={team_logo_url} 
+                                    alt={team_name}
+                                    className="topbar-logo"
+                                    onError={(e) => {
+                                        e.target.style.display = 'none';
+                                        const fallback = e.target.parentElement.querySelector('.logo-text');
+                                        if (fallback) fallback.style.display = 'inline';
+                                    }}
+                                />
+                            ) : null}
+                            <span 
+                                className="logo-text"
+                                style={{ display: hasLogo ? 'none' : 'inline' }}
+                            >
+                                {team_tag}
+                            </span>
                         </div>
                         <div className="brand-text">
                             <span className="brand-tag">

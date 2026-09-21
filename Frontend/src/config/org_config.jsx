@@ -12,11 +12,11 @@ import {
 } from './env_export';
 
 // ============================================
-// DEMO TENANTS — Test T2K, DRS, ABC instantly
+// DEMO MASTER — Test T2K, DRS, ABC instantly
 // Toggle in browser: ?tenant=drs | ?tenant=t2k | ?tenant=abc
 // Or set VITE_DEMO_TENANT=drs in .env
 // ============================================
-const DEMO_TENANTS = {
+const DEMO_MASTER = {
     abc: {
         // Master layer
         slug: 'optech',
@@ -132,20 +132,67 @@ const USE_DEMO = import.meta.env.VITE_USE_DEMO === 'true';
 // VITE_DEMO_TENANT=drs
 const ENV_DEMO_TENANT = import.meta.env.VITE_DEMO_TENANT || '';
 
+const normalizeOrgDomain = (value) => {
+    if (!value) return '';
+    const raw = String(value).trim().toLowerCase();
+    if (!raw) return '';
+
+    const withoutProtocol = raw.replace(/^https?:\/\//i, '');
+    const withoutTrailingSlash = withoutProtocol.replace(/\/+$/, '');
+    const withoutPath = withoutTrailingSlash.split('/')[0];
+    return withoutPath.replace(/^www\./, '');
+};
+
+const normalizeApiBase = (apiUrl) => {
+    if (!apiUrl) return MASTER_API_URL.replace(/\/+$/, '');
+
+    const raw = String(apiUrl).trim();
+    const withoutQuery = raw.split('?')[0].replace(/\/+$/, '');
+    const apiMatch = withoutQuery.match(/^(https?:\/\/[^/]+\/api)/i);
+
+    if (apiMatch) {
+        return apiMatch[1];
+    }
+
+    return withoutQuery;
+};
+
+const findMatchingOrgByCurrentHost = (items) => {
+    if (!Array.isArray(items) || items.length === 0 || typeof window === 'undefined') {
+        return null;
+    }
+
+    const currentHost = window.location.host.toLowerCase();
+    const currentHostname = window.location.hostname.toLowerCase();
+
+    return items.find((item) => {
+        const orgDomain = normalizeOrgDomain(item?.org_domain);
+        const slug = String(item?.slug || '').toLowerCase();
+
+        return (
+            orgDomain === currentHost ||
+            orgDomain === currentHostname ||
+            (orgDomain && (currentHost.includes(orgDomain) || currentHostname.includes(orgDomain))) ||
+            slug === currentHostname ||
+            slug === currentHost.split(':')[0]
+        );
+    }) || null;
+};
+
 // ============================================
 // Detect tenant identifier (domain, subdomain, or override)
 // Priority:
 //   1. ?tenant=drs  → query param (dev/testing)
 //   2. VITE_DEMO_TENANT → .env override (dev/testing)
-//   3. exact hostname match in DEMO_TENANTS (dev/testing)
-//   4. localhost → default slug
-//   5. full domain (drsesports.com)
-//   6. subdomain (drs.optech.com.np → "drs")
+//   3. current host matches a master org in the registry
+//   4. exact hostname match in DEMO_MASTER (dev/testing)
+//   5. localhost → default slug
+//   6. full domain (drsesports.com)
+//   7. subdomain (drs.optech.com.np → "drs")
 // ============================================
 const getTenantIdentifier = () => {
     if (typeof window === 'undefined') return DEFAULT_TENANT_SLUG;
 
-    // 1. Query param override: ?tenant=drs
     const urlParams = new URLSearchParams(window.location.search);
     const queryTenant = urlParams.get('tenant');
     if (queryTenant) {
@@ -153,38 +200,28 @@ const getTenantIdentifier = () => {
         return queryTenant.toLowerCase();
     }
 
-    // 2. .env override: VITE_DEMO_TENANT=drs
     if (ENV_DEMO_TENANT) {
         console.info(`[org_config] Tenant override via .env: ${ENV_DEMO_TENANT}`);
         return ENV_DEMO_TENANT.toLowerCase();
     }
 
-    // 3. Exact hostname match with demo tenants
-    const host = window.location.hostname
-        .toLowerCase()
-        .replace(/^www\./, '');
+    const host = window.location.hostname.toLowerCase().replace(/^www\./, '');
 
-    for (const [slug, tenant] of Object.entries(DEMO_TENANTS)) {
+    for (const [slug, tenant] of Object.entries(DEMO_MASTER)) {
         if (tenant.org_domain === host) {
             console.info(`[org_config] Tenant matched by domain: ${slug}`);
             return slug;
         }
     }
 
-    // 4. localhost / 127.0.0.1
     if (host === 'localhost' || host === '127.0.0.1') {
-        return DEFAULT_TENANT_SLUG;
+        return 'localhost';
     }
 
-    // 5. Full domain lookup (backend will resolve)
-    //    e.g., drsesports.com → backend finds tenant
-    //    We return the full hostname here so backend can match
     if (!host.includes('.optech.')) {
-        // Not a subdomain of optech → send full domain
         return host;
     }
 
-    // 6. Subdomain fallback: drs.optech.com.np → "drs"
     const parts = host.split('.');
     if (parts.length >= 3) return parts[0];
 
@@ -197,58 +234,68 @@ const getTenantIdentifier = () => {
 const fetchOrgData = async () => {
     const identifier = getTenantIdentifier();
 
-    // Demo mode → return from DEMO_TENANTS
+    // Demo mode → return from DEMO_MASTER
     if (USE_DEMO) {
         console.info(`[org_config] Demo mode — loading tenant: ${identifier}`);
 
-        // Try exact match first
-        if (DEMO_TENANTS[identifier]) {
-            return { ...DEMO_TENANTS[identifier] };
+        if (DEMO_MASTER[identifier]) {
+            return { ...DEMO_MASTER[identifier] };
         }
 
-        // Try to match by domain
-        for (const tenant of Object.values(DEMO_TENANTS)) {
+        for (const tenant of Object.values(DEMO_MASTER)) {
             if (tenant.org_domain === identifier) return { ...tenant };
         }
 
-        // Fallback to abc
         console.warn(`[org_config] Unknown demo tenant "${identifier}", using abc`);
-        return { ...DEMO_TENANTS.abc };
+        return { ...DEMO_MASTER.abc };
     }
 
     // ============================================
     // Real backend mode
     // ============================================
+    let master = null;
 
-    // 1. Ask master DB: "who is this domain/subdomain?"
-    const masterRes = await fetch(
-        `${MASTER_API_URL}/resolve-host?host=${encodeURIComponent(identifier)}`
-    );
-
-    if (!masterRes.ok) {
-        throw new Error(`Master DB error: ${masterRes.status}`);
+    try {
+        const listRes = await fetch(`${MASTER_API_URL}/master/organizations/`);
+        if (listRes.ok) {
+            const payload = await listRes.json();
+            const items = Array.isArray(payload) ? payload : (payload.results || []);
+            master = findMatchingOrgByCurrentHost(items) || items.find((item) =>
+                item.slug === identifier ||
+                normalizeOrgDomain(item.org_domain) === normalizeOrgDomain(identifier) ||
+                normalizeOrgDomain(item.org_domain) === normalizeOrgDomain(window.location.href)
+            ) || null;
+        }
+    } catch (err) {
+        console.warn('[org_config] Master registry list lookup failed:', err.message);
     }
 
-    const master = await masterRes.json();
+    if (!master) {
+        const masterRes = await fetch(
+            `${MASTER_API_URL}/resolve-host?host=${encodeURIComponent(identifier)}`
+        );
 
-    // 2. Fetch tenant-specific config
-    const tenantRes = await fetch(`${master.api_url}/config`);
+        if (!masterRes.ok) {
+            throw new Error(`Master DB error: ${masterRes.status}`);
+        }
+
+        master = await masterRes.json();
+    }
+
+    const tenantApiBase = normalizeApiBase(master.api_url || MASTER_API_URL);
+    const tenantRes = await fetch(`${tenantApiBase}/config`);
     if (!tenantRes.ok) {
         throw new Error(`Tenant API error: ${tenantRes.status}`);
     }
 
     const tenant = await tenantRes.json();
 
-    // 3. Merge master + tenant
     return {
-        // Master layer
         slug: master.slug,
-        org_domain: master.domain,
-        subscription_tier: master.tier,
-        subscription_status: master.status,
+        org_domain: master.domain || master.org_domain,
+        subscription_tier: master.tier || master.subscription_tier,
+        subscription_status: master.status || master.subscription_status,
         feature_flags: master.feature_flags || {},
-
-        // Tenant layer
         ...tenant,
     };
 };
@@ -303,7 +350,7 @@ export const clearOrgCache = () => {
 // List demo tenants (for a switcher UI)
 // ============================================
 export const getDemoTenants = () => {
-    return Object.entries(DEMO_TENANTS).map(([slug, tenant]) => ({
+    return Object.entries(DEMO_MASTER).map(([slug, tenant]) => ({
         slug,
         name: tenant.team_name,
         domain: tenant.org_domain,
@@ -332,7 +379,7 @@ const org_config = {
     getTenantIdentifier,
     getDemoTenants,
     switchDemoTenant,
-    DEMO_TENANTS,
+    DEMO_MASTER,
 };
 
 export default org_config;

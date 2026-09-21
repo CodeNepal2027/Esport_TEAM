@@ -32,6 +32,10 @@ const Footer = () => {
     const navigate = useNavigate();
     const location = useLocation();
 
+    // Guards against empty-string image sources
+    const hasTeamLogo = team_logo_url && team_logo_url.trim() !== '';
+    const hasPoweredByLogo = POWERED_BY_LOGO_URL && POWERED_BY_LOGO_URL.trim() !== '';
+
     // Auto-fetch current year from system calendar
     const currentYear = new Date().getFullYear();
 
@@ -57,11 +61,9 @@ const Footer = () => {
     const handleSectionClick = (e, sectionId) => {
         e.preventDefault();
 
-        // If already on home page, just scroll
         if (location.pathname === '/') {
             scrollToSection(sectionId);
         } else {
-            // Navigate to home then scroll after render
             navigate('/');
             setTimeout(() => {
                 scrollToSection(sectionId);
@@ -87,14 +89,36 @@ const Footer = () => {
                     {/* Brand Column */}
                     <div className="footer-brand">
                         <div className="footer-logo-wrapper">
-                            <img 
-                                src={team_logo_url} 
-                                alt={team_name}
-                                className="footer-logo"
-                                onError={(e) => {
-                                    e.target.src = `https://ui-avatars.com/api/?name=${team_tag}&background=${color_code_1.replace('#', '')}&color=fff&size=64`;
+                            {hasTeamLogo ? (
+                                <img 
+                                    src={team_logo_url} 
+                                    alt={team_name}
+                                    className="footer-logo"
+                                    onError={(e) => {
+                                        e.target.style.display = 'none';
+                                        const fallback = e.target.parentElement.querySelector('.footer-logo-fallback');
+                                        if (fallback) fallback.style.display = 'flex';
+                                    }}
+                                />
+                            ) : null}
+                            <div 
+                                className="footer-logo-fallback"
+                                style={{
+                                    display: hasTeamLogo ? 'none' : 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    background: color_code_1,
+                                    color: '#fff',
+                                    fontWeight: 900,
+                                    fontSize: '14px',
+                                    fontFamily: "'Orbitron', sans-serif",
+                                    width: '50px',
+                                    height: '50px',
+                                    borderRadius: '6px',
                                 }}
-                            />
+                            >
+                                {team_tag}
+                            </div>
                             <h2 className="footer-brand-name" style={{ color: color_code_1 }}>
                                 {team_tag} <span>ESPORTS</span>
                             </h2>
@@ -216,7 +240,6 @@ const Footer = () => {
                                         target="_blank" 
                                         rel="noopener noreferrer"
                                         className="social-icon"
-                                        // style={{ color: color_code_1 }}
                                     >
                                         <i className="bi bi-twitter"></i>
                                     </a>
@@ -227,7 +250,6 @@ const Footer = () => {
                                         target="_blank" 
                                         rel="noopener noreferrer"
                                         className="social-icon"
-                                        // style={{ color: color_code_2 }}
                                     >
                                         <i className="bi bi-instagram"></i>
                                     </a>
@@ -279,7 +301,7 @@ const Footer = () => {
                                     rel="noopener noreferrer"
                                     className="powered-by-link"
                                 >
-                                    {POWERED_BY_LOGO_URL && (
+                                    {hasPoweredByLogo ? (
                                         <img 
                                             src={POWERED_BY_LOGO_URL} 
                                             alt={POWERED_BY_NAME}
@@ -288,7 +310,7 @@ const Footer = () => {
                                                 e.target.style.display = 'none';
                                             }}
                                         />
-                                    )}
+                                    ) : null}
                                     <span>{POWERED_BY_NAME}</span>
                                 </a>
                             ) : (

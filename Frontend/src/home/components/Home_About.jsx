@@ -67,17 +67,24 @@ const Home_About = () => {
                             <span style={{ color: color_code_1 }}>{team_tag}</span> - {about?.heading || team_name}
                         </h3>
 
+                        {/* 
+                            FIX: paragraphs come back from API as objects:
+                            { id, text, order }
+                            So render `para.text` (or handle string just in case)
+                        */}
                         {about?.paragraphs?.map((para, i) => (
-                            <p key={i} className="about-text">{para}</p>
+                            <p key={para?.id ?? i} className="about-text">
+                                {typeof para === 'string' ? para : para?.text}
+                            </p>
                         ))}
 
                         <div className="about-stats">
                             {about?.stats?.map((stat, i) => (
-                                <div key={i} className="stat-item">
+                                <div key={stat?.id ?? i} className="stat-item">
                                     <span className="stat-number" style={{ color: color_code_1 }}>
-                                        {stat.value}
+                                        {stat?.value}
                                     </span>
-                                    <span className="stat-label">{stat.label}</span>
+                                    <span className="stat-label">{stat?.label}</span>
                                 </div>
                             ))}
                         </div>
@@ -91,10 +98,7 @@ const Home_About = () => {
 
                     {/* About Image — Logo */}
                     <div className="about-image">
-                        <div className="image-placeholder" style={{
-                            // border: `3px solid ${color_code_1}`,
-                            // boxShadow: `0 0 40px ${color_code_1}44`
-                        }}>
+                        <div className="image-placeholder">
                             {/* Glow rings */}
                             <div className="placeholder-glow" style={{
                                 background: `radial-gradient(circle, ${color_code_1}33 0%, transparent 70%)`
