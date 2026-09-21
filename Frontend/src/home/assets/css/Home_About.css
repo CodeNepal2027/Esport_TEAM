@@ -3,7 +3,7 @@
 
 
 /* ============================================
-   ABOUT GRID
+        ABOUT GRID
    ============================================ */
 .about-grid {
     display: grid;
@@ -77,7 +77,7 @@
 }
 
 /* ============================================
-   ABOUT IMAGE
+        ABOUT IMAGE
    ============================================ */
 .about-image {
     display: flex;
@@ -152,7 +152,7 @@
 }
 
 /* ============================================
-   MISSION & VISION
+        MISSION & VISION
    ============================================ */
 .mission-vision {
     display: grid;
@@ -193,7 +193,7 @@
 }
 
 /* ============================================
-   RESPONSIVE
+        RESPONSIVE
    ============================================ */
 @media (max-width: 1024px) {
     .about-grid {
@@ -261,7 +261,7 @@
 /* src/assets/css/Home_About.css — Add these styles */
 
 /* ============================================
-   ABOUT LOGO
+        ABOUT LOGO
    ============================================ */
 .about-logo {
     width: 75%;
@@ -292,4 +292,142 @@
     z-index: 1;
     text-align: center;
     padding: var(--spacing-lg);
+}
+
+
+
+
+/* ============================================
+        SKELETON LOADER — HOME ABOUT
+   ============================================ */
+.about-skeleton {
+    background: linear-gradient(
+        90deg,
+        rgba(255, 255, 255, 0.06) 25%,
+        rgba(255, 255, 255, 0.14) 50%,
+        rgba(255, 255, 255, 0.06) 75%
+    );
+    background-size: 200% 100%;
+    animation: aboutSkeletonShimmer 1.6s infinite linear;
+    border-radius: var(--curve-radius);
+}
+
+@keyframes aboutSkeletonShimmer {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
+
+/* Section header */
+.about-skeleton-badge {
+    width: 100px;
+    height: 26px;
+    margin: 0 auto var(--spacing-md);
+}
+
+.about-skeleton-title {
+    width: 220px;
+    height: clamp(24px, 3vw, 38px);
+    margin: 0 auto var(--spacing-sm);
+}
+
+.about-skeleton-subtitle {
+    width: 300px;
+    max-width: 80%;
+    height: 16px;
+    margin: 0 auto;
+}
+
+/* Left content */
+.about-skeleton-heading {
+    width: 70%;
+    height: 28px;
+    margin-bottom: var(--spacing-sm);
+}
+
+.about-skeleton-text {
+    width: 100%;
+    height: 14px;
+    margin-bottom: var(--spacing-xs);
+}
+
+.about-skeleton-text-short {
+    width: 65%;
+    margin-bottom: var(--spacing-md);
+}
+
+/* Stats */
+.about-skeleton-stat-number {
+    width: 60%;
+    height: 26px;
+    margin: 0 auto var(--spacing-xs);
+}
+
+.about-skeleton-stat-label {
+    width: 80%;
+    height: 12px;
+    margin: 0 auto;
+}
+
+/* Button */
+.about-skeleton-btn {
+    width: 170px;
+    height: 46px;
+    margin-top: var(--spacing-sm);
+    border-radius: var(--curve-radius);
+}
+
+/* Logo */
+.about-skeleton-logo {
+    width: 180px;
+    height: 180px;
+    border-radius: var(--round-radius);
+    margin: 0 auto;
+}
+
+/* Mission / Vision */
+.about-skeleton-mission-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: var(--round-radius);
+    margin: 0 auto var(--spacing-sm);
+}
+
+.about-skeleton-mission-title {
+    width: 140px;
+    height: 22px;
+    margin: 0 auto var(--spacing-xs);
+}
+
+.about-skeleton-mission-text {
+    width: 90%;
+    height: 13px;
+    margin: 0 auto var(--spacing-xs);
+}
+
+.about-skeleton-mission-text-short {
+    width: 60%;
+}
+
+/* Responsive tweaks */
+@media (max-width: 768px) {
+    .about-skeleton-btn {
+        width: 100%;
+        align-self: center;
+    }
+
+    .about-skeleton-logo {
+        width: 140px;
+        height: 140px;
+    }
+}
+
+@media (max-width: 480px) {
+    .about-skeleton-stat-number {
+        height: 20px;
+    }
+
+    .about-skeleton-logo {
+        width: 110px;
+        height: 110px;
+    }
 }

@@ -1,9 +1,9 @@
-/* src/assets/css/Home_Sponser.css */
+/* src/home/assets/css/Home_Sponser.css */
 
 
 
 /* ============================================
-   LOADING STATE
+        LOADING STATE
    ============================================ */
 .sponsor-loading {
     display: flex;
@@ -34,7 +34,7 @@
 }
 
 /* ============================================
-   ERROR STATE
+        ERROR STATE
    ============================================ */
 .sponsor-error {
     display: flex;
@@ -59,7 +59,7 @@
 }
 
 /* ============================================
-   SPONSOR CAROUSEL
+        SPONSOR CAROUSEL
    ============================================ */
 .sponsor-carousel-wrapper {
     position: relative;
@@ -111,7 +111,7 @@
 }
 
 /* ============================================
-   SPONSOR ITEM
+        SPONSOR ITEM
    ============================================ */
 .sponsor-item {
     flex: 0 0 auto;
@@ -166,7 +166,7 @@
 }
 
 /* ============================================
-   CAROUSEL BUTTONS
+        CAROUSEL BUTTONS
    ============================================ */
 .carousel-btn {
     width: clamp(40px, 4vw, 50px);
@@ -195,7 +195,7 @@
 }
 
 /* ============================================
-   SPONSOR CTA
+        SPONSOR CTA
    ============================================ */
 .sponsor-cta {
     margin-top: var(--spacing-xl);
@@ -244,7 +244,7 @@
 }
 
 /* ============================================
-   RESPONSIVE
+        RESPONSIVE
    ============================================ */
 @media (max-width: 1024px) {
     .sponsor-item {
@@ -310,10 +310,113 @@
 }
 
 /* ============================================
-   PAUSE ANIMATION ON INTERACTION
+        PAUSE ANIMATION ON INTERACTION
    ============================================ */
 @media (prefers-reduced-motion: reduce) {
     .sponsor-track {
         animation: none;
+    }
+}
+
+
+
+/* ============================================
+        SKELETON LOADER — HOME SPONSOR
+   ============================================ */
+.sponsor-skeleton {
+    background: linear-gradient(
+        90deg,
+        rgba(255, 255, 255, 0.06) 25%,
+        rgba(255, 255, 255, 0.14) 50%,
+        rgba(255, 255, 255, 0.06) 75%
+    );
+    background-size: 200% 100%;
+    animation: sponsorSkeletonShimmer 1.6s infinite linear;
+    border-radius: var(--curve-radius);
+}
+
+@keyframes sponsorSkeletonShimmer {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
+
+/* Section header */
+.sponsor-skeleton-badge {
+    width: 120px;
+    height: 26px;
+    margin: 0 auto var(--spacing-md);
+}
+
+.sponsor-skeleton-title {
+    width: 240px;
+    height: clamp(24px, 3vw, 38px);
+    margin: 0 auto var(--spacing-sm);
+}
+
+.sponsor-skeleton-subtitle {
+    width: 340px;
+    max-width: 80%;
+    height: 16px;
+    margin: 0 auto;
+}
+
+/* Carousel buttons */
+.sponsor-skeleton-carousel-btn {
+    width: clamp(40px, 4vw, 50px);
+    height: clamp(40px, 4vw, 50px);
+    border-radius: var(--round-radius);
+    flex-shrink: 0;
+}
+
+/* Sponsor logos */
+.sponsor-skeleton-logo {
+    width: 60%;
+    height: 50%;
+    border-radius: var(--curve-radius);
+}
+
+/* Disable auto-scroll animation in skeleton state */
+.sponsor-track-skeleton {
+    animation: none;
+    transform: none;
+}
+
+/* CTA */
+.sponsor-skeleton-cta-title {
+    width: 220px;
+    height: 28px;
+    margin: 0 auto var(--spacing-sm);
+}
+
+.sponsor-skeleton-cta-text {
+    width: 320px;
+    max-width: 80%;
+    height: 16px;
+    margin: 0 auto var(--spacing-md);
+}
+
+.sponsor-skeleton-cta-btn {
+    width: 200px;
+    height: 46px;
+    margin: 0 auto;
+    border-radius: var(--curve-radius);
+}
+
+/* Responsive tweaks */
+@media (max-width: 768px) {
+    .sponsor-skeleton-carousel-btn {
+        width: 32px;
+        height: 32px;
+    }
+
+    .sponsor-skeleton-cta-btn {
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .sponsor-skeleton-carousel-btn {
+        width: 28px;
+        height: 28px;
     }
 }

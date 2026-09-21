@@ -1,9 +1,9 @@
-/* src/assets/css/Home_Team.css */
+/* src/home/assets/css/Home_Team.css */
 
 
 
 /* ============================================
-   TEAM FILTERS
+        TEAM FILTERS
    ============================================ */
 .team-filters {
     display: flex;
@@ -37,7 +37,7 @@
 }
 
 /* ============================================
-   TEAM GRID
+        TEAM GRID
    ============================================ */
 .team-grid {
     display: grid;
@@ -47,7 +47,7 @@
 }
 
 /* ============================================
-   TEAM CARD - IMPROVED DESIGN
+        TEAM CARD - IMPROVED DESIGN
    ============================================ */
 .team-card {
     border-radius: var(--curve-radius);
@@ -222,7 +222,7 @@
 }
 
 /* ============================================
-   TEAM CTA
+        TEAM CTA
    ============================================ */
 .team-cta {
     margin-top: var(--spacing-xl);
@@ -271,7 +271,7 @@
 }
 
 /* ============================================
-   MEMBER DETAIL MODAL
+        MEMBER DETAIL MODAL
    ============================================ */
 .member-modal {
     position: fixed;
@@ -447,7 +447,7 @@
 }
 
 /* ============================================
-   RESPONSIVE
+        RESPONSIVE
    ============================================ */
 @media (max-width: 1024px) {
     .team-grid {
@@ -549,5 +549,142 @@
     .team-cta-btn {
         width: 100%;
         justify-content: center;
+    }
+}
+
+
+
+
+
+
+/* ============================================
+        SKELETON LOADER — HOME TEAM
+   ============================================ */
+.team-skeleton {
+    background: linear-gradient(
+        90deg,
+        rgba(255, 255, 255, 0.06) 25%,
+        rgba(255, 255, 255, 0.14) 50%,
+        rgba(255, 255, 255, 0.06) 75%
+    );
+    background-size: 200% 100%;
+    animation: teamSkeletonShimmer 1.6s infinite linear;
+    border-radius: var(--curve-radius);
+}
+
+@keyframes teamSkeletonShimmer {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
+
+/* Section header */
+.team-skeleton-badge {
+    width: 110px;
+    height: 26px;
+    margin: 0 auto var(--spacing-md);
+}
+
+.team-skeleton-title {
+    width: 220px;
+    height: clamp(24px, 3vw, 38px);
+    margin: 0 auto var(--spacing-sm);
+}
+
+.team-skeleton-subtitle {
+    width: 320px;
+    max-width: 80%;
+    height: 16px;
+    margin: 0 auto;
+}
+
+/* Role filters */
+.team-skeleton-filter {
+    width: 72px;
+    height: 36px;
+    border-radius: var(--curve-radius);
+}
+
+/* Team card — image */
+.team-skeleton-image {
+    width: 100%;
+    height: 100%;
+    border-radius: 0;
+}
+
+/* Team card — name & role */
+.team-skeleton-name {
+    width: 60%;
+    height: 20px;
+}
+
+.team-skeleton-role {
+    width: 40px;
+    height: 16px;
+}
+
+/* Team card — realname */
+.team-skeleton-realname {
+    width: 70%;
+    height: 14px;
+    margin-bottom: var(--spacing-xs);
+}
+
+/* Team card — social icons */
+.team-skeleton-social {
+    width: 36px;
+    height: 36px;
+    border-radius: var(--curve-radius);
+}
+
+/* CTA */
+.team-skeleton-cta-title {
+    width: 220px;
+    height: 28px;
+    margin: 0 auto var(--spacing-sm);
+}
+
+.team-skeleton-cta-text {
+    width: 320px;
+    max-width: 80%;
+    height: 16px;
+    margin: 0 auto var(--spacing-md);
+}
+
+.team-skeleton-cta-btn {
+    width: 200px;
+    height: 46px;
+    margin: 0 auto;
+    border-radius: var(--curve-radius);
+}
+
+/* Responsive tweaks */
+@media (max-width: 768px) {
+    .team-skeleton-filter {
+        width: 60px;
+        height: 30px;
+    }
+
+    .team-skeleton-social {
+        width: 30px;
+        height: 30px;
+    }
+
+    .team-skeleton-cta-btn {
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .team-skeleton-filter {
+        width: 52px;
+        height: 26px;
+    }
+
+    .team-skeleton-name {
+        height: 16px;
+    }
+
+    .team-skeleton-role {
+        height: 12px;
     }
 }

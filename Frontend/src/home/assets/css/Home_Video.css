@@ -1,8 +1,8 @@
-/* src/assets/css/Home_Video.css */
+/* src/home/assets/css/Home_Video.css */
 
 
 /* ============================================
-   VIDEO FILTERS
+        VIDEO FILTERS
    ============================================ */
 .video-filters {
     display: flex;
@@ -36,7 +36,7 @@
 }
 
 /* ============================================
-   VIDEO GRID
+        VIDEO GRID
    ============================================ */
 .video-grid {
     display: grid;
@@ -60,7 +60,7 @@
 }
 
 /* ============================================
-   VIDEO THUMBNAIL
+        VIDEO THUMBNAIL
    ============================================ */
 .video-thumbnail-wrapper {
     position: relative;
@@ -109,7 +109,7 @@
 }
 
 /* ============================================
-   VIDEO INFO
+        VIDEO INFO
    ============================================ */
 .video-info {
     padding: var(--spacing-md);
@@ -166,7 +166,7 @@
 }
 
 /* ============================================
-   VIDEO EMPTY
+        VIDEO EMPTY
    ============================================ */
 .video-empty {
     text-align: center;
@@ -181,7 +181,7 @@
 }
 
 /* ============================================
-   VIDEO LOADING
+        VIDEO LOADING
    ============================================ */
 .video-loading {
     display: flex;
@@ -207,7 +207,7 @@
 }
 
 /* ============================================
-   VIDEO MODAL
+        VIDEO MODAL
    ============================================ */
 .video-modal {
     position: fixed;
@@ -332,7 +332,7 @@
 }
 
 /* ============================================
-   RESPONSIVE
+        RESPONSIVE
    ============================================ */
 @media (max-width: 1024px) {
     .video-grid {
@@ -426,5 +426,122 @@
         width: 36px;
         height: 36px;
         font-size: var(--font-size-lg);
+    }
+}
+
+
+
+
+/* ============================================
+        SKELETON LOADER — HOME VIDEO
+   ============================================ */
+.video-skeleton {
+    background: linear-gradient(
+        90deg,
+        rgba(255, 255, 255, 0.06) 25%,
+        rgba(255, 255, 255, 0.14) 50%,
+        rgba(255, 255, 255, 0.06) 75%
+    );
+    background-size: 200% 100%;
+    animation: videoSkeletonShimmer 1.6s infinite linear;
+    border-radius: var(--curve-radius);
+}
+
+@keyframes videoSkeletonShimmer {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
+
+/* Section header */
+.video-skeleton-badge {
+    width: 110px;
+    height: 26px;
+    margin: 0 auto var(--spacing-md);
+}
+
+.video-skeleton-title {
+    width: 220px;
+    height: clamp(24px, 3vw, 38px);
+    margin: 0 auto var(--spacing-sm);
+}
+
+.video-skeleton-subtitle {
+    width: 320px;
+    max-width: 80%;
+    height: 16px;
+    margin: 0 auto;
+}
+
+/* Category filters */
+.video-skeleton-filter {
+    width: 90px;
+    height: 36px;
+    border-radius: var(--curve-radius);
+}
+
+/* Video card — thumbnail */
+.video-skeleton-thumbnail {
+    width: 100%;
+    height: 100%;
+    border-radius: 0;
+}
+
+/* Video card — title (2 lines) */
+.video-skeleton-video-title {
+    width: 100%;
+    height: 18px;
+    margin-bottom: var(--spacing-xs);
+}
+
+.video-skeleton-video-title-short {
+    width: 60%;
+}
+
+/* Video card — description (2 lines) */
+.video-skeleton-desc {
+    width: 100%;
+    height: 14px;
+    margin-bottom: var(--spacing-xs);
+}
+
+.video-skeleton-desc-short {
+    width: 70%;
+    margin-bottom: var(--spacing-sm);
+}
+
+/* Video card — meta row */
+.video-skeleton-tag {
+    width: 80px;
+    height: 20px;
+    border-radius: var(--curve-radius);
+}
+
+.video-skeleton-meta {
+    width: 70px;
+    height: 14px;
+}
+
+/* Responsive tweaks */
+@media (max-width: 768px) {
+    .video-skeleton-filter {
+        width: 74px;
+        height: 30px;
+    }
+}
+
+@media (max-width: 480px) {
+    .video-skeleton-filter {
+        width: 64px;
+        height: 26px;
+    }
+
+    .video-skeleton-tag {
+        width: 60px;
+        height: 16px;
+    }
+
+    .video-skeleton-meta {
+        width: 55px;
+        height: 12px;
     }
 }
