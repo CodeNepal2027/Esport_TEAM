@@ -1,9 +1,9 @@
-/* src/assets/css/Home_Gallery.css */
+/* src/home/assets/css/Home_Gallery.css */
 
 
 
 /* ============================================
-   GALLERY CONTROLS
+        GALLERY CONTROLS
    ============================================ */
 .gallery-controls {
     display: flex;
@@ -43,7 +43,7 @@
 }
 
 /* ============================================
-   GALLERY GRID - AUTO FIT
+        GALLERY GRID - AUTO FIT
    ============================================ */
 .gallery-grid {
     display: grid;
@@ -163,7 +163,7 @@
 }
 
 /* ============================================
-   VIEW MORE / VIEW LESS BUTTONS
+        VIEW MORE / VIEW LESS BUTTONS
    ============================================ */
 .gallery-actions {
     display: flex;
@@ -218,7 +218,7 @@
 }
 
 /* ============================================
-   LIGHTBOX
+        LIGHTBOX
    ============================================ */
 .lightbox {
     position: fixed;
@@ -350,7 +350,7 @@
 }
 
 /* ============================================
-   RESPONSIVE
+        RESPONSIVE
    ============================================ */
 @media (max-width: 1024px) {
     .gallery-grid {
@@ -485,5 +485,89 @@
     
     .gallery-item {
         min-height: 80px;
+    }
+}
+
+
+
+
+
+/* ============================================
+        SKELETON LOADER — HOME GALLERY
+   ============================================ */
+.gallery-skeleton {
+    background: linear-gradient(
+        90deg,
+        rgba(255, 255, 255, 0.06) 25%,
+        rgba(255, 255, 255, 0.14) 50%,
+        rgba(255, 255, 255, 0.06) 75%
+    );
+    background-size: 200% 100%;
+    animation: gallerySkeletonShimmer 1.6s infinite linear;
+    border-radius: var(--curve-radius);
+}
+
+@keyframes gallerySkeletonShimmer {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
+
+/* Section header */
+.gallery-skeleton-badge {
+    width: 120px;
+    height: 26px;
+    margin: 0 auto var(--spacing-md);
+}
+
+.gallery-skeleton-title {
+    width: 240px;
+    height: clamp(24px, 3vw, 38px);
+    margin: 0 auto var(--spacing-sm);
+}
+
+.gallery-skeleton-subtitle {
+    width: 340px;
+    max-width: 80%;
+    height: 16px;
+    margin: 0 auto;
+}
+
+/* Filter buttons */
+.gallery-skeleton-filter {
+    width: 80px;
+    height: 36px;
+    border-radius: var(--curve-radius);
+}
+
+/* Gallery items */
+.gallery-skeleton-image {
+    width: 100%;
+    height: 100%;
+    border-radius: 0;
+}
+
+/* View more button */
+.gallery-skeleton-view-btn {
+    width: 200px;
+    height: 48px;
+    border-radius: var(--curve-radius);
+}
+
+/* Responsive tweaks */
+@media (max-width: 768px) {
+    .gallery-skeleton-filter {
+        width: 64px;
+        height: 30px;
+    }
+
+    .gallery-skeleton-view-btn {
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .gallery-skeleton-filter {
+        width: 56px;
+        height: 26px;
     }
 }

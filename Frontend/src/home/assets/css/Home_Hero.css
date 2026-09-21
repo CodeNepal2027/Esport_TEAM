@@ -1,4 +1,4 @@
-/* src/assets/css/Home_Hero.css */
+/* src/home/assets/css/Home_Hero.css */
 
 .home-hero-section {
     position: relative;
@@ -10,7 +10,7 @@
 }
 
 /* ============================================
-   HERO SLIDER
+        HERO SLIDER
    ============================================ */
 .hero-slider {
     position: relative;
@@ -64,7 +64,7 @@
 }
 
 /* ============================================
-   HERO CONTENT
+        HERO CONTENT
    ============================================ */
 .hero-content {
     position: absolute;
@@ -169,7 +169,7 @@
 }
 
 /* ============================================
-   NAVIGATION ARROWS
+        NAVIGATION ARROWS
    ============================================ */
 .hero-arrow {
     position: absolute;
@@ -208,7 +208,7 @@
 }
 
 /* ============================================
-   DOTS INDICATOR
+        DOTS INDICATOR
    ============================================ */
 .hero-dots {
     position: absolute;
@@ -240,7 +240,7 @@
 }
 
 /* ============================================
-   TEAM INFO OVERLAY
+        TEAM INFO OVERLAY
    ============================================ */
 .hero-team-info {
     position: absolute;
@@ -274,7 +274,7 @@
 }
 
 /* ============================================
-   RESPONSIVE
+        RESPONSIVE
    ============================================ */
 @media (max-width: 1024px) {
     .hero-content {
@@ -353,6 +353,139 @@
     }
     
     .hero-dot {
+        width: 8px;
+        height: 8px;
+    }
+}
+
+
+
+
+/* ========== SKELETON LOADER ============= */
+/* ============================================
+        SKELETON LOADER
+   ============================================ */
+.hero-skeleton {
+    background: linear-gradient(
+        90deg,
+        rgba(255, 255, 255, 0.06) 25%,
+        rgba(255, 255, 255, 0.15) 50%,
+        rgba(255, 255, 255, 0.06) 75%
+    );
+    background-size: 200% 100%;
+    animation: heroSkeletonShimmer 1.6s infinite linear;
+    border-radius: var(--curve-radius);
+}
+
+@keyframes heroSkeletonShimmer {
+    0% {
+        background-position: 200% 0;
+    }
+    100% {
+        background-position: -200% 0;
+    }
+}
+
+.hero-skeleton-image {
+    width: 100%;
+    height: 100%;
+    border-radius: 0;
+}
+
+.hero-skeleton-badge {
+    width: 120px;
+    height: 24px;
+    margin-bottom: var(--spacing-md);
+    border-radius: var(--curve-radius);
+}
+
+.hero-skeleton-title {
+    width: 80%;
+    height: clamp(32px, 5vw, 64px);
+    margin-bottom: var(--spacing-sm);
+}
+
+.hero-skeleton-title-short {
+    width: 55%;
+    margin-bottom: var(--spacing-md);
+}
+
+.hero-skeleton-subtitle {
+    width: 90%;
+    height: 18px;
+    margin-bottom: var(--spacing-xs);
+}
+
+.hero-skeleton-subtitle-short {
+    width: 65%;
+    margin-bottom: var(--spacing-lg);
+}
+
+.hero-skeleton-btn {
+    width: 140px;
+    height: 44px;
+    border-radius: var(--curve-radius);
+}
+
+.hero-skeleton-dot {
+    width: clamp(10px, 1vw, 14px);
+    height: clamp(10px, 1vw, 14px);
+    border-radius: var(--round-radius);
+}
+
+.hero-skeleton-team-tag {
+    width: 100px;
+    height: 40px;
+    margin-left: auto;
+    margin-bottom: var(--spacing-xs);
+}
+
+.hero-skeleton-team-name {
+    width: 140px;
+    height: 16px;
+    margin-left: auto;
+}
+
+@media (max-width: 768px) {
+    .hero-skeleton-badge {
+        width: 90px;
+        height: 20px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .hero-skeleton-title,
+    .hero-skeleton-title-short {
+        width: 90%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .hero-skeleton-subtitle,
+    .hero-skeleton-subtitle-short {
+        width: 80%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .hero-skeleton-btn {
+        width: 120px;
+        height: 38px;
+    }
+
+    .hero-skeleton-team-tag,
+    .hero-skeleton-team-name {
+        display: none;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-skeleton-btn {
+        width: 100px;
+        height: 32px;
+    }
+
+    .hero-skeleton-dot {
         width: 8px;
         height: 8px;
     }
