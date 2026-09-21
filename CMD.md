@@ -34,7 +34,7 @@ cd Backend
 ### Run migrations for master database
 
 ```powershell
-py manage.py migrate --database=master
+py manage.py migrate --database=default
 ```
 
 ### Run migrations for tenant database
@@ -58,7 +58,7 @@ py manage.py createsuperuser
 ### Create tenant user
 
 ```powershell
-py manage.py create_tenant_user
+python manage.py create_tenant_user --username t2k_username --password t2k@pass --slug t2k
 ```
 
 ### Delete tenant user
@@ -119,7 +119,7 @@ This project uses two databases:
 Important:
 
 ```powershell
-py manage.py migrate --database=master
+py manage.py migrate --database=default
 py manage.py migrate --database=tenant
 ```
 
@@ -165,7 +165,7 @@ Check:
 Run:
 
 ```powershell
-py manage.py migrate --database=master
+py manage.py migrate --database=default
 py manage.py migrate --database=tenant
 ```
 
