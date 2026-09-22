@@ -67,6 +67,16 @@ const DEMO_CLIENT = {
         { id: 8, title: 'Bootcamp Vibes',    category: 'team',      image: 'https://images.unsplash.com/photo-1538481199705-c710c4e965fc?w=800&h=600&fit=crop', description: 'Late-night scrims and team bonding',               aspect_ratio: '4/3' },
         { id: 9, title: 'Meet & Greet',      category: 'events',    image: 'https://images.unsplash.com/photo-1511882150382-421056c89033?w=800&h=600&fit=crop', description: 'Autographs and photos with the community',         aspect_ratio: '4/3' },
         { id: 10, title: 'Practice Arena',   category: 'training',  image: 'https://images.unsplash.com/photo-1511512578047-dfb367046420?w=1000&h=600&fit=crop', description: 'Where champions are forged, one scrim at a time',  aspect_ratio: '16/9' },
+        { id: 11, title: 'Team Victory',      category: 'matches',   image: 'https://images.unsplash.com/photo-1542751371-adc38448a05e?w=800&h=600&fit=crop', description: 'Our team celebrating championship victory',       aspect_ratio: '1/1' },
+        { id: 12, title: 'Training Session',  category: 'training',  image: 'https://images.unsplash.com/photo-1511882150382-421056c89033?w=600&h=800&fit=crop', description: 'Intense training session at the bootcamp',        aspect_ratio: '3/4' },
+        { id: 13, title: 'Grand Final Stage', category: 'matches',   image: 'https://images.unsplash.com/photo-1560253023-3ec5d502959f?w=1000&h=600&fit=crop', description: 'The stage is set for the grand final',             aspect_ratio: '16/9' },
+        { id: 14, title: 'Squad Lineup',      category: 'team',      image: 'https://images.unsplash.com/photo-1511512578047-dfb367046420?w=800&h=800&fit=crop', description: 'Full squad ready for the season opener',           aspect_ratio: '1/1' },
+        { id: 15, title: 'Fan Meet 2025',     category: 'events',    image: 'https://images.unsplash.com/photo-1493711662062-fa541adb3fc8?w=800&h=1000&fit=crop', description: 'Meeting our amazing fans in person',               aspect_ratio: '4/5' },
+        { id: 16, title: 'Strategy Talk',     category: 'training',  image: 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=900&h=600&fit=crop', description: 'Coach breaking down the next opponent',            aspect_ratio: '3/2' },
+        { id: 17, title: 'Trophy Lift',       category: 'matches',   image: 'https://images.unsplash.com/photo-1542751371-adc38448a05e?w=800&h=1200&fit=crop', description: 'Lifting the trophy after a nail-biting final',     aspect_ratio: '2/3' },
+        { id: 18, title: 'Bootcamp Vibes',    category: 'team',      image: 'https://images.unsplash.com/photo-1538481199705-c710c4e965fc?w=800&h=600&fit=crop', description: 'Late-night scrims and team bonding',               aspect_ratio: '4/3' },
+        { id: 19, title: 'Meet & Greet',      category: 'events',    image: 'https://images.unsplash.com/photo-1511882150382-421056c89033?w=800&h=600&fit=crop', description: 'Autographs and photos with the community',         aspect_ratio: '4/3' },
+        { id: 20, title: 'Practice Arena',   category: 'training',  image: 'https://images.unsplash.com/photo-1511512578047-dfb367046420?w=1000&h=600&fit=crop', description: 'Where champions are forged, one scrim at a time',  aspect_ratio: '16/9' },
     ],
 
     team: [
