@@ -20,7 +20,7 @@ const Home_Team = () => {
     const [roleFilter, setRoleFilter] = useState('all');
     const [visibleCount, setVisibleCount] = useState(getDefaultVisibleCount);
 
-    const teamMembers = team || [];
+    const teamMembers = team ? [...team].reverse() : [];
     const roles = ['all', 'IGL', 'Entry', 'Support', 'Anchor', 'Fragger', 'Sniper'];
 
     const filteredMembers = roleFilter === 'all'
