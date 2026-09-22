@@ -96,16 +96,14 @@ const DEMO_CLIENT = {
 
     videos: [
         { id: 1,  youtube_url: 'https://youtu.be/sHtBOMbBLZM?si=nAkLX1rnXfX3XI7y', category: 'highlights' },
-        { id: 2,  youtube_url: 'https://youtu.be/9bZkp7q19f0',                       category: 'highlights' },
-        { id: 3,  youtube_url: 'https://youtu.be/kJQP7kiw5Fk',                       category: 'highlights' },
-        { id: 4,  youtube_url: 'https://youtu.be/JGwWNGJdvx8',                       category: 'training'   },
-        { id: 5,  youtube_url: 'https://youtu.be/RgKAFK5djSk',                       category: 'training'   },
-        { id: 6,  youtube_url: 'https://youtu.be/OPf0YbXqDm0',                       category: 'interviews' },
-        { id: 7,  youtube_url: 'https://youtu.be/fJ9rUzIMcZQ',                       category: 'interviews' },
-        { id: 8,  youtube_url: 'https://youtu.be/hTWKbfoikeg',                       category: 'analysis'   },
-        { id: 9,  youtube_url: 'https://youtu.be/YQHsXMglC9A',                       category: 'analysis'   },
-        { id: 10, youtube_url: 'https://youtu.be/60ItHLz5WEA',                       category: 'events'     },
-        { id: 11, youtube_url: 'https://youtu.be/CevxZvSJLk8',                       category: 'events'     },
+        { id: 2,  youtube_url: 'https://youtu.be/9bZkp7q19f0',                     category: 'highlights' },
+        { id: 3,  youtube_url: 'https://youtu.be/kJQP7kiw5Fk',                     category: 'highlights' },
+        { id: 4,  youtube_url: 'https://youtu.be/RgKAFK5djSk',                     category: 'training'   },
+        { id: 5,  youtube_url: 'https://youtu.be/OPf0YbXqDm0',                     category: 'interviews' },
+        { id: 6,  youtube_url: 'https://youtu.be/hTWKbfoikeg',                     category: 'analysis'   },
+        { id: 7,  youtube_url: 'https://youtu.be/YQHsXMglC9A',                     category: 'analysis'   },
+        { id: 8, youtube_url: 'https://youtu.be/60ItHLz5WEA',                      category: 'events'     },
+        { id: 9, youtube_url: 'https://youtu.be/CevxZvSJLk8',                      category: 'events'     },
     ],
 };
 
