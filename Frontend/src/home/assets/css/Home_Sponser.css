@@ -420,3 +420,23 @@
         height: 28px;
     }
 }
+
+
+/* Ensure CTA works as both <button> and <a> */
+.cta-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.cta-btn:visited,
+.cta-btn:hover,
+.cta-btn:active {
+    text-decoration: none;
+}
+
+.cta-btn i {
+    font-size: 1.05em;
+}

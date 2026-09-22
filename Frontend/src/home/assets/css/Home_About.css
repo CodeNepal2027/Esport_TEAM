@@ -431,3 +431,24 @@
         height: 110px;
     }
 }
+
+/* Ensure .about-btn works as both <button> and <a> */
+.about-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.about-btn:visited,
+.about-btn:hover,
+.about-btn:active {
+    text-decoration: none;
+    color: var(--font-color-inverse);
+}
+
+.about-btn i {
+    font-size: 1.05em;
+}
+

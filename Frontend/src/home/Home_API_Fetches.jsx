@@ -26,8 +26,6 @@ const DEMO_CLIENT = {
         heading: 'Professional Esports Organization',
         paragraphs: [
             'Dedicated to competitive gaming excellence. Founded with a passion for gaming and a vision to dominate the competitive scene.',
-            'Our team consists of highly skilled players who train rigorously to compete at the highest level.',
-            'From grassroots tournaments to international arenas, we have built a legacy of discipline, teamwork and relentless pursuit of victory.',
             'Our coaching staff, analysts and support crew work around the clock to ensure every player performs at their absolute peak.',
         ],
         stats: [
@@ -47,13 +45,11 @@ const DEMO_CLIENT = {
     sponsors: [
         { id: 1, name: 'adidas',       logo: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/2/20/Adidas_Logo.svg/3840px-Adidas_Logo.svg.png' },
         { id: 2, name: 'Nike',         logo: 'https://images.seeklogo.com/logo-png/9/2/nike-logo-png_seeklogo-99478.png' },
-        { id: 3, name: 'Red Bull',     logo: 'https://upload.wikimedia.org/wikipedia/en/thumb/f/f5/RedBullEnergyDrink.svg/512px-RedBullEnergyDrink.svg.png' },
-        { id: 4, name: 'Logitech G',   logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/1c/Logitech_logo.svg/512px-Logitech_logo.svg.png' },
-        { id: 5, name: 'Razer',        logo: 'https://upload.wikimedia.org/wikipedia/en/thumb/4/40/Razer_snake_logo.svg/512px-Razer_snake_logo.svg.png' },
-        { id: 6, name: 'HyperX',       logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/HyperX_logo.svg/512px-HyperX_logo.svg.png' },
-        { id: 7, name: 'Intel',        logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7d/Intel_logo_%282006-2020%29.svg/512px-Intel_logo_%282006-2020%29.svg.png' },
-        { id: 8, name: 'Monster',      logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7f/Monster_Energy_logo.svg/512px-Monster_Energy_logo.svg.png' },
-        { id: 9, name: 'Secretlab',    logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f0/Secretlab_logo.svg/512px-Secretlab_logo.svg.png' },
+        { id: 3, name: 'Xtreme',     logo: 'https://horaaesports.com.np/uploads/partner_kb7NBIdDXTREME%20LOGO1%20final.png' },
+        { id: 4, name: 'World Link',   logo: 'https://worldlink.com.np/wp-content/uploads/2023/08/logo-587-396.jpg' },
+        { id: 7, name: 'Intel',        logo: 'https://upload.wikimedia.org/wikipedia/commons/7/7d/Intel_logo_%282006-2020%29.svg?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original' },
+        { id: 8, name: 'Vianet',      logo: 'https://www.vianet.com.np/wp-content/themes/vianet/images/img-vianet-default.png' },
+        { id: 9, name: 'Pubg Mobile',    logo: 'https://upload.wikimedia.org/wikipedia/commons/4/43/PUBG_Mobile_simple_logo_black.png?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original' },
     ],
 
     gallery: [

@@ -13,7 +13,7 @@ const getDefaultVisibleCount = () => {
 };
 
 const Home_Team = () => {
-    const { team_name, color_code_1, color_code_2 } = getOrgConfig();
+    const { team_name, color_code_1, color_code_2, org_whatsapp } = getOrgConfig();
     const { team, loading, error, refresh } = useHomeAPI();
 
     const [selectedMember, setSelectedMember] = useState(null);
@@ -34,12 +34,22 @@ const Home_Team = () => {
     const hasMore = filteredMembers.length > visibleCount;
     const hasLess = visibleCount > getDefaultVisibleCount();
 
+    // Build WhatsApp tryout link with a prefilled message
+    const whatsappDigits = org_whatsapp
+        ? String(org_whatsapp).replace(/[^0-9]/g, '')
+        : '';
+    const tryoutMessage = encodeURIComponent(
+        `Hi ${team_name || 'Team'},\n\nI'd like to try out for the squad. Here's a bit about me:`
+    );
+    const whatsappTryoutLink = whatsappDigits
+        ? `https://wa.me/${whatsappDigits}?text=${tryoutMessage}`
+        : null;
+
     // Recalculate default when viewport crosses a breakpoint
     useEffect(() => {
         const onResize = () => {
             setVisibleCount((prev) => {
                 const def = getDefaultVisibleCount();
-                // If user has already expanded, keep their expansion
                 return prev <= def ? def : prev;
             });
         };
@@ -174,7 +184,6 @@ const Home_Team = () => {
                             className="team-card"
                             onClick={() => openMemberDetail(member)}
                             style={{
-                                // Rank-style top accent, uses the org's primary color
                                 '--card-accent': color_code_1,
                                 '--card-accent-soft': `${color_code_1}22`,
                             }}
@@ -190,7 +199,6 @@ const Home_Team = () => {
                                     background: `linear-gradient(135deg, ${color_code_1}, ${color_code_2})`
                                 }}>
                                     <span className="status-dot"></span>
-                                    {/* Active */}
                                 </div>
                                 <div className="team-card-overlay" style={{
                                     background: `linear-gradient(135deg, ${color_code_1}99, ${color_code_2}99)`
@@ -290,12 +298,31 @@ const Home_Team = () => {
                     <div className="team-cta-content">
                         <h3>Join the <span style={{ color: color_code_1 }}>Squad</span></h3>
                         <p>Think you have what it takes to join {team_name}?</p>
-                        <button className="team-cta-btn" style={{
-                            background: `linear-gradient(135deg, ${color_code_1}, ${color_code_2})`,
-                            color: 'white'
-                        }}>
-                            <i className="bi bi-person-plus"></i> Tryout Now
-                        </button>
+
+                        {whatsappTryoutLink ? (
+                            <a
+                                href={whatsappTryoutLink}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="team-cta-btn"
+                                style={{
+                                    background: `linear-gradient(135deg, ${color_code_1}, ${color_code_2})`,
+                                    color: 'white'
+                                }}
+                            >
+                                <i className="bi bi-whatsapp"></i> Tryout Now
+                            </a>
+                        ) : (
+                            <button
+                                className="team-cta-btn"
+                                style={{
+                                    background: `linear-gradient(135deg, ${color_code_1}, ${color_code_2})`,
+                                    color: 'white'
+                                }}
+                            >
+                                <i className="bi bi-person-plus"></i> Tryout Now
+                            </button>
+                        )}
                     </div>
                 </div>
 
@@ -313,7 +340,6 @@ const Home_Team = () => {
                                         background: `linear-gradient(135deg, ${color_code_1}, ${color_code_2})`
                                     }}>
                                         <span className="status-dot"></span>
-                                        {/* Active */}
                                     </div>
                                 </div>
                                 <div className="member-modal-info">
