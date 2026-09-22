@@ -110,6 +110,7 @@ html {
     /* <==== BACKGROUNDS ====> */
     --bg-color-primary: #0B0D11;
     --bg-color-secondary: #14181F;
+    --navbar-bg-color: #14181F;
 
     /* <==== FONT COLORS ====> */
     --font-color-primary: #FFFFFF;
@@ -136,6 +137,7 @@ html {
     /* <==== BACKGROUNDS ====> */
     --bg-color-primary: #F8FAFC;
     --bg-color-secondary: #FFFFFF;
+    --navbar-bg-color: #eeeeee;
 
     /* <==== FONT COLORS ====> */
     --font-color-primary: #0F172A;

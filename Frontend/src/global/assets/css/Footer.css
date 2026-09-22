@@ -1,14 +1,14 @@
 /* src/assets/css/Footer.css */
 
 .footer {
-    background: var(--bg-color-secondary);
+    background: var(--navbar-bg-color);
     border-top: 2px solid var(--border-color-highlight);
     padding: var(--spacing-xl) var(--spacing-md);
     margin-top: auto;
 }
 
 /* ============================================
-   FOOTER GRID
+        FOOTER GRID
    ============================================ */
 .footer-grid {
     display: grid;
@@ -19,7 +19,7 @@
 }
 
 /* ============================================
-   BRAND COLUMN
+        BRAND COLUMN
    ============================================ */
 .footer-brand {
     display: flex;
@@ -59,7 +59,7 @@
 }
 
 /* ============================================
-   FOOTER COLUMNS
+        FOOTER COLUMNS
    ============================================ */
 .footer-column-title {
     font-family: var(--font-family-heading);
@@ -94,7 +94,7 @@
 }
 
 /* ============================================
-   CONTACT INFO
+        CONTACT INFO
    ============================================ */
 .footer-contact {
     display: flex;
@@ -136,7 +136,7 @@
 }
 
 /* ============================================
-   SOCIAL SECTION
+        SOCIAL SECTION
    ============================================ */
 .footer-social-section {
     padding: var(--spacing-lg) 0;
@@ -188,7 +188,7 @@
 }
 
 /* ============================================
-   BOTTOM BAR
+        BOTTOM BAR
    ============================================ */
 .footer-bottom {
     display: flex;
@@ -227,7 +227,7 @@
 }
 
 /* ============================================
-   COPYRIGHT
+        COPYRIGHT
    ============================================ */
 .footer-copyright {
     text-align: center;
@@ -242,7 +242,7 @@
 }
 
 /* ============================================
-   RESPONSIVE
+        RESPONSIVE
    ============================================ */
 @media (max-width: 1024px) {
     .footer-grid {
@@ -332,7 +332,7 @@
 /* src/assets/css/Footer.css - Add these styles */
 
 /* ============================================
-   POWERED BY LINK & LOGO
+        POWERED BY LINK & LOGO & NAME
    ============================================ */
 .powered-by-link {
     display: inline-flex;
@@ -355,7 +355,7 @@
 }
 
 .powered-by-logo {
-    height: 20px;
+    height: 50px;
     width: auto;
     max-width: 60px;
     object-fit: contain;
@@ -365,5 +365,6 @@
 
 .powered-by-text {
     color: var(--highlight-color-primary);
-    font-weight: 600;
+    font-weight: 700;
+    font-size: 1.5rem;
 }
