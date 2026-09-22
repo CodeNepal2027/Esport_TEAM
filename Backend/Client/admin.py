@@ -176,7 +176,8 @@ class TeamAdmin(ScopedTenantAdmin):
 
 
 class EventsAdmin(ScopedTenantAdmin):
-    list_display = ('organization_slug', 'title', 'status', 'category', 'date', 'order')
+    # list_display = ('organization_slug', 'title', 'status', 'category', 'date', 'order')
+    list_display = ('organization_slug', 'title', 'category', 'date', 'order')
     list_filter = ('status', 'category')
     list_editable = ('order',)
     search_fields = ('title', 'location')
