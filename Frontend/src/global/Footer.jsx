@@ -293,7 +293,7 @@ const Footer = () => {
                 <div className="footer-bottom">
                     <div className="footer-bottom-left">
                         <span className="footer-powered">
-                            Powered By{' '}
+                            Powered By{' '} <br />
                             {POWERED_BY_LINK ? (
                                 <a 
                                     href={POWERED_BY_LINK} 
@@ -301,6 +301,7 @@ const Footer = () => {
                                     rel="noopener noreferrer"
                                     className="powered-by-link"
                                 >
+                                    <span className="powered-by-text">{POWERED_BY_NAME}</span>
                                     {hasPoweredByLogo ? (
                                         <img 
                                             src={POWERED_BY_LOGO_URL} 
@@ -311,7 +312,6 @@ const Footer = () => {
                                             }}
                                         />
                                     ) : null}
-                                    <span>{POWERED_BY_NAME}</span>
                                 </a>
                             ) : (
                                 <span className="powered-by-text">{POWERED_BY_NAME}</span>

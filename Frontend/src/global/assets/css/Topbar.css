@@ -2,7 +2,7 @@
 
 .topbar {
     height: var(--topbar-height);
-    background: var(--bg-color-secondary);
+    background: var(--navbar-bg-color);
     /* border-bottom: 1px solid var(--highlight-color-primary); */
     display: flex;
     align-items: center;
@@ -26,7 +26,7 @@
 }
 
 /* ============================================
-   TOPBAR LEFT - Logo & Brand
+        TOPBAR LEFT - Logo & Brand
    ============================================ */
 .topbar-left {
     display: flex;
@@ -116,7 +116,7 @@
 }
 
 /* ============================================
-   TOPBAR MIDDLE - Navigation Links
+        TOPBAR MIDDLE - Navigation Links
    ============================================ */
 .topbar-middle {
     display: flex;
@@ -194,7 +194,7 @@
 }
 
 /* ============================================
-   TOPBAR RIGHT - Controls
+        TOPBAR RIGHT - Controls
    ============================================ */
 .topbar-right {
     display: flex;
@@ -232,7 +232,7 @@
 }
 
 /* ============================================
-   RESPONSIVE - Tablet
+        RESPONSIVE - Tablet
    ============================================ */
 @media (max-width: 1024px) {
     .topbar .container {
@@ -253,7 +253,7 @@
 }
 
 /* ============================================
-   RESPONSIVE - Mobile (hide brand name only)
+        RESPONSIVE - Mobile (hide brand name only)
    ============================================ */
 @media (max-width: 768px) {
     .topbar {
@@ -302,7 +302,7 @@
 }
 
 /* ============================================
-   RESPONSIVE - Small Mobile
+        RESPONSIVE - Small Mobile
    ============================================ */
 @media (max-width: 480px) {
     .topbar {
@@ -337,7 +337,7 @@
 }
 
 /* ============================================
-   VERY SMALL MOBILE
+        VERY SMALL MOBILE
    ============================================ */
 @media (max-width: 360px) {
     .brand-tag {
