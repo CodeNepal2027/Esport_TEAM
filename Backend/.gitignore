@@ -1,8 +1,35 @@
-.env
-
-*.pyc
-*/__pycache__/
-
+# ============================================
+# Django media uploads (user content — never commit)
+# ============================================
+media/
+Backend/media/
 *.sqlite3
+db.sqlite3
 master.sqlite3
 tenant.sqlite3
+
+# ============================================
+# Python / Django
+# ============================================
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+env/
+.env
+*.log
+
+# ============================================
+# Static build output
+# ============================================
+staticfiles/
+Backend/staticfiles/
+
+# ============================================
+# IDE / OS
+# ============================================
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
