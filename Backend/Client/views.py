@@ -220,6 +220,7 @@ from Client.serializers import (
 )
 
 
+
 def _normalize_host(value):
     if not value:
         return ''

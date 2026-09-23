@@ -982,3 +982,4 @@ class Videos(models.Model):
 
     def __str__(self):
         return f"Video {self.id} [{self.category}]"
+    

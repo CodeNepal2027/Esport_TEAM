@@ -275,6 +275,7 @@ class ScopedTenantAdmin(admin.ModelAdmin):
                 readonly.remove('organization_slug')
         return readonly
 
+
     # ----- LogEntry overrides (force tenant DB) -----
     def log_addition(self, request, obj, message):
         LogEntry.objects.using(self.using).create(

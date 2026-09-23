@@ -17,9 +17,9 @@ Design goals:
     - Works identically on local disk and S3/R2 (via django-storages).
 
 NOTE: Each upload_to MUST be a top-level function (not a closure / factory)
-      so Django's migration serializer can reference it by dotted path.
-      That's why there are 5 near-identical functions below instead of
-      a single factory. It's verbose but required.
+    so Django's migration serializer can reference it by dotted path.
+    That's why there are 5 near-identical functions below instead of
+    a single factory. It's verbose but required.
 """
 
 import os
