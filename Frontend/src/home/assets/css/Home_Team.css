@@ -794,7 +794,7 @@
     }
 
     .team-view-btn {
-        width: 100%;
+        /* width: 100%; */
         justify-content: center;
         font-size: var(--font-size-xs);
         padding: var(--spacing-xs) var(--spacing-md);
@@ -839,4 +839,30 @@
         gap: 4px;
         padding-top: 6px;
     }
+}
+
+
+/* Ensure .team-cta-btn works as both <button> and <a> */
+.team-cta-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.team-cta-btn:visited,
+.team-cta-btn:hover,
+.team-cta-btn:active {
+    text-decoration: none;
+    color: white;
+}
+
+.team-cta-btn i {
+    font-size: 1.05em;
+    transition: transform 0.25s ease;
+}
+
+.team-cta-btn:hover i {
+    transform: translateX(3px);
 }

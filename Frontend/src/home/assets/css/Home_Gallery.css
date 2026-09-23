@@ -472,7 +472,7 @@
 
     /* Full-width button on mobile */
     .gallery-view-btn {
-        width: 100%;
+        /* width: 100%; */
         justify-content: center;
         font-size: var(--font-size-xs);
         padding: var(--spacing-xs) var(--spacing-md);
