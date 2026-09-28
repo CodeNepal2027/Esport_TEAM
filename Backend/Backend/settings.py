@@ -315,6 +315,12 @@ from pathlib import Path
 from datetime import timedelta
 from dotenv import load_dotenv
 
+import pymysql
+
+# Add this line BEFORE install_as_MySQLdb
+pymysql.version_info = (2, 2, 1, "final", 0) 
+pymysql.install_as_MySQLdb()
+
 # ============================================
 # ENV LOADER
 # ============================================
@@ -378,6 +384,7 @@ MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
 
     'django.middleware.security.SecurityMiddleware',
+    "whitenoise.middleware.WhiteNoiseMiddleware",  #Whitenoise
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
