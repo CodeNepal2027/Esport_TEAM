@@ -217,6 +217,9 @@ from .models import (
 from .admin_site import tenant_admin_site
 
 
+# ============================================
+# HELPERS
+# ============================================
 def get_user_org_slug(request):
     """Return the tenant slug for the logged-in user, or None."""
     if not request.user.is_authenticated:
@@ -228,6 +231,71 @@ def get_user_org_slug(request):
         return None
 
 
+def _trim_after_save(obj):
+    from Utils.limits import trim, LIMITS
+
+    print(f"[TRIM DEBUG] called: {type(obj).__name__} "
+          f"slug={getattr(obj, 'organization_slug', None)!r}")
+
+    TOP_LEVEL = (
+        (Hero,     'hero'),
+        (Gallery,  'gallery'),
+        (Team,     'team'),
+        (Events,   'events'),
+        (Videos,   'videos'),
+    )
+
+    for model_cls, key in TOP_LEVEL:
+        if isinstance(obj, model_cls):
+            slug = getattr(obj, 'organization_slug', None)
+            print(f"[TRIM DEBUG] matched {model_cls.__name__}, keep={LIMITS[key]}, slug={slug!r}")
+            if not slug:
+                print("[TRIM DEBUG] slug empty, aborting")
+                return
+            try:
+                before = model_cls.objects.using('tenant').filter(organization_slug=slug).count()
+                trim(model_cls, slug, LIMITS[key])
+                after = model_cls.objects.using('tenant').filter(organization_slug=slug).count()
+                print(f"[TRIM DEBUG] {model_cls.__name__}: {before} → {after}")
+            except Exception as e:
+                print(f"[TRIM DEBUG] EXCEPTION: {e}")
+                import traceback; traceback.print_exc()
+            return
+
+    # nested
+    if isinstance(obj, (AboutParagraph, AboutStat)):
+        print(f"[TRIM DEBUG] nested: {type(obj).__name__}")
+
+
+def _active_image_preview(obj, field_name='image'):
+    """
+    Renders a thumbnail of whichever image is active
+    (uploaded file wins over URL) plus a small label.
+    """
+    value = getattr(obj, field_name, '') or ''
+    if not value:
+        return '— no image —'
+
+    source = 'unknown'
+    if getattr(obj, 'image_file', None):
+        source = 'uploaded file'
+    elif getattr(obj, 'image_url', None):
+        source = 'URL'
+    elif getattr(obj, 'logo_file', None):
+        source = 'uploaded file'
+    elif getattr(obj, 'logo_url', None):
+        source = 'URL'
+
+    return format_html(
+        '<img src="{}" style="height:60px;border-radius:4px;object-fit:cover;" />'
+        '<div style="font-size:11px;color:#666;margin-top:4px;">Serving: <b>{}</b></div>',
+        value, source,
+    )
+
+
+# ============================================
+# SCOPED BASE ADMIN
+# ============================================
 class ScopedTenantAdmin(admin.ModelAdmin):
     using = 'tenant'
 
@@ -244,11 +312,17 @@ class ScopedTenantAdmin(admin.ModelAdmin):
         return qs.none()
 
     def save_model(self, request, obj, form, change):
-        if not getattr(obj, 'organization_slug', None):
-            slug = get_user_org_slug(request)
-            if slug:
-                obj.organization_slug = slug
+        # Tenant users: ALWAYS force their own slug (ignore form value)
+        slug = get_user_org_slug(request)
+        if slug:
+            obj.organization_slug = slug
+
+        # Save the row
         obj.save(using=self.using)
+
+        # Auto-trim AFTER save — guarantees the slug is set
+        # and the row exists in the DB before we count/delete.
+        _trim_after_save(obj)
 
     def delete_model(self, request, obj):
         obj.delete(using=self.using)
@@ -274,7 +348,6 @@ class ScopedTenantAdmin(admin.ModelAdmin):
             if 'organization_slug' in readonly:
                 readonly.remove('organization_slug')
         return readonly
-
 
     # ----- LogEntry overrides (force tenant DB) -----
     def log_addition(self, request, obj, message):
@@ -310,34 +383,21 @@ class ScopedTenantAdmin(admin.ModelAdmin):
             change_message='',
         )
 
+    def log_deletions(self, request, queryset):
+        """
+        Handle Django admin's bulk 'Delete selected' action.
 
-def _active_image_preview(obj, field_name='image'):
-    """
-    Renders a thumbnail of whichever image is active
-    (uploaded file wins over URL) plus a small label.
-    """
-    value = getattr(obj, field_name, '') or ''
-    if not value:
-        return '— no image —'
-
-    source = 'unknown'
-    if getattr(obj, 'image_file', None):
-        source = 'uploaded file'
-    elif getattr(obj, 'image_url', None):
-        source = 'URL'
-    elif getattr(obj, 'logo_file', None):
-        source = 'uploaded file'
-    elif getattr(obj, 'logo_url', None):
-        source = 'URL'
-
-    return format_html(
-        '<img src="{}" style="height:60px;border-radius:4px;object-fit:cover;" />'
-        '<div style="font-size:11px;color:#666;margin-top:4px;">Serving: <b>{}</b></div>',
-        value, source,
-    )
+        Mirrors log_deletion() but for a queryset. Writes each deletion as its
+        own LogEntry row in the tenant DB, using content_type_id resolved from
+        the tenant DB (not the default DB).
+        """
+        for obj in queryset:
+            self.log_deletion(request, obj, str(obj))
 
 
-# -------- Inlines --------
+# ============================================
+# INLINES
+# ============================================
 class AboutParagraphInline(admin.TabularInline):
     model = AboutParagraph
     extra = 1
@@ -352,7 +412,9 @@ class AboutStatInline(admin.TabularInline):
     ordering = ('order',)
 
 
-# -------- Admin classes --------
+# ============================================
+# ADMIN CLASSES
+# ============================================
 class TenantUserAdmin(admin.ModelAdmin):
     list_display = ('user', 'organization_slug', 'is_tenant_admin', 'created_at')
     list_filter = ('organization_slug', 'is_tenant_admin')
@@ -508,7 +570,9 @@ class VideosAdmin(ScopedTenantAdmin):
     search_fields = ('youtube_url',)
 
 
-# -------- Register --------
+# ============================================
+# REGISTER
+# ============================================
 tenant_admin_site.register(Hero,       HeroAdmin)
 tenant_admin_site.register(About,      AboutAdmin)
 tenant_admin_site.register(Sponsers,   SponsersAdmin)
