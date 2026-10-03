@@ -387,6 +387,10 @@ MIDDLEWARE = [
     "whitenoise.middleware.WhiteNoiseMiddleware",  #Whitenoise
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
+    
+    # ↓ Add this — enables ETag / If-None-Match handling
+    'django.middleware.http.ConditionalGetMiddleware',
+    
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'Client.middleware.TenantAdminUserMiddleware',  # tenant admin DB switching
