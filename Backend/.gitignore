@@ -1,35 +1,65 @@
 # ============================================
+# Backend/.gitignore
+# ============================================
+
+# ============================================
 # Django media uploads (user content — never commit)
 # ============================================
 media/
 Backend/media/
+**/media/
+
+# ============================================
+# Databases
+# ============================================
 *.sqlite3
 db.sqlite3
 master.sqlite3
 tenant.sqlite3
 
 # ============================================
-# Python / Django
-# ============================================
-__pycache__/
-*.py[cod]
-*.egg-info/
-.venv/
-venv/
-env/
-.env
-*.log
-
-# ============================================
 # Static build output
 # ============================================
 staticfiles/
 Backend/staticfiles/
+**/staticfiles/
+
+# ============================================
+# Python / Django
+# ============================================
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.eggs/
+build/
+dist/
+.venv/
+venv/
+env/
+ENV/
+.env
+.env.*
+!.env.example
+*.log
+local_settings.py
+
+# ============================================
+# Django migrations (usually committed — remove these lines
+# if you WANT migrations in git)
+# ============================================
+# */migrations/*.py
+# !*/migrations/__init__.py
+# */migrations/*.pyc
+# */migrations/__pycache__/
 
 # ============================================
 # IDE / OS
 # ============================================
 .vscode/
 .idea/
+*.swp
+*.swo
 .DS_Store
 Thumbs.db
+desktop.ini
