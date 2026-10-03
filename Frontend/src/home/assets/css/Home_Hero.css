@@ -68,7 +68,7 @@
    ============================================ */
 .hero-content {
     position: absolute;
-    top: 50%;
+    top: 75%;
     left: 10%;
     transform: translateY(-50%);
     z-index: 2;
@@ -103,7 +103,7 @@
 
 .hero-title {
     font-family: var(--font-family-heading);
-    font-size: var(--font-size-xxxl);
+    font-size: var(--font-size-xxl);
     font-weight: 900;
     line-height: 1.1;
     margin-bottom: var(--spacing-sm);
@@ -298,7 +298,7 @@
         right: 5%;
         max-width: 100%;
         text-align: center;
-        top: 50%;
+        top: 65%;
         transform: translateY(-50%);
     }
     

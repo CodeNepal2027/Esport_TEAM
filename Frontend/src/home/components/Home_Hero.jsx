@@ -137,6 +137,7 @@
 
 // ============ [NEW CODE WITH SKELETON LOADER] ===========
 // src/home/components/Home_Hero.jsx
+// src/home/components/Home_Hero.jsx
 import React, { useState, useEffect } from 'react';
 import { getOrgConfig } from '../../config/org_config';
 import { useHomeAPI } from '../../home/Home_API_Context';
@@ -161,6 +162,11 @@ const Home_Hero = () => {
     const goToSlide = (index) => setCurrentSlide(index);
     const nextSlide = () => setCurrentSlide((prev) => (prev + 1) % slides.length);
     const prevSlide = () => setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length);
+
+    // Smooth-scroll helpers
+    const scrollToSection = (id) => {
+        document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+    };
 
     // Loading state — skeleton loader
     if (loading && !hero) {
@@ -251,13 +257,20 @@ const Home_Hero = () => {
                             </h1>
                             <p className="hero-subtitle">{slide.subtitle}</p>
                             <div className="hero-actions">
-                                <button className="hero-btn-primary" style={{
-                                    background: `linear-gradient(135deg, ${color_code_1}, ${color_code_2})`
-                                }}>
-                                    Join Now
+                                <button
+                                    className="hero-btn-primary"
+                                    onClick={() => scrollToSection('home-event-section')}
+                                    style={{
+                                        background: `linear-gradient(135deg, ${color_code_1}, ${color_code_2})`
+                                    }}
+                                >
+                                    <i className="bi bi-calendar-event"></i> Events
                                 </button>
-                                <button className="hero-btn-secondary">
-                                    Learn More
+                                <button
+                                    className="hero-btn-secondary"
+                                    onClick={() => scrollToSection('home-contact-section')}
+                                >
+                                    Contact Us
                                 </button>
                             </div>
                         </div>

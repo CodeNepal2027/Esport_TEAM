@@ -116,11 +116,11 @@ const Home_Contact = ({ loading = false }) => {
             <div className="container">
                 {/* Section Header */}
                 <div className="section-header">
-                    <span className="section-badge" style={{
+                    {/* <span className="section-badge" style={{
                         background: `linear-gradient(135deg, ${color_code_1 || '#FF0000'}, ${color_code_2 || '#111111'})`
                     }}>
                         Get In Touch
-                    </span>
+                    </span> */}
                     <h2 className="section-title">
                         Let's <span style={{ color: color_code_1 || '#FF0000' }}>Connect</span>
                     </h2>

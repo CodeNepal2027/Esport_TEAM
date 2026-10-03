@@ -102,11 +102,11 @@ const Home_About = () => {
             <div className="container">
                 {/* Section Header */}
                 <div className="section-header">
-                    <span className="section-badge" style={{
+                    {/* <span className="section-badge" style={{
                         background: `linear-gradient(135deg, ${color_code_1}, ${color_code_2})`
                     }}>
                         About Us
-                    </span>
+                    </span> */}
                     <h2 className="section-title">
                         Who We <span style={{ color: color_code_1 }}>Are</span>
                     </h2>

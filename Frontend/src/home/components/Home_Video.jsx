@@ -230,11 +230,11 @@ const Home_Video = () => {
         <section id="home-video-section" className="home-video-section">
             <div className="container">
                 <div className="section-header">
-                    <span className="section-badge" style={{
+                    {/* <span className="section-badge" style={{
                         background: `linear-gradient(135deg, ${color_code_1}, ${color_code_2})`
                     }}>
                         Watch Us
-                    </span>
+                    </span> */}
                     <h2 className="section-title">
                         <span style={{ color: color_code_1 }}>Latest</span> Videos
                     </h2>

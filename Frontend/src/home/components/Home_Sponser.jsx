@@ -92,11 +92,11 @@ const Home_Sponser = () => {
         <section id="home-sponser-section" className="home-sponser-section">
             <div className="container">
                 <div className="section-header">
-                    <span className="section-badge" style={{
+                    {/* <span className="section-badge" style={{
                         background: `linear-gradient(135deg, ${color_code_1}, ${color_code_2})`
                     }}>
                         Our Partners
-                    </span>
+                    </span> */}
                     <h2 className="section-title">
                         <span style={{ color: color_code_1 }}>Trusted</span> Partners
                     </h2>
