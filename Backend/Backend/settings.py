@@ -384,19 +384,57 @@ MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
 
     'django.middleware.security.SecurityMiddleware',
-    "whitenoise.middleware.WhiteNoiseMiddleware",  #Whitenoise
+
+    # ↓ WhiteNoise (serves static files)
+    'whitenoise.middleware.WhiteNoiseMiddleware',
+
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    
-    # ↓ Add this — enables ETag / If-None-Match handling
+
+    # ↓ ConditionalGetMiddleware MUST come before CommonMiddleware
+    #   (Django docs: "before any middleware that may change the response")
+    #   Enables ETag / If-None-Match / 304 handling.
     'django.middleware.http.ConditionalGetMiddleware',
-    
+
+    'django.middleware.common.CommonMiddleware',
+
+    # ↓ Tenant-aware Vary — right after CommonMiddleware so the
+    #   Vary header is set before any cache sees the response.
+    # 'Client.vary_middleware.VaryByTenantMiddleware',
+
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'Client.middleware.TenantAdminUserMiddleware',  # tenant admin DB switching
+    
+    # ↓ MessageMiddleware must come BEFORE any middleware that uses messages
+    'django.contrib.messages.middleware.MessageMiddleware',
+
+    # ↓ NEW — blocks tenant users from /admin/
+    'Master.middleware.BlockTenantUsersFromMasterAdminMiddleware',
+
+    # ↓ tenant admin DB switching
+    'Client.middleware.TenantAdminUserMiddleware',
+
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+# MIDDLEWARE = [
+#     # CORS must be first
+#     'corsheaders.middleware.CorsMiddleware',
+
+#     'django.middleware.security.SecurityMiddleware',
+#     "whitenoise.middleware.WhiteNoiseMiddleware",  #Whitenoise
+#     'django.contrib.sessions.middleware.SessionMiddleware',
+#     'django.middleware.common.CommonMiddleware',
+    
+#     # ↓ Add this — enables ETag / If-None-Match handling
+#     'django.middleware.http.ConditionalGetMiddleware',
+    
+#     'django.middleware.csrf.CsrfViewMiddleware',
+#     'django.contrib.auth.middleware.AuthenticationMiddleware',
+#     'Client.middleware.TenantAdminUserMiddleware',  # tenant admin DB switching
+#     'django.contrib.messages.middleware.MessageMiddleware',
+#     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+# ]
+
 
 
 ROOT_URLCONF = 'Backend.urls'
@@ -455,7 +493,10 @@ DATABASE_ROUTERS = [
 # AUTH BACKENDS
 # ============================================
 AUTHENTICATION_BACKENDS = [
-    'django.contrib.auth.backends.ModelBackend',
+    # Master admin (/admin/) — refuses tenant users even if credentials match.
+    'Master.auth_backend.MasterOnlyAuthBackend',
+
+    # Tenant admin (/tenant-admin/) — reads from tenant DB.
     'Client.auth_backend.TenantAuthBackend',
 ]
 
