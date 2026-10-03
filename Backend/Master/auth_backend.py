@@ -3,19 +3,26 @@
 Master-auth backend for /admin/ (default admin site).
 
 Wraps Django's ModelBackend and additionally refuses any user who
-also exists as a TenantUser in the tenant DB. This guarantees that
-tenant admins cannot log into the master admin, even if their
-credentials accidentally match a row in the master DB.
+exists as a TenantUser in the tenant DB — UNLESS they are a superuser.
+
+This lets platform staff (superusers) log in even if they also happen
+to manage a tenant, while still blocking pure tenant users from the
+master admin.
 """
 
 from django.contrib.auth.backends import ModelBackend
 from django.contrib.auth import get_user_model
 
+import logging
+
+logger = logging.getLogger(__name__)
+
 
 class MasterOnlyAuthBackend(ModelBackend):
     """
     Same as ModelBackend (checks password against `default` DB), but
-    rejects any user who has a TenantUser profile in the tenant DB.
+    rejects any user who has a TenantUser profile in the tenant DB
+    AND is not a master superuser.
     """
 
     def authenticate(self, request, username=None, password=None, **kwargs):
@@ -23,7 +30,12 @@ class MasterOnlyAuthBackend(ModelBackend):
         if user is None:
             return None
 
-        # Reject tenant users — they must use /tenant-admin/, not /admin/
+        # Superusers are always allowed in master admin.
+        # They may also be tenant admins — that's fine for the platform operator.
+        if user.is_superuser:
+            return user
+
+        # Non-superuser: reject if they have a TenantUser profile in the tenant DB.
         try:
             from Client.models import TenantUser
             is_tenant = (
@@ -32,20 +44,14 @@ class MasterOnlyAuthBackend(ModelBackend):
                 .exists()
             )
         except Exception:
-            # If the tenant DB lookup fails, err on the side of allowing
-            # master users (never lock out platform staff because of a
-            # tenant-DB hiccup). But log it so you notice.
-            import logging
-            logging.getLogger(__name__).warning(
+            logger.warning(
                 "[auth] TenantUser lookup failed during master login; "
-                "allowing superuser through."
+                "allowing user through. Check tenant DB."
             )
             is_tenant = False
 
         if is_tenant:
-            # Block the login — return None so Django tries other backends.
-            import logging
-            logging.getLogger(__name__).warning(
+            logger.warning(
                 f"[auth] Blocked tenant user '{username}' from /admin/ login."
             )
             return None

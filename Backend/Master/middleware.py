@@ -6,10 +6,10 @@ from django.shortcuts import redirect
 
 class BlockTenantUsersFromMasterAdminMiddleware:
     """
-    Force-logout any tenant user who reaches /admin/.
+    Force-logout any non-superuser who has a TenantUser profile and
+    reaches /admin/.
 
-    Uses a query-string flag (`?tenant_blocked=1`) to signal the reason
-    to the login page, avoiding a hard dependency on MessageMiddleware.
+    Superusers are exempt — they are the platform operators.
     """
 
     def __init__(self, get_response):
@@ -20,6 +20,10 @@ class BlockTenantUsersFromMasterAdminMiddleware:
         user = getattr(request, 'user', None)
 
         if path.startswith('/admin/') and user and user.is_authenticated:
+            # Superusers are always allowed.
+            if user.is_superuser:
+                return self.get_response(request)
+
             is_tenant = False
             try:
                 from Client.models import TenantUser
