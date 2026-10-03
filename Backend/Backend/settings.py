@@ -315,7 +315,7 @@ from pathlib import Path
 from datetime import timedelta
 from dotenv import load_dotenv
 
-## === UNCOMMENT THIS BEFORE PUSHING IN PRODUCTION ======
+# === UNCOMMENT THIS BEFORE PUSHING IN PRODUCTION ======
 import pymysql
 # Add this line BEFORE install_as_MySQLdb
 pymysql.version_info = (2, 2, 1, "final", 0) 
@@ -380,40 +380,29 @@ INSTALLED_APPS = [
 # MIDDLEWARE
 # ============================================
 MIDDLEWARE = [
-    # CORS must be first
     'corsheaders.middleware.CorsMiddleware',
-
     'django.middleware.security.SecurityMiddleware',
-
-    # ↓ WhiteNoise (serves static files)
     'whitenoise.middleware.WhiteNoiseMiddleware',
-
     'django.contrib.sessions.middleware.SessionMiddleware',
 
-    # ↓ ConditionalGetMiddleware MUST come before CommonMiddleware
-    #   (Django docs: "before any middleware that may change the response")
-    #   Enables ETag / If-None-Match / 304 handling.
+    # ConditionalGetMiddleware MUST come before CommonMiddleware
     'django.middleware.http.ConditionalGetMiddleware',
 
     'django.middleware.common.CommonMiddleware',
-
-    # ↓ Tenant-aware Vary — right after CommonMiddleware so the
-    #   Vary header is set before any cache sees the response.
-    # 'Client.vary_middleware.VaryByTenantMiddleware',
+    # 'Client.vary_middleware.VaryByTenantMiddleware',   # enable when ready
 
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
-    
-    # ↓ MessageMiddleware must come BEFORE any middleware that uses messages
+
+    # MessageMiddleware must come BEFORE any middleware that uses messages
     'django.contrib.messages.middleware.MessageMiddleware',
 
-    # ↓ NEW — blocks tenant users from /admin/
+    # Block tenant users from /admin/ (superusers exempt)
     'Master.middleware.BlockTenantUsersFromMasterAdminMiddleware',
 
-    # ↓ tenant admin DB switching
+    # Tenant admin DB switching
     'Client.middleware.TenantAdminUserMiddleware',
 
-    'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 # MIDDLEWARE = [

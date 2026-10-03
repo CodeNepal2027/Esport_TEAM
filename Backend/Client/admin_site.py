@@ -1,6 +1,7 @@
 # Backend/Client/admin_site.py
 
 from django.contrib.admin import AdminSite
+from django.urls import reverse
 
 
 class TenantAdminSite(AdminSite):
@@ -8,6 +9,27 @@ class TenantAdminSite(AdminSite):
     site_title = 'Tenant Admin'
     index_title = 'Client Content Management'
 
+    # ============================================
+    # URL OVERRIDES — the critical fix.
+    # Without these, Django's base AdminSite points them at the MASTER
+    # admin's URLs. That causes tenant logins to redirect to /admin/,
+    # and the tenant session to appear as if it were a master session.
+    # ============================================
+    @property
+    def login_url(self):
+        return reverse('tenant_admin:login')
+
+    @property
+    def logout_url(self):
+        return reverse('tenant_admin:logout')
+
+    @property
+    def index_url(self):
+        return reverse('tenant_admin:index')
+
+    # ============================================
+    # PERMISSION
+    # ============================================
     def has_permission(self, request):
         """
         Superusers always allowed.
