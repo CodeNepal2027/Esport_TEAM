@@ -385,46 +385,49 @@ MIDDLEWARE = [
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
 
-    # ConditionalGetMiddleware MUST come before CommonMiddleware
     'django.middleware.http.ConditionalGetMiddleware',
-
     'django.middleware.common.CommonMiddleware',
-    # 'Client.vary_middleware.VaryByTenantMiddleware',   # enable when ready
+    # 'Client.vary_middleware.VaryByTenantMiddleware',
 
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
 
-    # MessageMiddleware must come BEFORE any middleware that uses messages
+    # ↓↓↓ MUST RUN FIRST — re-resolves request.user per admin site
+    'Client.middleware.TenantAdminUserMiddleware',
+
     'django.contrib.messages.middleware.MessageMiddleware',
 
-    # Block tenant users from /admin/ (superusers exempt)
+    # ↓ Then the master-admin guard sees the CORRECT request.user
     'Master.middleware.BlockTenantUsersFromMasterAdminMiddleware',
-
-    # Tenant admin DB switching
-    'Client.middleware.TenantAdminUserMiddleware',
 
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 # MIDDLEWARE = [
-#     # CORS must be first
 #     'corsheaders.middleware.CorsMiddleware',
-
 #     'django.middleware.security.SecurityMiddleware',
-#     "whitenoise.middleware.WhiteNoiseMiddleware",  #Whitenoise
+#     'whitenoise.middleware.WhiteNoiseMiddleware',
 #     'django.contrib.sessions.middleware.SessionMiddleware',
-#     'django.middleware.common.CommonMiddleware',
-    
-#     # ↓ Add this — enables ETag / If-None-Match handling
+
+#     # ConditionalGetMiddleware MUST come before CommonMiddleware
 #     'django.middleware.http.ConditionalGetMiddleware',
-    
+
+#     'django.middleware.common.CommonMiddleware',
+#     # 'Client.vary_middleware.VaryByTenantMiddleware',   # enable when ready
+
 #     'django.middleware.csrf.CsrfViewMiddleware',
 #     'django.contrib.auth.middleware.AuthenticationMiddleware',
-#     'Client.middleware.TenantAdminUserMiddleware',  # tenant admin DB switching
+
+#     # MessageMiddleware must come BEFORE any middleware that uses messages
 #     'django.contrib.messages.middleware.MessageMiddleware',
+
+#     # Block tenant users from /admin/ (superusers exempt)
+#     'Master.middleware.BlockTenantUsersFromMasterAdminMiddleware',
+
+#     # Tenant admin DB switching
+#     'Client.middleware.TenantAdminUserMiddleware',
+
 #     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 # ]
-
-
 
 ROOT_URLCONF = 'Backend.urls'
 

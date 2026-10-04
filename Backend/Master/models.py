@@ -79,7 +79,7 @@ class Organization(models.Model):
     # ----- Identity -----
     slug = models.SlugField(
         unique=True, max_length=100,
-        help_text="Esport tag url in small eg:- drs, t2k, horra, asl, ..etc"
+        help_text="Esport tag url in small eg:- drs, t2k, horaa, asl, hlx ..etc"
     )
     org_domain = models.CharField(
         max_length=255, unique=True, blank=True, null=True,
@@ -87,17 +87,17 @@ class Organization(models.Model):
     )
     api_url = models.URLField(
         max_length=500, blank=True, null=True,
-        help_text="Master DB Backend API Url."
+        help_text="Master DB Backend API Url. eg:- https://api.esports.optechnepal.com/api/master/organizations"
     )
 
     # ----- Team / Brand (PUBLIC) -----
     team_tag = models.CharField(
         max_length=50, default='TEAM',
-        help_text="eg:- t2k, drs, horra, ..etc"
+        help_text="eg:- t2k, drs, horaa, asl, hlx ..etc"
     )
     team_name = models.CharField(
         max_length=255, default='Esports Team',
-        help_text="eg:- Trained To Kill, Horra Esports, ..etc"
+        help_text="eg:- Trained To Kill, Horaa Esports, ..etc"
     )
 
     # --- Team Logo: URL OR upload (file wins) ---
